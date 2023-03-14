@@ -51,7 +51,7 @@ pub struct PodStatus {
 
 impl crate::DeepMerge for PodStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::merge_strategies::list::atomic(&mut self.container_statuses, other.container_statuses);
         crate::merge_strategies::list::atomic(&mut self.ephemeral_container_statuses, other.ephemeral_container_statuses);
         crate::DeepMerge::merge_from(&mut self.host_ip, other.host_ip);
@@ -60,7 +60,7 @@ impl crate::DeepMerge for PodStatus {
         crate::DeepMerge::merge_from(&mut self.nominated_node_name, other.nominated_node_name);
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
         crate::DeepMerge::merge_from(&mut self.pod_ip, other.pod_ip);
-        crate::merge_strategies::list::map(&mut self.pod_ips, other.pod_ips, &[|lhs, rhs| lhs.ip == rhs.ip]);
+        crate::merge_strategies::list::map(&mut self.pod_ips, other.pod_ips, &[|lhs, rhs| lhs.ip == rhs.ip], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.qos_class, other.qos_class);
         crate::DeepMerge::merge_from(&mut self.reason, other.reason);
         crate::DeepMerge::merge_from(&mut self.start_time, other.start_time);

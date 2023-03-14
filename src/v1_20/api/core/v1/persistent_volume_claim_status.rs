@@ -19,8 +19,8 @@ pub struct PersistentVolumeClaimStatus {
 impl crate::DeepMerge for PersistentVolumeClaimStatus {
     fn merge_from(&mut self, other: Self) {
         crate::merge_strategies::list::atomic(&mut self.access_modes, other.access_modes);
-        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity);
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
     }
 }

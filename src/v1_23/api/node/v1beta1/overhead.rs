@@ -9,7 +9,7 @@ pub struct Overhead {
 
 impl crate::DeepMerge for Overhead {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.pod_fixed, other.pod_fixed);
+        crate::merge_strategies::map::granular(&mut self.pod_fixed, other.pod_fixed, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
     }
 }
 

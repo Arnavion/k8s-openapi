@@ -101,7 +101,7 @@ impl crate::DeepMerge for PersistentVolumeSpec {
         crate::DeepMerge::merge_from(&mut self.aws_elastic_block_store, other.aws_elastic_block_store);
         crate::DeepMerge::merge_from(&mut self.azure_disk, other.azure_disk);
         crate::DeepMerge::merge_from(&mut self.azure_file, other.azure_file);
-        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity);
+        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.cephfs, other.cephfs);
         crate::DeepMerge::merge_from(&mut self.cinder, other.cinder);
         crate::DeepMerge::merge_from(&mut self.claim_ref, other.claim_ref);

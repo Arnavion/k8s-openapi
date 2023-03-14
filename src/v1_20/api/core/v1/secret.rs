@@ -498,10 +498,10 @@ impl crate::Metadata for Secret {
 
 impl crate::DeepMerge for Secret {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.data, other.data);
+        crate::merge_strategies::map::granular(&mut self.data, other.data, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.immutable, other.immutable);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::merge_strategies::map::granular(&mut self.string_data, other.string_data);
+        crate::merge_strategies::map::granular(&mut self.string_data, other.string_data, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.type_, other.type_);
     }
 }

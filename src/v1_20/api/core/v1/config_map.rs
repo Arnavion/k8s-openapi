@@ -495,8 +495,8 @@ impl crate::Metadata for ConfigMap {
 
 impl crate::DeepMerge for ConfigMap {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.binary_data, other.binary_data);
-        crate::merge_strategies::map::granular(&mut self.data, other.data);
+        crate::merge_strategies::map::granular(&mut self.binary_data, other.binary_data, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.data, other.data, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.immutable, other.immutable);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
     }

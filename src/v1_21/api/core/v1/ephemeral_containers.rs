@@ -207,7 +207,7 @@ impl crate::Metadata for EphemeralContainers {
 
 impl crate::DeepMerge for EphemeralContainers {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.ephemeral_containers, other.ephemeral_containers, &[|lhs, rhs| lhs.name == rhs.name]);
+        crate::merge_strategies::list::map(&mut self.ephemeral_containers, other.ephemeral_containers, &[|lhs, rhs| lhs.name == rhs.name], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
     }
 }

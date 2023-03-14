@@ -12,7 +12,7 @@ pub struct ServiceStatus {
 
 impl crate::DeepMerge for ServiceStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.load_balancer, other.load_balancer);
     }
 }

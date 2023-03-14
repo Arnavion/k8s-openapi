@@ -24,11 +24,11 @@ pub struct LimitRangeItem {
 
 impl crate::DeepMerge for LimitRangeItem {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.default, other.default);
-        crate::merge_strategies::map::granular(&mut self.default_request, other.default_request);
-        crate::merge_strategies::map::granular(&mut self.max, other.max);
-        crate::merge_strategies::map::granular(&mut self.max_limit_request_ratio, other.max_limit_request_ratio);
-        crate::merge_strategies::map::granular(&mut self.min, other.min);
+        crate::merge_strategies::map::granular(&mut self.default, other.default, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.default_request, other.default_request, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.max, other.max, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.max_limit_request_ratio, other.max_limit_request_ratio, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.min, other.min, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.type_, other.type_);
     }
 }

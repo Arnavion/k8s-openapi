@@ -16,7 +16,7 @@ pub struct CustomResourceDefinitionStatus {
 impl crate::DeepMerge for CustomResourceDefinitionStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.accepted_names, other.accepted_names);
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::merge_strategies::list::atomic(&mut self.stored_versions, other.stored_versions);
     }
 }

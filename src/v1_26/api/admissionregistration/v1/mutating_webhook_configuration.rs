@@ -374,7 +374,7 @@ impl crate::Metadata for MutatingWebhookConfiguration {
 impl crate::DeepMerge for MutatingWebhookConfiguration {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::merge_strategies::list::map(&mut self.webhooks, other.webhooks, &[|lhs, rhs| lhs.name == rhs.name]);
+        crate::merge_strategies::list::map(&mut self.webhooks, other.webhooks, &[|lhs, rhs| lhs.name == rhs.name], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
     }
 }
 

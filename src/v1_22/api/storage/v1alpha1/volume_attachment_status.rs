@@ -20,7 +20,7 @@ impl crate::DeepMerge for VolumeAttachmentStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.attach_error, other.attach_error);
         crate::DeepMerge::merge_from(&mut self.attached, other.attached);
-        crate::merge_strategies::map::granular(&mut self.attachment_metadata, other.attachment_metadata);
+        crate::merge_strategies::map::granular(&mut self.attachment_metadata, other.attachment_metadata, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.detach_error, other.detach_error);
     }
 }

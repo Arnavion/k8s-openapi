@@ -25,7 +25,7 @@ pub struct ReplicationControllerStatus {
 impl crate::DeepMerge for ReplicationControllerStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.available_replicas, other.available_replicas);
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.fully_labeled_replicas, other.fully_labeled_replicas);
         crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);
         crate::DeepMerge::merge_from(&mut self.ready_replicas, other.ready_replicas);

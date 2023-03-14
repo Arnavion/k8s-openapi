@@ -60,7 +60,7 @@ pub struct CertificateSigningRequestSpec {
 
 impl crate::DeepMerge for CertificateSigningRequestSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.extra, other.extra);
+        crate::merge_strategies::map::granular(&mut self.extra, other.extra, |inner_self, inner_other| crate::merge_strategies::list::atomic(inner_self, inner_other));
         crate::merge_strategies::list::atomic(&mut self.groups, other.groups);
         crate::DeepMerge::merge_from(&mut self.request, other.request);
         crate::DeepMerge::merge_from(&mut self.signer_name, other.signer_name);

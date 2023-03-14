@@ -24,7 +24,7 @@ pub struct SubjectAccessReviewSpec {
 
 impl crate::DeepMerge for SubjectAccessReviewSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::map::granular(&mut self.extra, other.extra);
+        crate::merge_strategies::map::granular(&mut self.extra, other.extra, |inner_self, inner_other| crate::merge_strategies::list::atomic(inner_self, inner_other));
         crate::merge_strategies::list::atomic(&mut self.group, other.group);
         crate::DeepMerge::merge_from(&mut self.non_resource_attributes, other.non_resource_attributes);
         crate::DeepMerge::merge_from(&mut self.resource_attributes, other.resource_attributes);

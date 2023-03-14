@@ -145,8 +145,8 @@ impl crate::DeepMerge for JSONSchemaProps {
         crate::merge_strategies::list::atomic(&mut self.all_of, other.all_of);
         crate::merge_strategies::list::atomic(&mut self.any_of, other.any_of);
         crate::DeepMerge::merge_from(&mut self.default, other.default);
-        crate::merge_strategies::map::granular(&mut self.definitions, other.definitions);
-        crate::merge_strategies::map::granular(&mut self.dependencies, other.dependencies);
+        crate::merge_strategies::map::granular(&mut self.definitions, other.definitions, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.dependencies, other.dependencies, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::DeepMerge::merge_from(&mut self.description, other.description);
         crate::merge_strategies::list::atomic(&mut self.enum_, other.enum_);
         crate::DeepMerge::merge_from(&mut self.example, other.example);
@@ -169,8 +169,8 @@ impl crate::DeepMerge for JSONSchemaProps {
         crate::DeepMerge::merge_from(&mut self.nullable, other.nullable);
         crate::merge_strategies::list::atomic(&mut self.one_of, other.one_of);
         crate::DeepMerge::merge_from(&mut self.pattern, other.pattern);
-        crate::merge_strategies::map::granular(&mut self.pattern_properties, other.pattern_properties);
-        crate::merge_strategies::map::granular(&mut self.properties, other.properties);
+        crate::merge_strategies::map::granular(&mut self.pattern_properties, other.pattern_properties, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
+        crate::merge_strategies::map::granular(&mut self.properties, other.properties, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
         crate::merge_strategies::list::atomic(&mut self.required, other.required);
         crate::DeepMerge::merge_from(&mut self.title, other.title);
         crate::DeepMerge::merge_from(&mut self.type_, other.type_);
@@ -181,7 +181,7 @@ impl crate::DeepMerge for JSONSchemaProps {
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_list_type, other.x_kubernetes_list_type);
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_map_type, other.x_kubernetes_map_type);
         crate::DeepMerge::merge_from(&mut self.x_kubernetes_preserve_unknown_fields, other.x_kubernetes_preserve_unknown_fields);
-        crate::merge_strategies::list::map(&mut self.x_kubernetes_validations, other.x_kubernetes_validations, &[|lhs, rhs| lhs.rule == rhs.rule]);
+        crate::merge_strategies::list::map(&mut self.x_kubernetes_validations, other.x_kubernetes_validations, &[|lhs, rhs| lhs.rule == rhs.rule], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
     }
 }
 

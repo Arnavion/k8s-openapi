@@ -24,7 +24,7 @@ pub struct HorizontalPodAutoscalerStatus {
 
 impl crate::DeepMerge for HorizontalPodAutoscalerStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_]);
+        crate::merge_strategies::list::map(&mut self.conditions, other.conditions, &[|lhs, rhs| lhs.type_ == rhs.type_], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::merge_strategies::list::atomic(&mut self.current_metrics, other.current_metrics);
         crate::DeepMerge::merge_from(&mut self.current_replicas, other.current_replicas);
         crate::DeepMerge::merge_from(&mut self.desired_replicas, other.desired_replicas);

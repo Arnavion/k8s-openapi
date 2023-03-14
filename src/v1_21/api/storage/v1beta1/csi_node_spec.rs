@@ -9,7 +9,7 @@ pub struct CSINodeSpec {
 
 impl crate::DeepMerge for CSINodeSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::merge_strategies::list::map(&mut self.drivers, other.drivers, &[|lhs, rhs| lhs.name == rhs.name]);
+        crate::merge_strategies::list::map(&mut self.drivers, other.drivers, &[|lhs, rhs| lhs.name == rhs.name], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
     }
 }
 

@@ -40,7 +40,7 @@ impl crate::DeepMerge for Endpoint {
         crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
         crate::DeepMerge::merge_from(&mut self.node_name, other.node_name);
         crate::DeepMerge::merge_from(&mut self.target_ref, other.target_ref);
-        crate::merge_strategies::map::granular(&mut self.topology, other.topology);
+        crate::merge_strategies::map::granular(&mut self.topology, other.topology, |inner_self, inner_other| crate::DeepMerge::merge_from(inner_self, inner_other));
     }
 }
 
