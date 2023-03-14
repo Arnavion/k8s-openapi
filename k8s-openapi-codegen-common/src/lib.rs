@@ -675,7 +675,11 @@ pub fn run(
 					field_type_name: "Vec<T>".to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
-					merge_type: templates::MergeType::Default,
+					merge_type: templates::MergeType::List {
+						strategy: swagger20::KubernetesListType::Map,
+						keys: vec!["metadata().namespace".to_string(), "metadata().name".to_string()],
+						item_merge_type: Box::new(templates::MergeType::Default),
+					},
 				},
 
 				templates::Property {
@@ -732,6 +736,12 @@ pub fn run(
 			)?;
 
 			if definition.impl_deep_merge {
+				let template_generics_where_part = format!("T: {local}DeepMerge + {local}Metadata<Ty = {local}apimachinery::pkg::apis::meta::v1::ObjectMeta> + {local}ListableResource");
+				let template_generics = templates::Generics {
+					where_part: Some(&template_generics_where_part),
+					..template_generics
+				};
+
 				templates::struct_deep_merge::generate(
 					&mut out,
 					type_name,
@@ -1445,7 +1455,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		}
 		else {
 			result.push(match c {
-				'.' | '-' => '_',
+				'-' => '_',
 				c => c,
 			});
 		}
