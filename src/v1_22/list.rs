@@ -31,9 +31,9 @@ impl<T> crate::Metadata for List<T> where T: crate::ListableResource {
     }
 }
 
-impl<T> crate::DeepMerge for List<T> where T: crate::ListableResource {
+impl<T> crate::DeepMerge for List<T> where T: crate::DeepMerge + crate::Metadata<Ty = crate::apimachinery::pkg::apis::meta::v1::ObjectMeta> + crate::ListableResource {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.items, other.items);
+        crate::merge_strategies::list::map(&mut self.items, other.items, &[|lhs, rhs| lhs.metadata().namespace == rhs.metadata().namespace, |lhs, rhs| lhs.metadata().name == rhs.metadata().name], |inner_self, inner_other| {crate::DeepMerge::merge_from(inner_self, inner_other)});
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
     }
 }
