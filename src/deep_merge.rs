@@ -38,11 +38,11 @@
 ///
 /// ## `Vec`
 ///
-/// The implementation depends on the specific [merge strategy](`strategies::list`) specified by the containing object. Defaults to [`strategies::list::atomic`].
+/// Use an [explicit merge strategy](`strategies::list`).
 ///
 /// ## `BTreeMap`
 ///
-/// The implementation depends on the specific [merge strategy](`strategies::map`) specified by the containing object. Defaults to [`strategies::map::granular`].
+/// Use an [explicit merge strategy](`strategies::map`).
 ///
 /// ## `serde_json::Value`
 ///
@@ -99,12 +99,6 @@ impl<T> DeepMerge for Box<T> where T: DeepMerge {
     }
 }
 
-impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
-    fn merge_from(&mut self, other: Self) {
-        strategies::map::granular(self, other, V::merge_from);
-    }
-}
-
 impl<T> DeepMerge for Option<T> where T: DeepMerge {
     fn merge_from(&mut self, other: Self) {
         if let Some(other) = other {
@@ -114,12 +108,6 @@ impl<T> DeepMerge for Option<T> where T: DeepMerge {
                 *self = Some(other);
             }
         }
-    }
-}
-
-impl<T> DeepMerge for Vec<T> {
-    fn merge_from(&mut self, other: Self) {
-        strategies::list::atomic(self, other);
     }
 }
 
