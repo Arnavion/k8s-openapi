@@ -7,7 +7,7 @@ pub struct ResourceRequirements {
     ///
     /// This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.
     ///
-    /// This field is immutable.
+    /// This field is immutable. It can only be set for containers.
     pub claims: Option<Vec<crate::api::core::v1::ResourceClaim>>,
 
     /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -143,7 +143,7 @@ impl crate::schemars::JsonSchema for ResourceRequirements {
                         "claims".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.\n\nThis is an alpha field and requires enabling the DynamicResourceAllocation feature gate.\n\nThis field is immutable.".to_owned()),
+                                description: Some("Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.\n\nThis is an alpha field and requires enabling the DynamicResourceAllocation feature gate.\n\nThis field is immutable. It can only be set for containers.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
