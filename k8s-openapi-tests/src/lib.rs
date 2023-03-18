@@ -109,29 +109,32 @@ impl Client {
 				// This also requires the reqwest::Client to be built with use_rustls_tls(), otherwise the Identity is ignored.
 				//
 				// However, the client then fails to connect to kind clusters anyway, because kind clusters listen on 127.0.0.1
-				// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/ctz/hyper-rustls/issues/84
+				// and hyper-rustls doesn't support connecting to IPs. Ref: https://github.com/rustls/hyper-rustls/issues/56
 				//
 				// So we need to use the native-tls backend, and thus Identity::from_pkcs12_der
 
-				let public_key_pem = match client_certificate {
+				let certificate = match client_certificate {
 					ClientCertificate::File(path) => std::fs::read(path).expect("couldn't read client certificate file"),
 					ClientCertificate::Inline(data) =>
 						base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
 						.expect("couldn't parse client certificate data"),
 				};
-				let public_key = openssl::x509::X509::from_pem(&public_key_pem).expect("couldn't parse client certificate data");
+				let certificate = openssl::x509::X509::from_pem(&certificate).expect("couldn't parse client certificate data");
 
-				let private_key_pem = match client_key {
+				let key = match client_key {
 					ClientKey::File(path) => std::fs::read(path).expect("couldn't read client key file"),
 					ClientKey::Inline(data) =>
 						base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
 						.expect("couldn't parse client key data"),
 				};
-				let private_key = openssl::pkey::PKey::private_key_from_pem(&private_key_pem).expect("couldn't parse client key data");
+				let key = openssl::pkey::PKey::private_key_from_pem(&key).expect("couldn't parse client key data");
 
 				let pkcs12 =
 					openssl::pkcs12::Pkcs12::builder()
-					.build("", "admin", &private_key, &public_key).expect("couldn't construct client identity")
+					.name("admin")
+					.pkey(&key)
+					.cert(&certificate)
+					.build2("").expect("couldn't construct client identity")
 					.to_der().expect("couldn't construct client identity");
 
 				let tls_identity = reqwest::Identity::from_pkcs12_der(&pkcs12, "").expect("couldn't construct client identity");
