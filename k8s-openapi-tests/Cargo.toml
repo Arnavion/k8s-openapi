@@ -14,7 +14,7 @@ include = [
 base64 = { version = "0.21", default-features = false, features = [
 	"alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
-dirs = { version = "4", default-features = false }
+dirs = { version = "5", default-features = false }
 futures-core = { version = "0.3", default-features = false }
 futures-io = { version = "0.3", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
