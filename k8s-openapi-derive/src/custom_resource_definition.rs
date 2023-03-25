@@ -32,41 +32,37 @@ impl super::CustomDerive for CustomResourceDefinition {
 		for attr in &input.attrs {
 			let syn::AttrStyle::Outer = attr.style else { continue; };
 
-			if !attr.path.is_ident("custom_resource_definition") {
+			if !attr.path().is_ident("custom_resource_definition") {
 				continue;
 			}
 
-			let metas = match attr.parse_meta()? {
-				syn::Meta::List(meta) => meta.nested,
-				meta => return Err(r#"#[custom_resource_definition] expects a list of metas, like `#[custom_resource_definition(...)]`"#).spanning(meta),
-			};
-
+			let metas = attr.parse_args_with(syn::punctuated::Punctuated::<syn::Meta, syn::Token![,]>::parse_terminated)?;
 			for meta in metas {
 				let meta: &dyn quote::ToTokens = match &meta {
-					syn::NestedMeta::Meta(syn::Meta::NameValue(meta)) =>
+					syn::Meta::NameValue(meta) =>
 						if meta.path.is_ident("group") {
-							let syn::Lit::Str(lit) = &meta.lit else {
+							let syn::Expr::Lit(syn::ExprLit { lit: syn::Lit::Str(lit), .. }) = &meta.value else {
 								return Err(r#"#[custom_resource_definition(group = "...")] expects a string literal value"#).spanning(meta);
 							};
 							group = Some(lit.value());
 							continue;
 						}
 						else if meta.path.is_ident("version") {
-							let syn::Lit::Str(lit) = &meta.lit else {
+							let syn::Expr::Lit(syn::ExprLit { lit: syn::Lit::Str(lit), .. }) = &meta.value else {
 								return Err(r#"#[custom_resource_definition(version = "...")] expects a string literal value"#).spanning(meta);
 							};
 							version = Some(lit.value());
 							continue;
 						}
 						else if meta.path.is_ident("plural") {
-							let syn::Lit::Str(lit) = &meta.lit else {
+							let syn::Expr::Lit(syn::ExprLit { lit: syn::Lit::Str(lit), .. }) = &meta.value else {
 								return Err(r#"#[custom_resource_definition(plural = "...")] expects a string literal value"#).spanning(meta);
 							};
 							plural = Some(lit.value());
 							continue;
 						}
 						else if meta.path.is_ident("has_subresources") {
-							let syn::Lit::Str(lit) = &meta.lit else {
+							let syn::Expr::Lit(syn::ExprLit { lit: syn::Lit::Str(lit), .. }) = &meta.value else {
 								return Err(r#"#[custom_resource_definition(has_subresources = "...")] expects a string literal value"#).spanning(meta);
 							};
 							has_subresources = Some(lit.value());
@@ -76,7 +72,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							meta
 						},
 
-					syn::NestedMeta::Meta(syn::Meta::Path(path)) =>
+					syn::Meta::Path(path) =>
 						if path.is_ident("generate_schema") {
 							generate_schema = true;
 							continue;
@@ -93,7 +89,7 @@ impl super::CustomDerive for CustomResourceDefinition {
 							&meta
 						},
 
-					meta => meta,
+					meta @ syn::Meta::List(_) => meta,
 				};
 
 				return

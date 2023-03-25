@@ -22,9 +22,9 @@ http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { version = "=0.17.0", path = "../k8s-openapi-codegen-common" }
 proc-macro2 = { version = "1", default-features = false, features = ["proc-macro"] }
 quote = { version = "1", default-features = false }
-syn = { version = "1", default-features = false, features = [
+syn = { version = "2", default-features = false, features = [
 	"derive", # minimal feature for writing custom derives
-	"parsing", # for syn::parse2, syn::Path::is_ident, syn::Attribute::parse_meta
+	"parsing", # for syn::parse2, syn::Attribute::parse_args_with, syn::Path::is_ident
 	"printing", # for syn types: quote::ToTokens
 ] }
 
