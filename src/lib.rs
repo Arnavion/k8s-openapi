@@ -21,7 +21,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.20", doc = "v1_20")]
 #![cfg_attr(k8s_openapi_enabled_version="1.21", doc = "v1_21")]
 #![cfg_attr(k8s_openapi_enabled_version="1.22", doc = "v1_22")]
 #![cfg_attr(k8s_openapi_enabled_version="1.23", doc = "v1_23")]
@@ -289,7 +288,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!
 //! For example:
 //!
-//! 1. Your crate creates a service spec and wants to set the cluster IP. This field is only available in Kubernetes 1.20+,
+//! 1. Your crate creates a service spec and wants to set the cluster IP. This field is only available in Kubernetes 1.21+,
 //!    so you want your crate to fail to compile if a lower feature was enabled.
 //!
 //! 1. Your crate creates a service spec and wants to set the cluster IP, but you want it to be skipped when compiling for older versions.
@@ -301,8 +300,8 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.20 or lower is selected.
-//!      k8s_openapi::k8s_if_le_1_20! {
+//!      // The compile_error!() is only emitted if 1.21 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_21! {
 //!          compile_error!("This crate requires the v1_21 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
 //!
@@ -319,7 +318,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!          ...
 //!      };
 //!
-//!      k8s_openapi::k8s_if_ge_1_20! {
+//!      k8s_openapi::k8s_if_ge_1_21! {
 //!          service_spec.cluster_ips = ...;
 //!      }
 //!      ```
@@ -350,7 +349,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!        // - MM is the major version.
 //!        // - NN is the minor version.
 //!        //
-//!        // Thus, if the v1_20 feature was enabled, k8s_openapi_version would be 0x00_01_14_00
+//!        // Thus, if the v1_21 feature was enabled, k8s_openapi_version would be 0x00_01_21_00
 //!
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
@@ -367,7 +366,7 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    - ```rust,ignore
 //!      // The compile_error!() is only emitted if 1.19 or lower is selected.
 //!      #[cfg(not(k8s_service_spec_supports_cluster_ips))]
-//!      compile_error!("This crate requires the v1_20 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      compile_error!("This crate requires the v1_21 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!
 //!      ...
 //!
@@ -439,9 +438,6 @@ pub use _resource::{
     Metadata,
     api_version, group, kind, version,
 };
-
-#[cfg(k8s_openapi_enabled_version="1.20")] mod v1_20;
-#[cfg(k8s_openapi_enabled_version="1.20")] pub use self::v1_20::*;
 
 #[cfg(k8s_openapi_enabled_version="1.21")] mod v1_21;
 #[cfg(k8s_openapi_enabled_version="1.21")] pub use self::v1_21::*;
