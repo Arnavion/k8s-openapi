@@ -12,7 +12,7 @@ pub struct SupplementalGroupsStrategyOptions {
 
 impl crate::DeepMerge for SupplementalGroupsStrategyOptions {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.ranges, other.ranges);
+        crate::merge_strategies::list::atomic(&mut self.ranges, other.ranges);
         crate::DeepMerge::merge_from(&mut self.rule, other.rule);
     }
 }

@@ -55,8 +55,8 @@ impl crate::DeepMerge for CSIDriverSpec {
         crate::DeepMerge::merge_from(&mut self.pod_info_on_mount, other.pod_info_on_mount);
         crate::DeepMerge::merge_from(&mut self.requires_republish, other.requires_republish);
         crate::DeepMerge::merge_from(&mut self.storage_capacity, other.storage_capacity);
-        crate::DeepMerge::merge_from(&mut self.token_requests, other.token_requests);
-        crate::DeepMerge::merge_from(&mut self.volume_lifecycle_modes, other.volume_lifecycle_modes);
+        crate::merge_strategies::list::atomic(&mut self.token_requests, other.token_requests);
+        crate::merge_strategies::list::set(&mut self.volume_lifecycle_modes, other.volume_lifecycle_modes);
     }
 }
 

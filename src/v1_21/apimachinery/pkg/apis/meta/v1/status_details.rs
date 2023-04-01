@@ -24,7 +24,7 @@ pub struct StatusDetails {
 
 impl crate::DeepMerge for StatusDetails {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.causes, other.causes);
+        crate::merge_strategies::list::atomic(&mut self.causes, other.causes);
         crate::DeepMerge::merge_from(&mut self.group, other.group);
         crate::DeepMerge::merge_from(&mut self.kind, other.kind);
         crate::DeepMerge::merge_from(&mut self.name, other.name);

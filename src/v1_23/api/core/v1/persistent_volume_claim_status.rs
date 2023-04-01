@@ -25,10 +25,21 @@ pub struct PersistentVolumeClaimStatus {
 
 impl crate::DeepMerge for PersistentVolumeClaimStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.access_modes, other.access_modes);
-        crate::DeepMerge::merge_from(&mut self.allocated_resources, other.allocated_resources);
-        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::atomic(&mut self.access_modes, other.access_modes);
+        crate::merge_strategies::map::granular(&mut self.allocated_resources, other.allocated_resources, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
+        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
         crate::DeepMerge::merge_from(&mut self.resize_status, other.resize_status);
     }

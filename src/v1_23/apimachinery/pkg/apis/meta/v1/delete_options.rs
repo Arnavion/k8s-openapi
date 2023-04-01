@@ -28,7 +28,7 @@ pub struct DeleteOptions {
 impl crate::DeepMerge for DeleteOptions {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
-        crate::DeepMerge::merge_from(&mut self.dry_run, other.dry_run);
+        crate::merge_strategies::list::atomic(&mut self.dry_run, other.dry_run);
         crate::DeepMerge::merge_from(&mut self.grace_period_seconds, other.grace_period_seconds);
         crate::DeepMerge::merge_from(&mut self.kind, other.kind);
         crate::DeepMerge::merge_from(&mut self.orphan_dependents, other.orphan_dependents);

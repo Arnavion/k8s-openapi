@@ -34,7 +34,8 @@ pub(crate) fn generate(
 	let watch_append_pair =
 		if is_watch {
 			"        __query_pairs.append_pair(\"watch\", \"true\");\n"
-		} else {
+		}
+		else {
 			""
 		};
 

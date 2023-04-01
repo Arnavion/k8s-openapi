@@ -97,11 +97,13 @@ pub struct PersistentVolumeSpec {
 
 impl crate::DeepMerge for PersistentVolumeSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.access_modes, other.access_modes);
+        crate::merge_strategies::list::atomic(&mut self.access_modes, other.access_modes);
         crate::DeepMerge::merge_from(&mut self.aws_elastic_block_store, other.aws_elastic_block_store);
         crate::DeepMerge::merge_from(&mut self.azure_disk, other.azure_disk);
         crate::DeepMerge::merge_from(&mut self.azure_file, other.azure_file);
-        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
+        crate::merge_strategies::map::granular(&mut self.capacity, other.capacity, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.cephfs, other.cephfs);
         crate::DeepMerge::merge_from(&mut self.cinder, other.cinder);
         crate::DeepMerge::merge_from(&mut self.claim_ref, other.claim_ref);
@@ -114,7 +116,7 @@ impl crate::DeepMerge for PersistentVolumeSpec {
         crate::DeepMerge::merge_from(&mut self.host_path, other.host_path);
         crate::DeepMerge::merge_from(&mut self.iscsi, other.iscsi);
         crate::DeepMerge::merge_from(&mut self.local, other.local);
-        crate::DeepMerge::merge_from(&mut self.mount_options, other.mount_options);
+        crate::merge_strategies::list::atomic(&mut self.mount_options, other.mount_options);
         crate::DeepMerge::merge_from(&mut self.nfs, other.nfs);
         crate::DeepMerge::merge_from(&mut self.node_affinity, other.node_affinity);
         crate::DeepMerge::merge_from(&mut self.persistent_volume_reclaim_policy, other.persistent_volume_reclaim_policy);

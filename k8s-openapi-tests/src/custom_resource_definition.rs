@@ -31,7 +31,7 @@ async fn test() {
 	impl k8s_openapi::DeepMerge for FooBarSpec {
 		fn merge_from(&mut self, other: Self) where Self: Sized {
 			self.prop1.merge_from(other.prop1);
-			self.prop2.merge_from(other.prop2);
+			k8s_openapi::merge_strategies::list::atomic(&mut self.prop2, other.prop2);
 			self.prop3.merge_from(other.prop3);
 		}
 	}

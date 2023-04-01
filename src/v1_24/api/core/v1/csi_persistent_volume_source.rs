@@ -40,7 +40,9 @@ impl crate::DeepMerge for CSIPersistentVolumeSource {
         crate::DeepMerge::merge_from(&mut self.node_publish_secret_ref, other.node_publish_secret_ref);
         crate::DeepMerge::merge_from(&mut self.node_stage_secret_ref, other.node_stage_secret_ref);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
-        crate::DeepMerge::merge_from(&mut self.volume_attributes, other.volume_attributes);
+        crate::merge_strategies::map::granular(&mut self.volume_attributes, other.volume_attributes, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.volume_handle, other.volume_handle);
     }
 }

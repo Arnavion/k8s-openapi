@@ -319,6 +319,7 @@ pub fn run(
 						field_type_name,
 						required,
 						is_flattened,
+						merge_type: &schema.merge_type,
 					});
 				}
 
@@ -666,6 +667,12 @@ pub fn run(
 				where_part: Some(&template_generics_where_part),
 			};
 
+			let items_merge_type = swagger20::MergeType::List {
+				strategy: swagger20::KubernetesListType::Map,
+				keys: vec!["metadata().namespace".to_string(), "metadata().name".to_string()],
+				item_merge_type: Box::new(swagger20::MergeType::Default),
+			};
+
 			let template_properties = vec![
 				templates::Property {
 					name: "items",
@@ -674,6 +681,7 @@ pub fn run(
 					field_type_name: "Vec<T>".to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
+					merge_type: &items_merge_type,
 				},
 
 				templates::Property {
@@ -683,6 +691,7 @@ pub fn run(
 					field_type_name: (*metadata_rust_type).to_owned(),
 					required: templates::PropertyRequired::Required { is_default: true },
 					is_flattened: false,
+					merge_type: &swagger20::MergeType::Default,
 				},
 			];
 
@@ -729,6 +738,12 @@ pub fn run(
 			)?;
 
 			if definition.impl_deep_merge {
+				let template_generics_where_part = format!("T: {local}DeepMerge + {local}Metadata<Ty = {local}apimachinery::pkg::apis::meta::v1::ObjectMeta> + {local}ListableResource");
+				let template_generics = templates::Generics {
+					where_part: Some(&template_generics_where_part),
+					..template_generics
+				};
+
 				templates::struct_deep_merge::generate(
 					&mut out,
 					type_name,
@@ -808,6 +823,7 @@ pub fn run(
 						field_type_name,
 						required: templates::PropertyRequired::Optional,
 						is_flattened: false,
+						merge_type: &schema.merge_type,
 					});
 				}
 
@@ -1008,7 +1024,7 @@ pub fn run(
 					schema_feature,
 					map_namespace,
 				)?;
-			} 
+			}
 
 			swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => {
 				templates::impl_schema::generate(
@@ -1441,7 +1457,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		}
 		else {
 			result.push(match c {
-				'.' | '-' => '_',
+				'-' => '_',
 				c => c,
 			});
 		}
@@ -1691,7 +1707,7 @@ pub fn write_operation(
 					path == "io.k8s.ListOptional" ||
 					path == "io.k8s.PatchOptional" ||
 					path == "io.k8s.ReplaceOptional" ||
-					path == "io.k8s.WatchOptional" 
+					path == "io.k8s.WatchOptional"
 				}
 				else {
 					false

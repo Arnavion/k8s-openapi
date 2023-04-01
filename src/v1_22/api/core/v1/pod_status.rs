@@ -49,16 +49,30 @@ pub struct PodStatus {
 
 impl crate::DeepMerge for PodStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
-        crate::DeepMerge::merge_from(&mut self.container_statuses, other.container_statuses);
-        crate::DeepMerge::merge_from(&mut self.ephemeral_container_statuses, other.ephemeral_container_statuses);
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::atomic(&mut self.container_statuses, other.container_statuses);
+        crate::merge_strategies::list::atomic(&mut self.ephemeral_container_statuses, other.ephemeral_container_statuses);
         crate::DeepMerge::merge_from(&mut self.host_ip, other.host_ip);
-        crate::DeepMerge::merge_from(&mut self.init_container_statuses, other.init_container_statuses);
+        crate::merge_strategies::list::atomic(&mut self.init_container_statuses, other.init_container_statuses);
         crate::DeepMerge::merge_from(&mut self.message, other.message);
         crate::DeepMerge::merge_from(&mut self.nominated_node_name, other.nominated_node_name);
         crate::DeepMerge::merge_from(&mut self.phase, other.phase);
         crate::DeepMerge::merge_from(&mut self.pod_ip, other.pod_ip);
-        crate::DeepMerge::merge_from(&mut self.pod_ips, other.pod_ips);
+        crate::merge_strategies::list::map(
+            &mut self.pod_ips,
+            other.pod_ips,
+            &[|lhs, rhs| lhs.ip == rhs.ip],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.qos_class, other.qos_class);
         crate::DeepMerge::merge_from(&mut self.reason, other.reason);
         crate::DeepMerge::merge_from(&mut self.start_time, other.start_time);

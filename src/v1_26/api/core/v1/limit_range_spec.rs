@@ -9,7 +9,7 @@ pub struct LimitRangeSpec {
 
 impl crate::DeepMerge for LimitRangeSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.limits, other.limits);
+        crate::merge_strategies::list::atomic(&mut self.limits, other.limits);
     }
 }
 

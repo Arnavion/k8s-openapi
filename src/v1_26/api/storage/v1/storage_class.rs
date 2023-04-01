@@ -394,10 +394,12 @@ impl crate::Metadata for StorageClass {
 impl crate::DeepMerge for StorageClass {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.allow_volume_expansion, other.allow_volume_expansion);
-        crate::DeepMerge::merge_from(&mut self.allowed_topologies, other.allowed_topologies);
+        crate::merge_strategies::list::atomic(&mut self.allowed_topologies, other.allowed_topologies);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.mount_options, other.mount_options);
-        crate::DeepMerge::merge_from(&mut self.parameters, other.parameters);
+        crate::merge_strategies::list::atomic(&mut self.mount_options, other.mount_options);
+        crate::merge_strategies::map::granular(&mut self.parameters, other.parameters, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.provisioner, other.provisioner);
         crate::DeepMerge::merge_from(&mut self.reclaim_policy, other.reclaim_policy);
         crate::DeepMerge::merge_from(&mut self.volume_binding_mode, other.volume_binding_mode);

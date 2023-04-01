@@ -15,7 +15,7 @@ pub struct TokenRequestSpec {
 
 impl crate::DeepMerge for TokenRequestSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.audiences, other.audiences);
+        crate::merge_strategies::list::atomic(&mut self.audiences, other.audiences);
         crate::DeepMerge::merge_from(&mut self.bound_object_ref, other.bound_object_ref);
         crate::DeepMerge::merge_from(&mut self.expiration_seconds, other.expiration_seconds);
     }

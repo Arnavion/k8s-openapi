@@ -34,13 +34,15 @@ pub struct Endpoint {
 
 impl crate::DeepMerge for Endpoint {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.addresses, other.addresses);
+        crate::merge_strategies::list::set(&mut self.addresses, other.addresses);
         crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
         crate::DeepMerge::merge_from(&mut self.hints, other.hints);
         crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
         crate::DeepMerge::merge_from(&mut self.node_name, other.node_name);
         crate::DeepMerge::merge_from(&mut self.target_ref, other.target_ref);
-        crate::DeepMerge::merge_from(&mut self.topology, other.topology);
+        crate::merge_strategies::map::granular(&mut self.topology, other.topology, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
     }
 }
 

@@ -72,23 +72,32 @@ impl crate::DeepMerge for ServiceSpec {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.allocate_load_balancer_node_ports, other.allocate_load_balancer_node_ports);
         crate::DeepMerge::merge_from(&mut self.cluster_ip, other.cluster_ip);
-        crate::DeepMerge::merge_from(&mut self.cluster_ips, other.cluster_ips);
-        crate::DeepMerge::merge_from(&mut self.external_ips, other.external_ips);
+        crate::merge_strategies::list::atomic(&mut self.cluster_ips, other.cluster_ips);
+        crate::merge_strategies::list::atomic(&mut self.external_ips, other.external_ips);
         crate::DeepMerge::merge_from(&mut self.external_name, other.external_name);
         crate::DeepMerge::merge_from(&mut self.external_traffic_policy, other.external_traffic_policy);
         crate::DeepMerge::merge_from(&mut self.health_check_node_port, other.health_check_node_port);
         crate::DeepMerge::merge_from(&mut self.internal_traffic_policy, other.internal_traffic_policy);
-        crate::DeepMerge::merge_from(&mut self.ip_families, other.ip_families);
+        crate::merge_strategies::list::atomic(&mut self.ip_families, other.ip_families);
         crate::DeepMerge::merge_from(&mut self.ip_family_policy, other.ip_family_policy);
         crate::DeepMerge::merge_from(&mut self.load_balancer_class, other.load_balancer_class);
         crate::DeepMerge::merge_from(&mut self.load_balancer_ip, other.load_balancer_ip);
-        crate::DeepMerge::merge_from(&mut self.load_balancer_source_ranges, other.load_balancer_source_ranges);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::atomic(&mut self.load_balancer_source_ranges, other.load_balancer_source_ranges);
+        crate::merge_strategies::list::map(
+            &mut self.ports,
+            other.ports,
+            &[|lhs, rhs| lhs.port == rhs.port],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.publish_not_ready_addresses, other.publish_not_ready_addresses);
-        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::merge_strategies::map::granular(&mut self.selector, other.selector, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.session_affinity, other.session_affinity);
         crate::DeepMerge::merge_from(&mut self.session_affinity_config, other.session_affinity_config);
-        crate::DeepMerge::merge_from(&mut self.topology_keys, other.topology_keys);
+        crate::merge_strategies::list::atomic(&mut self.topology_keys, other.topology_keys);
         crate::DeepMerge::merge_from(&mut self.type_, other.type_);
     }
 }

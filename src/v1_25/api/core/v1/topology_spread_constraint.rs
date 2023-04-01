@@ -43,7 +43,7 @@ pub struct TopologySpreadConstraint {
 impl crate::DeepMerge for TopologySpreadConstraint {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.label_selector, other.label_selector);
-        crate::DeepMerge::merge_from(&mut self.match_label_keys, other.match_label_keys);
+        crate::merge_strategies::list::atomic(&mut self.match_label_keys, other.match_label_keys);
         crate::DeepMerge::merge_from(&mut self.max_skew, other.max_skew);
         crate::DeepMerge::merge_from(&mut self.min_domains, other.min_domains);
         crate::DeepMerge::merge_from(&mut self.node_affinity_policy, other.node_affinity_policy);

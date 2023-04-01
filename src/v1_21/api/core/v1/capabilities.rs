@@ -12,8 +12,8 @@ pub struct Capabilities {
 
 impl crate::DeepMerge for Capabilities {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.add, other.add);
-        crate::DeepMerge::merge_from(&mut self.drop, other.drop);
+        crate::merge_strategies::list::atomic(&mut self.add, other.add);
+        crate::merge_strategies::list::atomic(&mut self.drop, other.drop);
     }
 }
 

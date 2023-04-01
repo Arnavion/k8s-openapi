@@ -15,7 +15,7 @@ pub struct HPAScalingRules {
 
 impl crate::DeepMerge for HPAScalingRules {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.policies, other.policies);
+        crate::merge_strategies::list::atomic(&mut self.policies, other.policies);
         crate::DeepMerge::merge_from(&mut self.select_policy, other.select_policy);
         crate::DeepMerge::merge_from(&mut self.stabilization_window_seconds, other.stabilization_window_seconds);
     }

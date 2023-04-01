@@ -12,8 +12,12 @@ pub struct ResourceQuotaStatus {
 
 impl crate::DeepMerge for ResourceQuotaStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.hard, other.hard);
-        crate::DeepMerge::merge_from(&mut self.used, other.used);
+        crate::merge_strategies::map::granular(&mut self.hard, other.hard, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
+        crate::merge_strategies::map::granular(&mut self.used, other.used, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
     }
 }
 

@@ -24,11 +24,11 @@ pub struct CustomResourceDefinitionNames {
 
 impl crate::DeepMerge for CustomResourceDefinitionNames {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.categories, other.categories);
+        crate::merge_strategies::list::atomic(&mut self.categories, other.categories);
         crate::DeepMerge::merge_from(&mut self.kind, other.kind);
         crate::DeepMerge::merge_from(&mut self.list_kind, other.list_kind);
         crate::DeepMerge::merge_from(&mut self.plural, other.plural);
-        crate::DeepMerge::merge_from(&mut self.short_names, other.short_names);
+        crate::merge_strategies::list::atomic(&mut self.short_names, other.short_names);
         crate::DeepMerge::merge_from(&mut self.singular, other.singular);
     }
 }

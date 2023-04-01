@@ -15,7 +15,7 @@ pub struct ResourceClaimSchedulingStatus {
 impl crate::DeepMerge for ResourceClaimSchedulingStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.name, other.name);
-        crate::DeepMerge::merge_from(&mut self.unsuitable_nodes, other.unsuitable_nodes);
+        crate::merge_strategies::list::set(&mut self.unsuitable_nodes, other.unsuitable_nodes);
     }
 }
 

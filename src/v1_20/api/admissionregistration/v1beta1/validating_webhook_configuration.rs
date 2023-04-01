@@ -374,7 +374,14 @@ impl crate::Metadata for ValidatingWebhookConfiguration {
 impl crate::DeepMerge for ValidatingWebhookConfiguration {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.webhooks, other.webhooks);
+        crate::merge_strategies::list::map(
+            &mut self.webhooks,
+            other.webhooks,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
     }
 }
 

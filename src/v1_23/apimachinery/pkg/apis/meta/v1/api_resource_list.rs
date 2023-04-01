@@ -22,7 +22,7 @@ impl crate::Resource for APIResourceList {
 impl crate::DeepMerge for APIResourceList {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.group_version, other.group_version);
-        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
+        crate::merge_strategies::list::atomic(&mut self.resources, other.resources);
     }
 }
 

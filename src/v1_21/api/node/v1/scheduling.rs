@@ -12,8 +12,10 @@ pub struct Scheduling {
 
 impl crate::DeepMerge for Scheduling {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.node_selector, other.node_selector);
-        crate::DeepMerge::merge_from(&mut self.tolerations, other.tolerations);
+        crate::merge_strategies::map::granular(&mut self.node_selector, other.node_selector, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
+        crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
     }
 }
 

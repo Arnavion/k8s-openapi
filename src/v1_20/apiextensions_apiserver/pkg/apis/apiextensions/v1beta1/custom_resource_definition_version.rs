@@ -30,7 +30,7 @@ pub struct CustomResourceDefinitionVersion {
 
 impl crate::DeepMerge for CustomResourceDefinitionVersion {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.additional_printer_columns, other.additional_printer_columns);
+        crate::merge_strategies::list::atomic(&mut self.additional_printer_columns, other.additional_printer_columns);
         crate::DeepMerge::merge_from(&mut self.deprecated, other.deprecated);
         crate::DeepMerge::merge_from(&mut self.deprecation_warning, other.deprecation_warning);
         crate::DeepMerge::merge_from(&mut self.name, other.name);

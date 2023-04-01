@@ -19,7 +19,7 @@ impl crate::DeepMerge for ScopedResourceSelectorRequirement {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.operator, other.operator);
         crate::DeepMerge::merge_from(&mut self.scope_name, other.scope_name);
-        crate::DeepMerge::merge_from(&mut self.values, other.values);
+        crate::merge_strategies::list::atomic(&mut self.values, other.values);
     }
 }
 

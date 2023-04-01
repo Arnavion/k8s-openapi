@@ -378,7 +378,7 @@ impl crate::DeepMerge for ClusterRole {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.aggregation_rule, other.aggregation_rule);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+        crate::merge_strategies::list::atomic(&mut self.rules, other.rules);
     }
 }
 

@@ -9,7 +9,7 @@ pub struct NodeSelector {
 
 impl crate::DeepMerge for NodeSelector {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.node_selector_terms, other.node_selector_terms);
+        crate::merge_strategies::list::atomic(&mut self.node_selector_terms, other.node_selector_terms);
     }
 }
 

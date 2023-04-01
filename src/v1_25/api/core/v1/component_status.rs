@@ -172,7 +172,14 @@ impl crate::Metadata for ComponentStatus {
 
 impl crate::DeepMerge for ComponentStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
     }
 }

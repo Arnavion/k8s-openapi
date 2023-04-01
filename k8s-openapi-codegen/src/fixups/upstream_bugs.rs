@@ -68,6 +68,7 @@ pub(crate) fn pod_exec_command_parameter_type(spec: &mut crate::swagger20::Spec)
 								kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::String { format: None }),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								merge_type: crate::swagger20::MergeType::Default,
 								impl_deep_merge: true,
 							}),
 						}),

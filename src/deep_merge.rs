@@ -1,6 +1,6 @@
 /// A trait applies to types that support deep merging.
 ///
-/// `a.merge_from(b)` behaves in the following ways:
+/// `current.merge_from(new)` behaves in the following ways:
 ///
 /// ## `struct`s
 ///
@@ -28,25 +28,21 @@
 ///
 /// ## `Option`
 ///
-/// - If `b` is a `None`, `a` is unchanged.
+/// - If `new` is a `None`, `current` is unchanged.
 ///
-/// - If `b` is a `Some(b_inner)`:
+/// - If `new` is a `Some(new_inner)`:
 ///
-///   - If `a` is a `Some(a_inner)`, `a_inner` is merged with `b_inner`.
+///   - If `current` is a `None`, `current` becomes `Some(new_inner)`.
 ///
-///   - If `a` is a `None`, `a` becomes `Some(b_inner)`.
+///   - If `current` is a `Some(current_inner)`, `current_inner` is merged with `new_inner`.
 ///
 /// ## `Vec`
 ///
-/// The elements of `b` are appended to `a`.
+/// Use an [explicit merge strategy.](`strategies::list`)
 ///
 /// ## `BTreeMap`
 ///
-/// For each key `k` in `b`:
-///
-/// - If `a` contains the key `k` too, the value in `a` is merged with the value in `b`.
-///
-/// - If `a` does not contain the key `k`, the value in `b` is inserted into `a`.
+/// Use an [explicit merge strategy.](`strategies::map`)
 ///
 /// ## `serde_json::Value`
 ///
@@ -103,31 +99,195 @@ impl<T> DeepMerge for Box<T> where T: DeepMerge {
     }
 }
 
-impl<K, V> DeepMerge for std::collections::BTreeMap<K, V> where K: Ord, V: DeepMerge {
-    fn merge_from(&mut self, other: Self) {
-        for (k, v) in other {
-            match self.entry(k) {
-                std::collections::btree_map::Entry::Vacant(e) => { e.insert(v); },
-                std::collections::btree_map::Entry::Occupied(e) => e.into_mut().merge_from(v),
-            }
-        }
-    }
-}
-
 impl<T> DeepMerge for Option<T> where T: DeepMerge {
     fn merge_from(&mut self, other: Self) {
         if let Some(other) = other {
             if let Some(s) = self {
                 s.merge_from(other);
-            } else {
+            }
+            else {
                 *self = Some(other);
             }
         }
     }
 }
 
-impl<T> DeepMerge for Vec<T> {
-    fn merge_from(&mut self, other: Self) {
-        self.extend(other);
+/// Strategies for merging collections.
+pub mod strategies {
+    /// Strategies for merging [`Vec`]s.
+    ///
+    /// These correspond to [`JSONSchemaProps.x-kubernetes-list-type`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#jsonschemaprops-v1-apiextensions-k8s-io).
+    pub mod list {
+        mod private {
+            pub trait AsOptVec {
+                type Item;
+
+                fn set_if_some(&mut self, new: Self);
+                fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>>;
+                fn into_opt(self) -> Option<Vec<Self::Item>>;
+            }
+
+            impl<T> AsOptVec for Vec<T> {
+                type Item = T;
+
+                fn set_if_some(&mut self, new: Self) {
+                    *self = new;
+                }
+
+                fn as_mut_opt(&mut self) -> Option<&mut Self> {
+                    Some(self)
+                }
+
+                fn into_opt(self) -> Option<Self> {
+                    Some(self)
+                }
+            }
+
+            impl<T> AsOptVec for Option<Vec<T>> {
+                type Item = T;
+
+                fn set_if_some(&mut self, new: Self) {
+                    if new.is_some() {
+                        *self = new;
+                    }
+                }
+
+                fn as_mut_opt(&mut self) -> Option<&mut Vec<T>> {
+                    self.as_mut()
+                }
+
+                fn into_opt(self) -> Self {
+                    self
+                }
+            }
+        }
+        use private::AsOptVec;
+
+        /// The whole list is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
+        pub fn atomic<V>(current: &mut V, new: V) where V: AsOptVec {
+            current.set_if_some(new);
+        }
+
+        /// The list is treated as a map.
+        ///
+        /// Any items with matching keys will be deep-merged. Any items in `new` that are not in `current` will be appended to `current`.
+        pub fn map<V>(
+            current: &mut V,
+            new: V,
+            key_comparators: &[fn(&V::Item, &V::Item) -> bool],
+            merge_item: fn(&mut V::Item, V::Item),
+        )
+        where
+            V: AsOptVec,
+        {
+            if let Some(current) = current.as_mut_opt() {
+                for new_item in new.into_opt().into_iter().flatten() {
+                    if let Some(current_item) = current.iter_mut().find(|current_item| key_comparators.iter().all(|&f| f(&**current_item, &new_item))) {
+                        merge_item(current_item, new_item);
+                    }
+                    else {
+                        current.push(new_item);
+                    }
+                }
+            }
+            else {
+                current.set_if_some(new);
+            }
+        }
+
+        /// The list is treated as a set.
+        ///
+        /// Items from `new` will be appended to `current`, _unless_ `current` already contains an equal item.
+        pub fn set<V>(current: &mut V, new: V) where V: AsOptVec, V::Item: PartialEq {
+            if let Some(current) = current.as_mut_opt() {
+                for item in new.into_opt().into_iter().flatten() {
+                    if !current.contains(&item) {
+                        current.push(item);
+                    }
+                }
+            }
+            else {
+                current.set_if_some(new);
+            }
+        }
+    }
+
+    /// Strategies for merging [`BTreeMap`s.](std::collections::BTreeMap)
+    ///
+    /// These correspond to [`JSONSchemaProps.x-kubernetes-map-type`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#jsonschemaprops-v1-apiextensions-k8s-io).
+    pub mod map {
+        mod private {
+            use std::collections::BTreeMap;
+
+            pub trait AsOptMap {
+                type Key;
+                type Value;
+
+                fn set_if_some(&mut self, new: Self);
+                fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<Self::Key, Self::Value>>;
+                fn into_opt(self) -> Option<BTreeMap<Self::Key, Self::Value>>;
+            }
+
+            impl<K, V> AsOptMap for BTreeMap<K, V> {
+                type Key = K;
+                type Value = V;
+
+                fn set_if_some(&mut self, new: Self) {
+                    *self = new;
+                }
+
+                fn as_mut_opt(&mut self) -> Option<&mut Self> {
+                    Some(self)
+                }
+
+                fn into_opt(self) -> Option<Self> {
+                    Some(self)
+                }
+            }
+
+            impl<K, V> AsOptMap for Option<BTreeMap<K, V>> {
+                type Key = K;
+                type Value = V;
+
+                fn set_if_some(&mut self, new: Self) {
+                    if new.is_some() {
+                        *self = new;
+                    }
+                }
+
+                fn as_mut_opt(&mut self) -> Option<&mut BTreeMap<K, V>> {
+                    self.as_mut()
+                }
+
+                fn into_opt(self) -> Self {
+                    self
+                }
+            }
+        }
+        use private::AsOptMap;
+
+        /// The whole map is treated as one scalar value, and will be replaced with the new (non-[`None`]) value.
+        pub fn atomic<M>(current: &mut M, new: M) where M: AsOptMap {
+            current.set_if_some(new);
+        }
+
+        /// Each value will be merged separately.
+        pub fn granular<M>(current: &mut M, new: M, merge_value: fn(&mut M::Value, M::Value))
+        where
+            M: AsOptMap,
+            M::Key: Ord,
+        {
+            if let Some(current) = current.as_mut_opt() {
+                for (k, new_v) in new.into_opt().into_iter().flatten() {
+                    match current.entry(k) {
+                        std::collections::btree_map::Entry::Vacant(entry) => { entry.insert(new_v); }
+                        std::collections::btree_map::Entry::Occupied(entry) => merge_value(entry.into_mut(), new_v),
+                    }
+                }
+            }
+            else {
+                current.set_if_some(new);
+            }
+        }
     }
 }

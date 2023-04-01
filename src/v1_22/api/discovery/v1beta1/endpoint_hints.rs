@@ -9,7 +9,7 @@ pub struct EndpointHints {
 
 impl crate::DeepMerge for EndpointHints {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.for_zones, other.for_zones);
+        crate::merge_strategies::list::atomic(&mut self.for_zones, other.for_zones);
     }
 }
 

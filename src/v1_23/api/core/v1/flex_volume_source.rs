@@ -23,7 +23,9 @@ impl crate::DeepMerge for FlexVolumeSource {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.driver, other.driver);
         crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
-        crate::DeepMerge::merge_from(&mut self.options, other.options);
+        crate::merge_strategies::map::granular(&mut self.options, other.options, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
         crate::DeepMerge::merge_from(&mut self.secret_ref, other.secret_ref);
     }

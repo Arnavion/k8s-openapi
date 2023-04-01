@@ -25,7 +25,9 @@ impl crate::DeepMerge for CSIVolumeSource {
         crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
         crate::DeepMerge::merge_from(&mut self.node_publish_secret_ref, other.node_publish_secret_ref);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
-        crate::DeepMerge::merge_from(&mut self.volume_attributes, other.volume_attributes);
+        crate::merge_strategies::map::granular(&mut self.volume_attributes, other.volume_attributes, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
     }
 }
 

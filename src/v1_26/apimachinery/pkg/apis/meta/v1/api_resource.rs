@@ -36,15 +36,15 @@ pub struct APIResource {
 
 impl crate::DeepMerge for APIResource {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.categories, other.categories);
+        crate::merge_strategies::list::atomic(&mut self.categories, other.categories);
         crate::DeepMerge::merge_from(&mut self.group, other.group);
         crate::DeepMerge::merge_from(&mut self.kind, other.kind);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
         crate::DeepMerge::merge_from(&mut self.namespaced, other.namespaced);
-        crate::DeepMerge::merge_from(&mut self.short_names, other.short_names);
+        crate::merge_strategies::list::atomic(&mut self.short_names, other.short_names);
         crate::DeepMerge::merge_from(&mut self.singular_name, other.singular_name);
         crate::DeepMerge::merge_from(&mut self.storage_version_hash, other.storage_version_hash);
-        crate::DeepMerge::merge_from(&mut self.verbs, other.verbs);
+        crate::merge_strategies::list::atomic(&mut self.verbs, other.verbs);
         crate::DeepMerge::merge_from(&mut self.version, other.version);
     }
 }

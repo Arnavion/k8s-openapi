@@ -43,6 +43,7 @@ pub(crate) struct Property<'a> {
 	pub(crate) field_type_name: String,
 	pub(crate) required: PropertyRequired,
 	pub(crate) is_flattened: bool,
+	pub(crate) merge_type: &'a crate::swagger20::MergeType,
 }
 
 #[derive(Clone, Copy)]

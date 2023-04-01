@@ -20,7 +20,9 @@ impl crate::DeepMerge for ReplicationControllerSpec {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.min_ready_seconds, other.min_ready_seconds);
         crate::DeepMerge::merge_from(&mut self.replicas, other.replicas);
-        crate::DeepMerge::merge_from(&mut self.selector, other.selector);
+        crate::merge_strategies::map::granular(&mut self.selector, other.selector, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.template, other.template);
     }
 }

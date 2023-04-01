@@ -37,7 +37,14 @@ pub struct DaemonSetStatus {
 impl crate::DeepMerge for DaemonSetStatus {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.collision_count, other.collision_count);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.current_number_scheduled, other.current_number_scheduled);
         crate::DeepMerge::merge_from(&mut self.desired_number_scheduled, other.desired_number_scheduled);
         crate::DeepMerge::merge_from(&mut self.number_available, other.number_available);

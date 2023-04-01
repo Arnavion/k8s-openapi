@@ -138,32 +138,83 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.active_deadline_seconds, other.active_deadline_seconds);
         crate::DeepMerge::merge_from(&mut self.affinity, other.affinity);
         crate::DeepMerge::merge_from(&mut self.automount_service_account_token, other.automount_service_account_token);
-        crate::DeepMerge::merge_from(&mut self.containers, other.containers);
+        crate::merge_strategies::list::map(
+            &mut self.containers,
+            other.containers,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.dns_config, other.dns_config);
         crate::DeepMerge::merge_from(&mut self.dns_policy, other.dns_policy);
         crate::DeepMerge::merge_from(&mut self.enable_service_links, other.enable_service_links);
-        crate::DeepMerge::merge_from(&mut self.ephemeral_containers, other.ephemeral_containers);
-        crate::DeepMerge::merge_from(&mut self.host_aliases, other.host_aliases);
+        crate::merge_strategies::list::map(
+            &mut self.ephemeral_containers,
+            other.ephemeral_containers,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::map(
+            &mut self.host_aliases,
+            other.host_aliases,
+            &[|lhs, rhs| lhs.ip == rhs.ip],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.host_ipc, other.host_ipc);
         crate::DeepMerge::merge_from(&mut self.host_network, other.host_network);
         crate::DeepMerge::merge_from(&mut self.host_pid, other.host_pid);
         crate::DeepMerge::merge_from(&mut self.host_users, other.host_users);
         crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
-        crate::DeepMerge::merge_from(&mut self.image_pull_secrets, other.image_pull_secrets);
-        crate::DeepMerge::merge_from(&mut self.init_containers, other.init_containers);
+        crate::merge_strategies::list::map(
+            &mut self.image_pull_secrets,
+            other.image_pull_secrets,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::map(
+            &mut self.init_containers,
+            other.init_containers,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.node_name, other.node_name);
-        crate::DeepMerge::merge_from(&mut self.node_selector, other.node_selector);
+        crate::merge_strategies::map::atomic(&mut self.node_selector, other.node_selector);
         crate::DeepMerge::merge_from(&mut self.os, other.os);
-        crate::DeepMerge::merge_from(&mut self.overhead, other.overhead);
+        crate::merge_strategies::map::granular(&mut self.overhead, other.overhead, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.preemption_policy, other.preemption_policy);
         crate::DeepMerge::merge_from(&mut self.priority, other.priority);
         crate::DeepMerge::merge_from(&mut self.priority_class_name, other.priority_class_name);
-        crate::DeepMerge::merge_from(&mut self.readiness_gates, other.readiness_gates);
-        crate::DeepMerge::merge_from(&mut self.resource_claims, other.resource_claims);
+        crate::merge_strategies::list::atomic(&mut self.readiness_gates, other.readiness_gates);
+        crate::merge_strategies::list::map(
+            &mut self.resource_claims,
+            other.resource_claims,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.restart_policy, other.restart_policy);
         crate::DeepMerge::merge_from(&mut self.runtime_class_name, other.runtime_class_name);
         crate::DeepMerge::merge_from(&mut self.scheduler_name, other.scheduler_name);
-        crate::DeepMerge::merge_from(&mut self.scheduling_gates, other.scheduling_gates);
+        crate::merge_strategies::list::map(
+            &mut self.scheduling_gates,
+            other.scheduling_gates,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.security_context, other.security_context);
         crate::DeepMerge::merge_from(&mut self.service_account, other.service_account);
         crate::DeepMerge::merge_from(&mut self.service_account_name, other.service_account_name);
@@ -171,9 +222,23 @@ impl crate::DeepMerge for PodSpec {
         crate::DeepMerge::merge_from(&mut self.share_process_namespace, other.share_process_namespace);
         crate::DeepMerge::merge_from(&mut self.subdomain, other.subdomain);
         crate::DeepMerge::merge_from(&mut self.termination_grace_period_seconds, other.termination_grace_period_seconds);
-        crate::DeepMerge::merge_from(&mut self.tolerations, other.tolerations);
-        crate::DeepMerge::merge_from(&mut self.topology_spread_constraints, other.topology_spread_constraints);
-        crate::DeepMerge::merge_from(&mut self.volumes, other.volumes);
+        crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
+        crate::merge_strategies::list::map(
+            &mut self.topology_spread_constraints,
+            other.topology_spread_constraints,
+            &[|lhs, rhs| lhs.topology_key == rhs.topology_key],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::map(
+            &mut self.volumes,
+            other.volumes,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
     }
 }
 

@@ -14,7 +14,7 @@ pub struct PodSchedulingSpec {
 
 impl crate::DeepMerge for PodSchedulingSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.potential_nodes, other.potential_nodes);
+        crate::merge_strategies::list::set(&mut self.potential_nodes, other.potential_nodes);
         crate::DeepMerge::merge_from(&mut self.selected_node, other.selected_node);
     }
 }

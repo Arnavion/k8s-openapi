@@ -81,16 +81,30 @@ pub struct EphemeralContainer {
 
 impl crate::DeepMerge for EphemeralContainer {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.args, other.args);
-        crate::DeepMerge::merge_from(&mut self.command, other.command);
-        crate::DeepMerge::merge_from(&mut self.env, other.env);
-        crate::DeepMerge::merge_from(&mut self.env_from, other.env_from);
+        crate::merge_strategies::list::atomic(&mut self.args, other.args);
+        crate::merge_strategies::list::atomic(&mut self.command, other.command);
+        crate::merge_strategies::list::map(
+            &mut self.env,
+            other.env,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::atomic(&mut self.env_from, other.env_from);
         crate::DeepMerge::merge_from(&mut self.image, other.image);
         crate::DeepMerge::merge_from(&mut self.image_pull_policy, other.image_pull_policy);
         crate::DeepMerge::merge_from(&mut self.lifecycle, other.lifecycle);
         crate::DeepMerge::merge_from(&mut self.liveness_probe, other.liveness_probe);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::map(
+            &mut self.ports,
+            other.ports,
+            &[|lhs, rhs| lhs.container_port == rhs.container_port],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.readiness_probe, other.readiness_probe);
         crate::DeepMerge::merge_from(&mut self.resources, other.resources);
         crate::DeepMerge::merge_from(&mut self.security_context, other.security_context);
@@ -101,8 +115,22 @@ impl crate::DeepMerge for EphemeralContainer {
         crate::DeepMerge::merge_from(&mut self.termination_message_path, other.termination_message_path);
         crate::DeepMerge::merge_from(&mut self.termination_message_policy, other.termination_message_policy);
         crate::DeepMerge::merge_from(&mut self.tty, other.tty);
-        crate::DeepMerge::merge_from(&mut self.volume_devices, other.volume_devices);
-        crate::DeepMerge::merge_from(&mut self.volume_mounts, other.volume_mounts);
+        crate::merge_strategies::list::map(
+            &mut self.volume_devices,
+            other.volume_devices,
+            &[|lhs, rhs| lhs.device_path == rhs.device_path],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
+        crate::merge_strategies::list::map(
+            &mut self.volume_mounts,
+            other.volume_mounts,
+            &[|lhs, rhs| lhs.mount_path == rhs.mount_path],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.working_dir, other.working_dir);
     }
 }

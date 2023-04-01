@@ -21,11 +21,11 @@ pub struct ResourcePolicyRule {
 
 impl crate::DeepMerge for ResourcePolicyRule {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.api_groups, other.api_groups);
+        crate::merge_strategies::list::set(&mut self.api_groups, other.api_groups);
         crate::DeepMerge::merge_from(&mut self.cluster_scope, other.cluster_scope);
-        crate::DeepMerge::merge_from(&mut self.namespaces, other.namespaces);
-        crate::DeepMerge::merge_from(&mut self.resources, other.resources);
-        crate::DeepMerge::merge_from(&mut self.verbs, other.verbs);
+        crate::merge_strategies::list::set(&mut self.namespaces, other.namespaces);
+        crate::merge_strategies::list::set(&mut self.resources, other.resources);
+        crate::merge_strategies::list::set(&mut self.verbs, other.verbs);
     }
 }
 

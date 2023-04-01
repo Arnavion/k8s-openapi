@@ -17,7 +17,7 @@ impl crate::DeepMerge for LoadBalancerIngress {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.hostname, other.hostname);
         crate::DeepMerge::merge_from(&mut self.ip, other.ip);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::atomic(&mut self.ports, other.ports);
     }
 }
 

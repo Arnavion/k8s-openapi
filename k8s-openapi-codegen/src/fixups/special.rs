@@ -99,6 +99,7 @@ pub(crate) fn create_delete_optional(spec: &mut crate::swagger20::Spec) -> Resul
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::DeleteOptional(delete_optional_properties)),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
+		merge_type: crate::swagger20::MergeType::Default,
 		impl_deep_merge: true,
 	});
 
@@ -135,6 +136,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 				}),
 				kubernetes_group_kind_versions: vec![],
 				list_kind: None,
+				merge_type: crate::swagger20::MergeType::Default,
 				impl_deep_merge: true,
 			},
 		});
@@ -195,6 +197,7 @@ pub(crate) fn create_optionals(spec: &mut crate::swagger20::Spec) -> Result<(), 
 			kind: crate::swagger20::SchemaKind::Ty(ty(optional_definition)),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
+			merge_type: crate::swagger20::MergeType::Default,
 			impl_deep_merge: true,
 		});
 	}
@@ -236,6 +239,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 					}),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					merge_type: crate::swagger20::MergeType::Default,
 					impl_deep_merge: true,
 				},
 			}));
@@ -251,6 +255,7 @@ pub(crate) fn remove_delete_collection_operations_query_parameters(spec: &mut cr
 					}),
 					kubernetes_group_kind_versions: vec![],
 					list_kind: None,
+					merge_type: crate::swagger20::MergeType::Default,
 					impl_deep_merge: true,
 				},
 			}));
@@ -291,6 +296,7 @@ pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagge
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								merge_type: crate::swagger20::MergeType::Default,
 								impl_deep_merge: true,
 							},
 						}));
@@ -416,6 +422,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListOptional(list_optional_definition)),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
+		merge_type: crate::swagger20::MergeType::Default,
 		impl_deep_merge: true,
 	});
 
@@ -424,6 +431,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchOptional(watch_optional_definition)),
 		kubernetes_group_kind_versions: vec![],
 		list_kind: None,
+		merge_type: crate::swagger20::MergeType::Default,
 		impl_deep_merge: true,
 	});
 
@@ -439,6 +447,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
+			merge_type: crate::swagger20::MergeType::Default,
 			impl_deep_merge: true,
 		},
 	});
@@ -455,6 +464,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
+			merge_type: crate::swagger20::MergeType::Default,
 			impl_deep_merge: true,
 		},
 	});
@@ -524,6 +534,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			}),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
+			merge_type: crate::swagger20::MergeType::Default,
 			impl_deep_merge: true,
 		});
 
@@ -660,11 +671,13 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 								}),
 								kubernetes_group_kind_versions: vec![],
 								list_kind: None,
+								merge_type: crate::swagger20::MergeType::Default,
 								impl_deep_merge: true,
 							}),
 						}),
 						kubernetes_group_kind_versions: vec![],
 						list_kind: None,
+						merge_type: crate::swagger20::MergeType::Default,
 						impl_deep_merge: true,
 					},
 					true,
@@ -687,6 +700,7 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
 			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListDef { metadata: Box::new(metadata_schema_kind) }),
 			kubernetes_group_kind_versions: vec![],
 			list_kind: None,
+			merge_type: crate::swagger20::MergeType::Default,
 			impl_deep_merge: true,
 		});
 
@@ -1097,6 +1111,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 				kind: crate::swagger20::SchemaKind::Ty(ty),
 				kubernetes_group_kind_versions: vec![],
 				list_kind: None,
+				merge_type: crate::swagger20::MergeType::Default,
 				impl_deep_merge: true,
 			});
 	}

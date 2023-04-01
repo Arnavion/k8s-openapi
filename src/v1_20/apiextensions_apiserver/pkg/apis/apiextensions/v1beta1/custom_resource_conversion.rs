@@ -16,7 +16,7 @@ pub struct CustomResourceConversion {
 
 impl crate::DeepMerge for CustomResourceConversion {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conversion_review_versions, other.conversion_review_versions);
+        crate::merge_strategies::list::atomic(&mut self.conversion_review_versions, other.conversion_review_versions);
         crate::DeepMerge::merge_from(&mut self.strategy, other.strategy);
         crate::DeepMerge::merge_from(&mut self.webhook_client_config, other.webhook_client_config);
     }

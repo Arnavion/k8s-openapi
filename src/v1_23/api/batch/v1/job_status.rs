@@ -43,7 +43,14 @@ impl crate::DeepMerge for JobStatus {
         crate::DeepMerge::merge_from(&mut self.active, other.active);
         crate::DeepMerge::merge_from(&mut self.completed_indexes, other.completed_indexes);
         crate::DeepMerge::merge_from(&mut self.completion_time, other.completion_time);
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.failed, other.failed);
         crate::DeepMerge::merge_from(&mut self.ready, other.ready);
         crate::DeepMerge::merge_from(&mut self.start_time, other.start_time);

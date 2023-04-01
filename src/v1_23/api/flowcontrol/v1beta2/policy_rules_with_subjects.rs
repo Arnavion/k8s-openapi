@@ -15,9 +15,9 @@ pub struct PolicyRulesWithSubjects {
 
 impl crate::DeepMerge for PolicyRulesWithSubjects {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.non_resource_rules, other.non_resource_rules);
-        crate::DeepMerge::merge_from(&mut self.resource_rules, other.resource_rules);
-        crate::DeepMerge::merge_from(&mut self.subjects, other.subjects);
+        crate::merge_strategies::list::atomic(&mut self.non_resource_rules, other.non_resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.resource_rules, other.resource_rules);
+        crate::merge_strategies::list::atomic(&mut self.subjects, other.subjects);
     }
 }
 

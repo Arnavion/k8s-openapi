@@ -24,7 +24,7 @@ pub struct CephFSVolumeSource {
 
 impl crate::DeepMerge for CephFSVolumeSource {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.monitors, other.monitors);
+        crate::merge_strategies::list::atomic(&mut self.monitors, other.monitors);
         crate::DeepMerge::merge_from(&mut self.path, other.path);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
         crate::DeepMerge::merge_from(&mut self.secret_file, other.secret_file);

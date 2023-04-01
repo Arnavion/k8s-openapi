@@ -18,7 +18,7 @@ impl crate::Resource for APIGroupList {
 
 impl crate::DeepMerge for APIGroupList {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.groups, other.groups);
+        crate::merge_strategies::list::atomic(&mut self.groups, other.groups);
     }
 }
 

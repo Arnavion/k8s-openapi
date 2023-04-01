@@ -22,9 +22,9 @@ pub struct EndpointSubset {
 
 impl crate::DeepMerge for EndpointSubset {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.addresses, other.addresses);
-        crate::DeepMerge::merge_from(&mut self.not_ready_addresses, other.not_ready_addresses);
-        crate::DeepMerge::merge_from(&mut self.ports, other.ports);
+        crate::merge_strategies::list::atomic(&mut self.addresses, other.addresses);
+        crate::merge_strategies::list::atomic(&mut self.not_ready_addresses, other.not_ready_addresses);
+        crate::merge_strategies::list::atomic(&mut self.ports, other.ports);
     }
 }
 

@@ -30,9 +30,9 @@ impl crate::DeepMerge for NodeSpec {
         crate::DeepMerge::merge_from(&mut self.config_source, other.config_source);
         crate::DeepMerge::merge_from(&mut self.external_id, other.external_id);
         crate::DeepMerge::merge_from(&mut self.pod_cidr, other.pod_cidr);
-        crate::DeepMerge::merge_from(&mut self.pod_cidrs, other.pod_cidrs);
+        crate::merge_strategies::list::set(&mut self.pod_cidrs, other.pod_cidrs);
         crate::DeepMerge::merge_from(&mut self.provider_id, other.provider_id);
-        crate::DeepMerge::merge_from(&mut self.taints, other.taints);
+        crate::merge_strategies::list::atomic(&mut self.taints, other.taints);
         crate::DeepMerge::merge_from(&mut self.unschedulable, other.unschedulable);
     }
 }

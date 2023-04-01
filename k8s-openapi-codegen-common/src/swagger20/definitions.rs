@@ -30,6 +30,49 @@ pub enum IntegerFormat {
 	Int64,
 }
 
+/// The value of an `x-kubernetes-list-type` annotation on a property.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+pub enum KubernetesListType {
+	#[default]
+	#[cfg_attr(feature = "serde", serde(rename = "atomic"))]
+	Atomic,
+
+	#[cfg_attr(feature = "serde", serde(rename = "map"))]
+	Map,
+
+	#[cfg_attr(feature = "serde", serde(rename = "set"))]
+	Set,
+}
+
+/// The value of an `x-kubernetes-map-type` annotation on a property.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Default, PartialOrd, Ord)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+pub enum KubernetesMapType {
+	#[cfg_attr(feature = "serde", serde(rename = "atomic"))]
+	Atomic,
+
+	#[default]
+	#[cfg_attr(feature = "serde", serde(rename = "granular"))]
+	Granular,
+}
+
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+pub enum MergeType {
+	Default,
+
+	List {
+		strategy: KubernetesListType,
+		keys: Vec<String>,
+		item_merge_type: Box<MergeType>,
+	},
+
+	Map {
+		strategy: KubernetesMapType,
+		value_merge_type: Box<MergeType>,
+	},
+}
+
 /// A number format. This corresponds to the `"format"` property of a `"number"` schema type.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub enum NumberFormat {
@@ -109,6 +152,8 @@ pub struct Schema {
 	pub kind: SchemaKind,
 	pub kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
 
+	pub merge_type: MergeType,
+
 	/// Used to store the definition path of the corresponding list type, if any.
 	pub list_kind: Option<String>,
 
@@ -133,6 +178,23 @@ impl<'de> serde::Deserialize<'de> for Schema {
 
 			#[serde(default, rename = "x-kubernetes-group-version-kind")]
 			kubernetes_group_kind_versions: Vec<super::KubernetesGroupKindVersion>,
+
+			#[serde(default, rename = "x-kubernetes-list-map-keys")]
+			kubernetes_list_map_keys: Vec<String>,
+
+			#[serde(default, rename = "x-kubernetes-list-type")]
+			kubernetes_list_type: KubernetesListType,
+
+			#[serde(default, rename = "x-kubernetes-map-type")]
+			kubernetes_map_type: KubernetesMapType,
+
+			#[serde(default, rename = "x-kubernetes-patch-merge-key")]
+			kubernetes_patch_merge_key: Option<String>,
+
+			/// Comma-separated list of strategy tags.
+			/// Ref: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md
+			#[serde(default, rename = "x-kubernetes-patch-strategy")]
+			kubernetes_patch_strategy: String,
 
 			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
 
@@ -175,11 +237,40 @@ impl<'de> serde::Deserialize<'de> for Schema {
 				SchemaKind::Ty(Type::Any)
 			};
 
+		if let Some(key) = value.kubernetes_patch_merge_key {
+			value.kubernetes_list_map_keys = vec![key];
+		}
+		if value.kubernetes_patch_strategy.split(',').any(|x| x == "merge") {
+			value.kubernetes_list_type =
+				if value.kubernetes_list_map_keys.is_empty() {
+					KubernetesListType::Set
+				}
+				else {
+					KubernetesListType::Map
+				};
+		}
+
+		let merge_type = match &kind {
+			SchemaKind::Ty(Type::Array { items }) => MergeType::List {
+				strategy: value.kubernetes_list_type,
+				keys: value.kubernetes_list_map_keys,
+				item_merge_type: Box::new(items.merge_type.clone()),
+			},
+
+			SchemaKind::Ty(Type::Object { additional_properties }) => MergeType::Map {
+				strategy: value.kubernetes_map_type,
+				value_merge_type: Box::new(additional_properties.merge_type.clone()),
+			},
+
+			_ => MergeType::Default,
+		};
+
 		Ok(Schema {
 			description: value.description,
 			kind,
 			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
 			list_kind: None,
+			merge_type,
 			impl_deep_merge: true,
 		})
 	}

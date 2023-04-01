@@ -24,8 +24,8 @@ impl crate::DeepMerge for FCVolumeSource {
         crate::DeepMerge::merge_from(&mut self.fs_type, other.fs_type);
         crate::DeepMerge::merge_from(&mut self.lun, other.lun);
         crate::DeepMerge::merge_from(&mut self.read_only, other.read_only);
-        crate::DeepMerge::merge_from(&mut self.target_wwns, other.target_wwns);
-        crate::DeepMerge::merge_from(&mut self.wwids, other.wwids);
+        crate::merge_strategies::list::atomic(&mut self.target_wwns, other.target_wwns);
+        crate::merge_strategies::list::atomic(&mut self.wwids, other.wwids);
     }
 }
 

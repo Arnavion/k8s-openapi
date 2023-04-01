@@ -12,7 +12,7 @@ pub struct IngressTLS {
 
 impl crate::DeepMerge for IngressTLS {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.hosts, other.hosts);
+        crate::merge_strategies::list::atomic(&mut self.hosts, other.hosts);
         crate::DeepMerge::merge_from(&mut self.secret_name, other.secret_name);
     }
 }

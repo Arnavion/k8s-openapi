@@ -24,7 +24,7 @@ impl crate::DeepMerge for PodFailurePolicyRule {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.action, other.action);
         crate::DeepMerge::merge_from(&mut self.on_exit_codes, other.on_exit_codes);
-        crate::DeepMerge::merge_from(&mut self.on_pod_conditions, other.on_pod_conditions);
+        crate::merge_strategies::list::atomic(&mut self.on_pod_conditions, other.on_pod_conditions);
     }
 }
 

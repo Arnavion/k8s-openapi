@@ -496,9 +496,16 @@ impl crate::Metadata for ServiceAccount {
 impl crate::DeepMerge for ServiceAccount {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.automount_service_account_token, other.automount_service_account_token);
-        crate::DeepMerge::merge_from(&mut self.image_pull_secrets, other.image_pull_secrets);
+        crate::merge_strategies::list::atomic(&mut self.image_pull_secrets, other.image_pull_secrets);
         crate::DeepMerge::merge_from(&mut self.metadata, other.metadata);
-        crate::DeepMerge::merge_from(&mut self.secrets, other.secrets);
+        crate::merge_strategies::list::map(
+            &mut self.secrets,
+            other.secrets,
+            &[|lhs, rhs| lhs.name == rhs.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
     }
 }
 

@@ -35,10 +35,19 @@ pub struct PodDisruptionBudgetStatus {
 
 impl crate::DeepMerge for PodDisruptionBudgetStatus {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.conditions, other.conditions);
+        crate::merge_strategies::list::map(
+            &mut self.conditions,
+            other.conditions,
+            &[|lhs, rhs| lhs.type_ == rhs.type_],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
         crate::DeepMerge::merge_from(&mut self.current_healthy, other.current_healthy);
         crate::DeepMerge::merge_from(&mut self.desired_healthy, other.desired_healthy);
-        crate::DeepMerge::merge_from(&mut self.disrupted_pods, other.disrupted_pods);
+        crate::merge_strategies::map::granular(&mut self.disrupted_pods, other.disrupted_pods, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
         crate::DeepMerge::merge_from(&mut self.disruptions_allowed, other.disruptions_allowed);
         crate::DeepMerge::merge_from(&mut self.expected_pods, other.expected_pods);
         crate::DeepMerge::merge_from(&mut self.observed_generation, other.observed_generation);

@@ -27,7 +27,14 @@ impl crate::DeepMerge for ResourceClaimStatus {
         crate::DeepMerge::merge_from(&mut self.allocation, other.allocation);
         crate::DeepMerge::merge_from(&mut self.deallocation_requested, other.deallocation_requested);
         crate::DeepMerge::merge_from(&mut self.driver_name, other.driver_name);
-        crate::DeepMerge::merge_from(&mut self.reserved_for, other.reserved_for);
+        crate::merge_strategies::list::map(
+            &mut self.reserved_for,
+            other.reserved_for,
+            &[|lhs, rhs| lhs.uid == rhs.uid],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
     }
 }
 

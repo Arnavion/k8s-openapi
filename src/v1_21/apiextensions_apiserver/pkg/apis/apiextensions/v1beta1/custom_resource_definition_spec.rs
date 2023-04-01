@@ -36,7 +36,7 @@ pub struct CustomResourceDefinitionSpec {
 
 impl crate::DeepMerge for CustomResourceDefinitionSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.additional_printer_columns, other.additional_printer_columns);
+        crate::merge_strategies::list::atomic(&mut self.additional_printer_columns, other.additional_printer_columns);
         crate::DeepMerge::merge_from(&mut self.conversion, other.conversion);
         crate::DeepMerge::merge_from(&mut self.group, other.group);
         crate::DeepMerge::merge_from(&mut self.names, other.names);
@@ -45,7 +45,7 @@ impl crate::DeepMerge for CustomResourceDefinitionSpec {
         crate::DeepMerge::merge_from(&mut self.subresources, other.subresources);
         crate::DeepMerge::merge_from(&mut self.validation, other.validation);
         crate::DeepMerge::merge_from(&mut self.version, other.version);
-        crate::DeepMerge::merge_from(&mut self.versions, other.versions);
+        crate::merge_strategies::list::atomic(&mut self.versions, other.versions);
     }
 }
 

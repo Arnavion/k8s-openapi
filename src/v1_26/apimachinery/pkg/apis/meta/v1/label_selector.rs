@@ -12,8 +12,10 @@ pub struct LabelSelector {
 
 impl crate::DeepMerge for LabelSelector {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.match_expressions, other.match_expressions);
-        crate::DeepMerge::merge_from(&mut self.match_labels, other.match_labels);
+        crate::merge_strategies::list::atomic(&mut self.match_expressions, other.match_expressions);
+        crate::merge_strategies::map::granular(&mut self.match_labels, other.match_labels, |current_item, other_item| {
+            crate::DeepMerge::merge_from(current_item, other_item);
+        });
     }
 }
 

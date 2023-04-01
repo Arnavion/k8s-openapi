@@ -18,8 +18,10 @@ pub struct UserInfo {
 
 impl crate::DeepMerge for UserInfo {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.extra, other.extra);
-        crate::DeepMerge::merge_from(&mut self.groups, other.groups);
+        crate::merge_strategies::map::granular(&mut self.extra, other.extra, |current_item, other_item| {
+            crate::merge_strategies::list::atomic(current_item, other_item);
+        });
+        crate::merge_strategies::list::atomic(&mut self.groups, other.groups);
         crate::DeepMerge::merge_from(&mut self.uid, other.uid);
         crate::DeepMerge::merge_from(&mut self.username, other.username);
     }

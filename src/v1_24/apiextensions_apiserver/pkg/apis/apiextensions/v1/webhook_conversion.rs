@@ -13,7 +13,7 @@ pub struct WebhookConversion {
 impl crate::DeepMerge for WebhookConversion {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.client_config, other.client_config);
-        crate::DeepMerge::merge_from(&mut self.conversion_review_versions, other.conversion_review_versions);
+        crate::merge_strategies::list::atomic(&mut self.conversion_review_versions, other.conversion_review_versions);
     }
 }
 

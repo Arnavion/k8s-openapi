@@ -9,7 +9,7 @@ pub struct AggregationRule {
 
 impl crate::DeepMerge for AggregationRule {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.cluster_role_selectors, other.cluster_role_selectors);
+        crate::merge_strategies::list::atomic(&mut self.cluster_role_selectors, other.cluster_role_selectors);
     }
 }
 

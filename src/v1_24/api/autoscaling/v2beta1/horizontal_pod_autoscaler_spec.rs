@@ -19,7 +19,7 @@ pub struct HorizontalPodAutoscalerSpec {
 impl crate::DeepMerge for HorizontalPodAutoscalerSpec {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.max_replicas, other.max_replicas);
-        crate::DeepMerge::merge_from(&mut self.metrics, other.metrics);
+        crate::merge_strategies::list::atomic(&mut self.metrics, other.metrics);
         crate::DeepMerge::merge_from(&mut self.min_replicas, other.min_replicas);
         crate::DeepMerge::merge_from(&mut self.scale_target_ref, other.scale_target_ref);
     }

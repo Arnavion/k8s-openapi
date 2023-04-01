@@ -12,7 +12,7 @@ pub struct TokenReviewSpec {
 
 impl crate::DeepMerge for TokenReviewSpec {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.audiences, other.audiences);
+        crate::merge_strategies::list::atomic(&mut self.audiences, other.audiences);
         crate::DeepMerge::merge_from(&mut self.token, other.token);
     }
 }

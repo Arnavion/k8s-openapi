@@ -89,7 +89,8 @@ fn gen_schema(
 							writeln!(props, "{indent}                    }}));")?;
 							writeln!(props, "{indent}                    {local}schemars::schema::Schema::Object(schema_obj)")?;
 							writeln!(props, "{indent}                }},")?;
-						} else {
+						}
+						else {
 							writeln!(props, "{indent}                __gen.subschema_for::<{type_name}>(),")?;
 						}
 
@@ -279,7 +280,8 @@ fn gen_type(
 				writeln!(out,
 					"{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<{}>()))),",
 					crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
-			} else {
+			}
+			else {
 				writeln!(out, "{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(")?;
 				gen_schema(out, items, local, map_namespace, depth + 2)?;
 				writeln!(out, "{indent}    ))),")?;
@@ -326,7 +328,8 @@ fn gen_type(
 				writeln!(out,
 					"{indent}    additional_properties: Some(Box::new(__gen.subschema_for::<{}>())),",
 					crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
-			} else {
+			}
+			else {
 				writeln!(out, "{indent}    additional_properties: Some(Box::new(")?;
 				gen_schema(out, additional_properties, local, map_namespace, depth + 2)?;
 				writeln!(out, "{indent}    )),")?;

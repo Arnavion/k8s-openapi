@@ -16,7 +16,7 @@ pub struct ServerStorageVersion {
 impl crate::DeepMerge for ServerStorageVersion {
     fn merge_from(&mut self, other: Self) {
         crate::DeepMerge::merge_from(&mut self.api_server_id, other.api_server_id);
-        crate::DeepMerge::merge_from(&mut self.decodable_versions, other.decodable_versions);
+        crate::merge_strategies::list::set(&mut self.decodable_versions, other.decodable_versions);
         crate::DeepMerge::merge_from(&mut self.encoding_version, other.encoding_version);
     }
 }

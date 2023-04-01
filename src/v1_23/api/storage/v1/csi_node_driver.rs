@@ -21,7 +21,7 @@ impl crate::DeepMerge for CSINodeDriver {
         crate::DeepMerge::merge_from(&mut self.allocatable, other.allocatable);
         crate::DeepMerge::merge_from(&mut self.name, other.name);
         crate::DeepMerge::merge_from(&mut self.node_id, other.node_id);
-        crate::DeepMerge::merge_from(&mut self.topology_keys, other.topology_keys);
+        crate::merge_strategies::list::atomic(&mut self.topology_keys, other.topology_keys);
     }
 }
 

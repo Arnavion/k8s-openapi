@@ -12,7 +12,7 @@ pub struct RuntimeClassStrategyOptions {
 
 impl crate::DeepMerge for RuntimeClassStrategyOptions {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.allowed_runtime_class_names, other.allowed_runtime_class_names);
+        crate::merge_strategies::list::atomic(&mut self.allowed_runtime_class_names, other.allowed_runtime_class_names);
         crate::DeepMerge::merge_from(&mut self.default_runtime_class_name, other.default_runtime_class_name);
     }
 }

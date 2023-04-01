@@ -9,7 +9,7 @@ pub struct PodFailurePolicy {
 
 impl crate::DeepMerge for PodFailurePolicy {
     fn merge_from(&mut self, other: Self) {
-        crate::DeepMerge::merge_from(&mut self.rules, other.rules);
+        crate::merge_strategies::list::atomic(&mut self.rules, other.rules);
     }
 }
 
