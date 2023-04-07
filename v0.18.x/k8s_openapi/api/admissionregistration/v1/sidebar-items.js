@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ReadMutatingWebhookConfigurationResponse","ReadValidatingWebhookConfigurationResponse"],"struct":["MutatingWebhook","MutatingWebhookConfiguration","RuleWithOperations","ServiceReference","ValidatingWebhook","ValidatingWebhookConfiguration","WebhookClientConfig"]};

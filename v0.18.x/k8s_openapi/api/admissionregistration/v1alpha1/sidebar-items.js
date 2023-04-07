@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ReadValidatingAdmissionPolicyBindingResponse","ReadValidatingAdmissionPolicyResponse"],"struct":["MatchResources","NamedRuleWithOperations","ParamKind","ParamRef","ValidatingAdmissionPolicy","ValidatingAdmissionPolicyBinding","ValidatingAdmissionPolicyBindingSpec","ValidatingAdmissionPolicySpec","Validation"]};
