@@ -1,3 +1,31 @@
+# v0.18.0 (2023-04-07)
+
+## k8s-openapi
+
+- BREAKING CHANGE: The `k8s_openapi::DeepMerge` trait and its impls on this crate's types now have semantics in line with merge strategies in Kubernetes. Specifically, the code generator now takes the `x-kubernetes-list-map-keys`, `x-kubernetes-list-type`, `x-kubernetes-map-type`, `x-kubernetes-patch-merge-key` and `x-kubernetes-patch-strategy` annotations into account when generating the `DeepMerge` impls.
+
+  For example, in v0.17.0, `PodSpec::merge_from` would append entries into `self.containers`, whereas now it does a "list-map" strategy to replace containers with the same `name`.
+
+Corresponding Kubernetes API server versions:
+
+- v1.20.15
+- v1.21.14
+- v1.22.17
+- v1.23.17
+- v1.24.12
+- v1.25.8
+- v1.26.3
+
+## k8s-openapi-codegen-common
+
+- BREAKING CHANGE: As mentioned above, the generated code for `k8s_openapi::DeepMerge` impls now takes merge strategy annotations into account.
+
+## k8s-openapi-derive
+
+- No changes.
+
+---
+
 # v0.17.0 (2023-01-04)
 
 ## k8s-openapi
