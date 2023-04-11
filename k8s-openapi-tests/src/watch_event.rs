@@ -44,24 +44,79 @@ async fn watch_pods() {
 	assert_eq!(apiserver_pod_status.phase, Some("Running".to_string()));
 }
 
+#[cfg(k8s_watch_send_initial_events)]
+#[tokio::test]
+async fn watch_pods_without_initial_events() {
+	use k8s_openapi::api::core::v1 as api;
+	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
+
+	let mut client = crate::Client::new("watch_event-watch_pods_without_initial_events");
+
+	let (request, response_body) =
+		api::Pod::watch("kube-system", k8s_openapi::WatchOptional {
+			allow_watch_bookmarks: Some(true),
+			resource_version: Some("0"),
+			resource_version_match: Some("NotOlderThan"),
+			send_initial_events: Some(true),
+			..Default::default()
+		}).expect("couldn't watch pods");
+	let pod_watch_events = client.get_multiple_values(request, response_body);
+	futures_util::pin_mut!(pod_watch_events);
+
+	let initial_events_end_annotation =
+		pod_watch_events
+		.filter_map(|pod_watch_event| {
+			let initial_events_end_annotation = match pod_watch_event {
+				(k8s_openapi::WatchResponse::Ok(meta::WatchEvent::Bookmark { mut annotations, resource_version: _ }), _) => annotations.remove("k8s.io/initial-events-end"),
+				(k8s_openapi::WatchResponse::Ok(_), _) => return std::future::ready(None),
+				(other, status_code) => panic!("{other:?} {status_code}"),
+			};
+
+			std::future::ready(initial_events_end_annotation)
+		})
+		.next().await
+		.expect("couldn't find initial events end annotation");
+
+	assert_eq!(initial_events_end_annotation, "true");
+}
+
 #[test]
 fn bookmark_events() {
 	use k8s_openapi::api::core::v1 as api;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
-	const SUCCESS_TEST_CASES: &[&[u8]] = &[
+	let success_test_cases: &[(&[u8], _)] = &[
 		// Minimal number of required fields
-		br#"{
+		(br#"{
 			"type": "BOOKMARK",
 			"object": {
 				"metadata": {
 					"resourceVersion": "123"
 				}
 			}
-		}"#,
+		}"#, meta::WatchEvent::Bookmark {
+			annotations: Default::default(),
+			resource_version: "123".to_owned(),
+		}),
+
+		// Optionally contains annotations
+		(br#"{
+			"type": "BOOKMARK",
+			"object": {
+				"metadata": {
+					"annotations": {
+						"foo": "bar"
+					},
+					"resourceVersion": "123"
+				}
+			}
+		}"#, meta::WatchEvent::Bookmark {
+			annotations: [("foo".to_owned(), "bar".to_owned())].into_iter().collect(),
+			resource_version: "123".to_owned(),
+		}),
 
 		// Extra fields that should be ignored
-		br#"{
+		(br#"{
 			"type": "BOOKMARK",
 			"object": {
 				"apiVersion": "v1",
@@ -75,10 +130,13 @@ fn bookmark_events() {
 				},
 				"status": {}
 			}
-		}"#,
+		}"#, meta::WatchEvent::Bookmark {
+			annotations: Default::default(),
+			resource_version: "123".to_owned(),
+		}),
 	];
 
-	const FAILURE_TEST_CASES: &[&[u8]] = &[
+	let failure_test_cases: &[&[u8]] = &[
 		// Missing metadata
 		br#"{
 			"type": "BOOKMARK",
@@ -95,27 +153,25 @@ fn bookmark_events() {
 		}"#,
 	];
 
-	for test_case in SUCCESS_TEST_CASES {
+	for (input, expected) in success_test_cases {
 		let watch_response =
 			k8s_openapi::Response::try_from_parts(
 				k8s_openapi::http::StatusCode::OK,
-				test_case,
+				input,
 			)
 			.expect("expected hard-coded test case to be deserialized successfully but it failed to deserialize");
 		let watch_event = match watch_response {
-			(k8s_openapi::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == test_case.len() => watch_event,
+			(k8s_openapi::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == input.len() => watch_event,
 			watch_response => panic!("hard-coded test case did not deserialize as expected: {watch_response:?}"),
 		};
-		assert_eq!(watch_event, meta::WatchEvent::Bookmark {
-			resource_version: "123".to_owned(),
-		});
+		assert_eq!(watch_event, *expected);
 	}
 
-	for test_case in FAILURE_TEST_CASES {
+	for input in failure_test_cases {
 		let err =
 			<k8s_openapi::WatchResponse::<api::Pod> as k8s_openapi::Response>::try_from_parts(
 				k8s_openapi::http::StatusCode::OK,
-				test_case,
+				input,
 			)
 			.expect_err("expected hard-coded failure test case to fail to deserialize but it deserialized successfully");
 		match err {

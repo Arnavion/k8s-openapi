@@ -110,7 +110,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
     ```sh
     rm -rf ./target/doc/ &&
-    cargo rustdoc --features 'v1_26' -- -A 'rustdoc::bare_urls' -Z unstable-options --enable-index-page &&
+    cargo rustdoc --features 'v1_27' -- -A 'rustdoc::bare_urls' -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
     rm -rf ../k8s-openapi-gh-pages/v0.18.x &&

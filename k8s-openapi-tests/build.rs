@@ -4,7 +4,7 @@ fn main() {
 	// Assert that the DEP_K8S_OPENAPI_*_VERSION is set by the k8s-openapi crate's build script correctly.
 
 	const MIN: usize = 20;
-	const MAX: usize = 26;
+	const MAX: usize = 27;
 
 	let enabled_version = {
 		let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_TEST_V1_{v}")).is_ok());
@@ -26,4 +26,8 @@ fn main() {
 		.parse().expect("DEP_K8S_OPENAPI_*_VERSION is malformed");
 
 	assert_eq!(actual_k8s_openapi_version, expected_k8s_openapi_version);
+
+	if actual_k8s_openapi_version >= 0x00_01_1b_00 {
+		println!(r#"cargo:rustc-cfg=k8s_watch_send_initial_events"#);
+	}
 }

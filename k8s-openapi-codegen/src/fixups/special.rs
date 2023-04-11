@@ -382,7 +382,11 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				.find(|p| p.name == *expected_parameter_name && !p.required)
 				.ok_or_else(|| format!("operation {} is a list operation but doesn't have a {expected_parameter_name} parameter", operation.id))?;
 
-			if expected_parameter_name != "allowWatchBookmarks" && expected_parameter_name != "watch" {
+			if
+				expected_parameter_name != "allowWatchBookmarks" &&
+				expected_parameter_name != "sendInitialEvents" &&
+				expected_parameter_name != "watch"
+			{
 				list_optional_definition
 					.entry(crate::swagger20::PropertyName(expected_parameter_name.clone()))
 					.or_insert_with(|| expected_parameter.schema.clone());
@@ -391,7 +395,6 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			if
 				expected_parameter_name != "continue" &&
 				expected_parameter_name != "limit" &&
-				expected_parameter_name != "resourceVersionMatch" &&
 				expected_parameter_name != "watch"
 			{
 				watch_optional_definition

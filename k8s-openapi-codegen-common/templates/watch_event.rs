@@ -2,7 +2,10 @@ enum {type_name}<T> {{
     Added(T),
     Deleted(T),
     Modified(T),
-    Bookmark {{ resource_version: String }},
+    Bookmark {{
+        annotations: std::collections::BTreeMap<String, String>,
+        resource_version: String,
+    }},
     ErrorStatus({error_status_rust_type}),
     ErrorOther({error_other_rust_type}),
 }}
@@ -119,6 +122,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
                         let value_object = {local}serde_value::ValueDeserializer::new(value_object);
                         let value: BookmarkObject<'static> = {local}serde::Deserialize::deserialize(value_object)?;
                         {type_name}::Bookmark {{
+                            annotations: value.metadata.annotations.into_owned(),
                             resource_version: value.metadata.resource_version.into_owned(),
                         }}
                     }},
@@ -172,10 +176,11 @@ impl<T> {local}serde::Serialize for {type_name}<T> where T: {local}serde::Serial
                 {local}serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;
                 {local}serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             }},
-            {type_name}::Bookmark {{ resource_version }} => {{
+            {type_name}::Bookmark {{ annotations, resource_version }} => {{
                 {local}serde::ser::SerializeStruct::serialize_field(&mut state, "type", "BOOKMARK")?;
                 let object = BookmarkObject {{
                     metadata: BookmarkObjectMeta {{
+                        annotations: std::borrow::Cow::Borrowed(annotations),
                         resource_version: std::borrow::Cow::Borrowed(&**resource_version),
                     }},
                 }};
@@ -201,6 +206,7 @@ struct BookmarkObject<'a> {{
 
 #[derive(Debug, PartialEq)]
 struct BookmarkObjectMeta<'a> {{
+    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<String, String>>,
     resource_version: std::borrow::Cow<'a, str>,
 }}
 
@@ -263,6 +269,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObject<'static> {{
         deserializer.deserialize_struct(
             "BookmarkObject",
             &[
+                "annotations",
                 "metadata",
             ],
             Visitor,
@@ -274,6 +281,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
         #[allow(non_camel_case_types)]
         enum Field {{
+            Key_annotations,
             Key_resource_version,
             Other,
         }}
@@ -291,6 +299,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
                         Ok(match v {{
+                            "annotations" => Field::Key_annotations,
                             "resourceVersion" => Field::Key_resource_version,
                             _ => Field::Other,
                         }})
@@ -311,16 +320,19 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
             }}
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: {local}serde::de::MapAccess<'de> {{
+                let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_resource_version: Option<String> = None;
 
                 while let Some(key) = {local}serde::de::MapAccess::next_key::<Field>(&mut map)? {{
                     match key {{
+                        Field::Key_annotations => value_annotations = {local}serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resource_version => value_resource_version = {local}serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => {{ let _: {local}serde::de::IgnoredAny = {local}serde::de::MapAccess::next_value(&mut map)?; }},
                     }}
                 }}
 
                 Ok(BookmarkObjectMeta {{
+                    annotations: std::borrow::Cow::Owned(value_annotations.unwrap_or_default()),
                     resource_version: std::borrow::Cow::Owned(value_resource_version.ok_or_else(|| {local}serde::de::Error::missing_field("resourceVersion"))?),
                 }})
             }}
@@ -329,6 +341,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
         deserializer.deserialize_struct(
             "ObjectMeta",
             &[
+                "annotations",
                 "resourceVersion",
             ],
             Visitor,
@@ -351,8 +364,9 @@ impl<'a> {local}serde::Serialize for BookmarkObjectMeta<'a> {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: {local}serde::Serializer {{
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
-            1,
+            2,
         )?;
+        {local}serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", &self.annotations)?;
         {local}serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &self.resource_version)?;
         {local}serde::ser::SerializeStruct::end(state)
     }}

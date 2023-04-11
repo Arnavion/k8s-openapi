@@ -45,6 +45,7 @@ declare -A K8S_VERSIONS=(
 	['1.24']='1.24.12'
 	['1.25']='1.25.8'
 	['1.26']='1.26.3'
+	['1.27']='1.27.0'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
@@ -56,6 +57,7 @@ declare -A KIND_VERSIONS=(
 	['1.24']='0.18.0'
 	['1.25']='0.18.0'
 	['1.26']='0.18.0'
+	['1.27']='0.18.0'
 )
 
 case "$1" in
@@ -140,7 +142,22 @@ case "$2" in
 			trap "rm -f '/tmp/kubeconfig-v$K8S_VERSION'" EXIT
 
 			rm -f "/tmp/kubeconfig-v$K8S_VERSION"
-			"kind-$KIND_VERSION" create cluster --name "$K8S_CLUSTER_NAME" --image "kindest/node:v$K8S_VERSION" --kubeconfig "/tmp/kubeconfig-v$K8S_VERSION"
+
+			cluster_config_path="$(dirname "$0")/k8s-openapi-tests/cluster-configs/v$1.yaml"
+			if [ -f "$cluster_config_path" ]; then
+				"kind-$KIND_VERSION" create cluster \
+					--name "$K8S_CLUSTER_NAME" \
+					--image "kindest/node:v$K8S_VERSION" \
+					--kubeconfig "/tmp/kubeconfig-v$K8S_VERSION" \
+					--config "$cluster_config_path"
+			else
+			exit 1
+				"kind-$KIND_VERSION" create cluster \
+					--name "$K8S_CLUSTER_NAME" \
+					--image "kindest/node:v$K8S_VERSION" \
+					--kubeconfig "/tmp/kubeconfig-v$K8S_VERSION"
+			fi
+
 			rm -f "/tmp/kubeconfig-v$K8S_VERSION"
 		fi
 

@@ -12,7 +12,10 @@ pub enum WatchEvent<T> {
     Added(T),
     Deleted(T),
     Modified(T),
-    Bookmark { resource_version: String },
+    Bookmark {
+        annotations: std::collections::BTreeMap<String, String>,
+        resource_version: String,
+    },
     ErrorStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
     ErrorOther(crate::apimachinery::pkg::runtime::RawExtension),
 }
@@ -129,6 +132,7 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
                         let value_object = crate::serde_value::ValueDeserializer::new(value_object);
                         let value: BookmarkObject<'static> = crate::serde::Deserialize::deserialize(value_object)?;
                         WatchEvent::Bookmark {
+                            annotations: value.metadata.annotations.into_owned(),
                             resource_version: value.metadata.resource_version.into_owned(),
                         }
                     },
@@ -182,10 +186,11 @@ impl<T> crate::serde::Serialize for WatchEvent<T> where T: crate::serde::Seriali
                 crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;
                 crate::serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;
             },
-            WatchEvent::Bookmark { resource_version } => {
+            WatchEvent::Bookmark { annotations, resource_version } => {
                 crate::serde::ser::SerializeStruct::serialize_field(&mut state, "type", "BOOKMARK")?;
                 let object = BookmarkObject {
                     metadata: BookmarkObjectMeta {
+                        annotations: std::borrow::Cow::Borrowed(annotations),
                         resource_version: std::borrow::Cow::Borrowed(&**resource_version),
                     },
                 };
@@ -211,6 +216,7 @@ struct BookmarkObject<'a> {
 
 #[derive(Debug, PartialEq)]
 struct BookmarkObjectMeta<'a> {
+    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<String, String>>,
     resource_version: std::borrow::Cow<'a, str>,
 }
 
@@ -273,6 +279,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObject<'static> {
         deserializer.deserialize_struct(
             "BookmarkObject",
             &[
+                "annotations",
                 "metadata",
             ],
             Visitor,
@@ -284,6 +291,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
+            Key_annotations,
             Key_resource_version,
             Other,
         }
@@ -301,6 +309,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                         Ok(match v {
+                            "annotations" => Field::Key_annotations,
                             "resourceVersion" => Field::Key_resource_version,
                             _ => Field::Other,
                         })
@@ -321,16 +330,19 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_resource_version: Option<String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
+                        Field::Key_annotations => value_annotations = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resource_version => value_resource_version = crate::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(BookmarkObjectMeta {
+                    annotations: std::borrow::Cow::Owned(value_annotations.unwrap_or_default()),
                     resource_version: std::borrow::Cow::Owned(value_resource_version.ok_or_else(|| crate::serde::de::Error::missing_field("resourceVersion"))?),
                 })
             }
@@ -339,6 +351,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
         deserializer.deserialize_struct(
             "ObjectMeta",
             &[
+                "annotations",
                 "resourceVersion",
             ],
             Visitor,
@@ -361,8 +374,9 @@ impl<'a> crate::serde::Serialize for BookmarkObjectMeta<'a> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
-            1,
+            2,
         )?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", &self.annotations)?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", &self.resource_version)?;
         crate::serde::ser::SerializeStruct::end(state)
     }

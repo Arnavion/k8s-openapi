@@ -18,6 +18,11 @@ pub struct WatchOptional<'a> {
     /// Defaults to unset
     pub resource_version: Option<&'a str>,
 
+    /// resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.
+    ///
+    /// Defaults to unset
+    pub resource_version_match: Option<&'a str>,
+
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
 }
@@ -43,6 +48,9 @@ impl<'a> WatchOptional<'a> {
         }
         if let Some(value) = self.resource_version {
             __query_pairs.append_pair("resourceVersion", value);
+        }
+        if let Some(value) = self.resource_version_match {
+            __query_pairs.append_pair("resourceVersionMatch", value);
         }
         if let Some(value) = self.timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &value.to_string());
