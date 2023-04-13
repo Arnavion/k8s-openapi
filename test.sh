@@ -42,9 +42,9 @@ declare -A K8S_VERSIONS=(
 	['1.21']='1.21.14'
 	['1.22']='1.22.17'
 	['1.23']='1.23.17'
-	['1.24']='1.24.12'
-	['1.25']='1.25.8'
-	['1.26']='1.26.3'
+	['1.24']='1.24.13'
+	['1.25']='1.25.9'
+	['1.26']='1.26.4'
 	['1.27']='1.27.0'
 )
 
@@ -151,7 +151,6 @@ case "$2" in
 					--kubeconfig "/tmp/kubeconfig-v$K8S_VERSION" \
 					--config "$cluster_config_path"
 			else
-			exit 1
 				"kind-$KIND_VERSION" create cluster \
 					--name "$K8S_CLUSTER_NAME" \
 					--image "kindest/node:v$K8S_VERSION" \
