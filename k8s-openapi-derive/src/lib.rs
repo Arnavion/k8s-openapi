@@ -2,6 +2,7 @@
 #![warn(rust_2018_idioms)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
+    clippy::let_underscore_untyped,
     clippy::too_many_lines,
 )]
 
