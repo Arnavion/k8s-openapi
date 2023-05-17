@@ -29,7 +29,7 @@ pub struct JobSpec {
 
     /// Specifies the policy of handling failed pods. In particular, it allows to specify the set of actions and conditions which need to be satisfied to take the associated action. If empty, the default behaviour applies - the counter of failed pods, represented by the jobs's .status.failed field, is incremented and it is checked against the backoffLimit. This field cannot be used in combination with restartPolicy=OnFailure.
     ///
-    /// This field is alpha-level. To use this field, you must enable the `JobPodFailurePolicy` feature gate (disabled by default).
+    /// This field is beta-level. It can be used when the `JobPodFailurePolicy` feature gate is enabled (enabled by default).
     pub pod_failure_policy: Option<crate::api::batch::v1::PodFailurePolicy>,
 
     /// A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
@@ -328,7 +328,7 @@ impl crate::schemars::JsonSchema for JobSpec {
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::batch::v1::PodFailurePolicy>().into_object();
                             schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Specifies the policy of handling failed pods. In particular, it allows to specify the set of actions and conditions which need to be satisfied to take the associated action. If empty, the default behaviour applies - the counter of failed pods, represented by the jobs's .status.failed field, is incremented and it is checked against the backoffLimit. This field cannot be used in combination with restartPolicy=OnFailure.\n\nThis field is alpha-level. To use this field, you must enable the `JobPodFailurePolicy` feature gate (disabled by default).".to_owned()),
+                                description: Some("Specifies the policy of handling failed pods. In particular, it allows to specify the set of actions and conditions which need to be satisfied to take the associated action. If empty, the default behaviour applies - the counter of failed pods, represented by the jobs's .status.failed field, is incremented and it is checked against the backoffLimit. This field cannot be used in combination with restartPolicy=OnFailure.\n\nThis field is beta-level. It can be used when the `JobPodFailurePolicy` feature gate is enabled (enabled by default).".to_owned()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)

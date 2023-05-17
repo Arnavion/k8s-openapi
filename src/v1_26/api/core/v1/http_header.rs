@@ -3,7 +3,7 @@
 /// HTTPHeader describes a custom header to be used in HTTP probes
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPHeader {
-    /// The header field name
+    /// The header field name. This will be canonicalized upon output, so case-variant names will be understood as the same header.
     pub name: String,
 
     /// The header field value
@@ -120,7 +120,7 @@ impl crate::schemars::JsonSchema for HTTPHeader {
                         "name".to_owned(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
                             metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The header field name".to_owned()),
+                                description: Some("The header field name. This will be canonicalized upon output, so case-variant names will be understood as the same header.".to_owned()),
                                 ..Default::default()
                             })),
                             instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
