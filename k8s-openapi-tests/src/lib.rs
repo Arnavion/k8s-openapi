@@ -221,7 +221,7 @@ impl Client {
 					response_body: vec![],
 				});
 
-				let mut replay = replays.last_mut().unwrap();
+				let replay = replays.last_mut().unwrap();
 
 				let mut url: http::uri::Parts = server.clone().into();
 				url.path_and_query = Some(path);
