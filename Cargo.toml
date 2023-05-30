@@ -52,6 +52,7 @@ default = ["api"]
 api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
 
 # Each feature corresponds to a supported version of Kubernetes
+earliest = ["v1_20"]
 v1_20 = []
 v1_21 = []
 v1_22 = []
@@ -60,10 +61,11 @@ v1_24 = []
 v1_25 = []
 v1_26 = []
 v1_27 = []
+latest = ["v1_27"]
 
 [package.metadata.docs.rs]
 # docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
-features = ["v1_27"]
+features = ["latest"]
 
 [workspace]
 members = [

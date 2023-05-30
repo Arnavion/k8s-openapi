@@ -56,9 +56,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 1. `/Cargo.toml`: Add a new feature for the new version.
 
-1. `/Cargo.toml`: Update `package.metadata."docs.rs".features` to the new feature.
-
-1. Update feature name in the `rustdoc` command in the "To make a new crate release" section below.
+1. `/Cargo.toml`: Update `latest` feature to the new feature.
 
 1. `/build.rs`: Update the value of `MAX`
 
@@ -110,7 +108,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
     ```sh
     rm -rf ./target/doc/ &&
-    cargo rustdoc --features 'v1_27' -- -A 'rustdoc::bare_urls' -Z unstable-options --enable-index-page &&
+    cargo rustdoc --features 'latest' -- -A 'rustdoc::bare_urls' -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
     rm -rf ../k8s-openapi-gh-pages/v0.18.x &&

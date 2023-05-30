@@ -44,17 +44,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if let Some(v2) = enabled_versions.next() {
             panic!(
                 "\n\
-                    Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. These feature indicates which version of Kubernetes the k8s-openapi crate should support. \
-                    Only one feature can be enabled at the same time.\n\
-                    \n\
-                    If you have enabled both of these features yourself, either via the k8s-openapi dependency in your Cargo.toml or via setting \
-                    the `K8S_OPENAPI_ENABLED_VERSION` env var, please remove one of them. If you are writing a library crate, do not enable any features at all. \
-                    Library crates *must not* enable any features on the k8s-openapi crate.\n\
-                    \n\
-                    If you have not enabled one or both of these features yourself, then one of the library crates in your dependency graph *has*. \
-                    Locate which library crates in your dependency graph depend on k8s-openapi and enable one or more of its features, and file a bug against them, citing this text. \
-                    You can search your Cargo.lock for \"k8s-openapi\" to discover these crates.\
-                ");
+                Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. These feature indicates which version of Kubernetes the k8s-openapi crate should support. \
+                Only one feature can be enabled at the same time.\n\
+                \n\
+                If you have enabled both of these features yourself, either via the k8s-openapi dependency in your Cargo.toml or via setting \
+                the `K8S_OPENAPI_ENABLED_VERSION` env var, please remove one of them. If you are writing a library crate, do not enable any features at all. \
+                Library crates *must not* enable any features on the k8s-openapi crate.\n\
+                \n\
+                If you have not enabled one or both of these features yourself, then one of the library crates in your dependency graph *has*. \
+                Locate which library crates in your dependency graph depend on k8s-openapi and enable one or more of its features, and file a bug against them, citing this text. \
+                You can search your Cargo.lock for \"k8s-openapi\" to discover these crates.\
+            ");
         }
         v1
     };
