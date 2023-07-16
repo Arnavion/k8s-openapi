@@ -1457,7 +1457,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		}
 		else {
 			result.push(match c {
-				'-' => '_',
+				'-' | '.' => '_',
 				c => c,
 			});
 		}
