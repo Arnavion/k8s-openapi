@@ -2345,12 +2345,3 @@ fn get_operation_names(
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }
-
-#[cfg(test)]
-mod test {
-	#[test]
-	fn test_get_rust_ident() {
-		assert_eq!(super::get_rust_ident("as"), "as_");
-		assert_eq!(super::get_rust_ident("foo.bar"), "foo_bar");
-	}
-}

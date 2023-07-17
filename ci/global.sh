@@ -6,6 +6,7 @@ set -euo pipefail
 
 echo '### k8s-openapi-codegen-common:clippy ###'
 pushd k8s-openapi-codegen-common
+cargo test
 cargo clippy -- -D warnings
 popd
 
