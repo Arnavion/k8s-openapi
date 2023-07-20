@@ -7,19 +7,19 @@ set -euo pipefail
 export CARGO_TARGET_DIR="$PWD/target-tests-v$K8S_OPENAPI_ENABLED_VERSION"
 
 for api_feature in 'yes' 'no'; do
-	case "$api_feature" in
-		'yes') features_args='';;
-		'no') features_args='--no-default-features';;
-	esac
+    case "$api_feature" in
+        'yes') features_args='';;
+        'no') features_args='--no-default-features';;
+    esac
 
-	echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:lib-tests ###"
-	RUST_BACKTRACE=full cargo test $features_args
+    echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:lib-tests ###"
+    RUST_BACKTRACE=full cargo test $features_args
 
-	echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:clippy ###"
-	cargo clippy $features_args -- -D warnings
+    echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:clippy ###"
+    cargo clippy $features_args -- -D warnings
 
-	echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:doc ###"
-	RUSTDOCFLAGS='-D warnings' cargo doc --no-deps $features_args
+    echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:${api_feature}:doc ###"
+    RUSTDOCFLAGS='-D warnings' cargo doc --no-deps $features_args
 done
 
 echo "### k8s-openapi:${K8S_OPENAPI_ENABLED_VERSION}:tests ###"

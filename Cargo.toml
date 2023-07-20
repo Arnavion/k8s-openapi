@@ -11,11 +11,11 @@ keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi"
 include = [
-	"build.rs",
-	"Cargo.toml",
-	"LICENSE",
-	"README.md",
-	"src/**/*",
+    "build.rs",
+    "Cargo.toml",
+    "LICENSE",
+    "README.md",
+    "src/**/*",
 ]
 
 # Dummy value to allow metadata to work, since passing metadata to downstream currently requires the links key to be set.
@@ -29,19 +29,19 @@ links = "k8s-openapi-0.18.0"
 
 [dependencies]
 base64 = { version = "0.21", default-features = false, features = [
-	"alloc", # for base64::Engine::decode and base64::Engine::encode
+    "alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
 bytes = { version = "1", default-features = false}
 chrono = { version = "0.4.1", default-features = false, features = [
-	"alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
-	"serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
+    "alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
+    "serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
 ] }
 http = { version = "0.2", optional = true, default-features = false }
 percent-encoding = { version = "2", optional = true, default-features = false }
 schemars = { version = "0.8", optional = true, default-features = false }
 serde = { version = "1", default-features = false }
 serde_json = { version = "1", default-features = false, features = [
-	"alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
+    "alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
 ] }
 serde-value = { version = "0.7", default-features = false }
 url = { version = "2", optional = true, default-features = false }

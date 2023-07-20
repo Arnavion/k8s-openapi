@@ -32,46 +32,46 @@ pub(crate) mod watch_event;
 
 #[derive(Clone, Copy, Default)]
 pub(crate) struct Generics<'a> {
-	pub(crate) type_part: Option<&'a str>,
-	pub(crate) where_part: Option<&'a str>,
+    pub(crate) type_part: Option<&'a str>,
+    pub(crate) where_part: Option<&'a str>,
 }
 
 pub(crate) struct Property<'a> {
-	pub(crate) name: &'a str,
-	pub(crate) comment: Option<&'a str>,
-	pub(crate) field_name: std::borrow::Cow<'static, str>,
-	pub(crate) field_type_name: String,
-	pub(crate) required: PropertyRequired,
-	pub(crate) is_flattened: bool,
-	pub(crate) merge_type: &'a crate::swagger20::MergeType,
+    pub(crate) name: &'a str,
+    pub(crate) comment: Option<&'a str>,
+    pub(crate) field_name: std::borrow::Cow<'static, str>,
+    pub(crate) field_type_name: String,
+    pub(crate) required: PropertyRequired,
+    pub(crate) is_flattened: bool,
+    pub(crate) merge_type: &'a crate::swagger20::MergeType,
 }
 
 #[derive(Clone, Copy)]
 pub(crate) enum PropertyRequired {
-	Required { is_default: bool },
-	Optional,
+    Required { is_default: bool },
+    Optional,
 
-	// TODO:
-	// This was added in 6cff2149f3334a220f1827b6740fcac54783b6c3 but then stopped being used because of
-	// https://github.com/Arnavion/k8s-openapi/issues/103
-	#[allow(unused)]
-	OptionalDefault,
+    // TODO:
+    // This was added in 6cff2149f3334a220f1827b6740fcac54783b6c3 but then stopped being used because of
+    // https://github.com/Arnavion/k8s-openapi/issues/103
+    #[allow(unused)]
+    OptionalDefault,
 }
 
 #[derive(Clone, Copy)]
 pub(crate) struct ResourceMetadata<'a> {
-	pub(crate) api_version: &'a str,
-	pub(crate) group: &'a str,
-	pub(crate) kind: &'a str,
-	pub(crate) version: &'a str,
-	pub(crate) list_kind: Option<&'a str>,
-	pub(crate) metadata_ty: Option<&'a str>,
-	pub(crate) url_path_segment_and_scope: (&'a str, &'a str),
+    pub(crate) api_version: &'a str,
+    pub(crate) group: &'a str,
+    pub(crate) kind: &'a str,
+    pub(crate) version: &'a str,
+    pub(crate) list_kind: Option<&'a str>,
+    pub(crate) metadata_ty: Option<&'a str>,
+    pub(crate) url_path_segment_and_scope: (&'a str, &'a str),
 }
 
 #[derive(Clone, Copy)]
 pub(crate) enum DateTimeSerializationFormat {
-	Default,
-	SixDecimalDigits,
-	ZeroDecimalDigits,
+    Default,
+    SixDecimalDigits,
+    ZeroDecimalDigits,
 }

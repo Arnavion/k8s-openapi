@@ -11,16 +11,16 @@ keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi"
 include = [
-	"Cargo.toml",
-	"LICENSE",
-	"README.md",
-	"src/**/*",
-	"templates/**/*",
+    "Cargo.toml",
+    "LICENSE",
+    "README.md",
+    "src/**/*",
+    "templates/**/*",
 ]
 
 [dependencies]
 http = { version = "0.2", default-features = false }
 serde = { version = "1", optional = true, default-features = false, features = [
-	"derive", # for #[derive(serde::Deserialize, serde::Serialize)]
-	"rc", # for Arc<Parameter>: serde::Deserialize
+    "derive", # for #[derive(serde::Deserialize, serde::Serialize)]
+    "rc", # for Arc<Parameter>: serde::Deserialize
 ] }

@@ -11,10 +11,10 @@ keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi"
 include = [
-	"Cargo.toml",
-	"LICENSE",
-	"README.md",
-	"src/**/*",
+    "Cargo.toml",
+    "LICENSE",
+    "README.md",
+    "src/**/*",
 ]
 
 [dependencies]
@@ -23,9 +23,9 @@ k8s-openapi-codegen-common = { version = "=0.18.0", path = "../k8s-openapi-codeg
 proc-macro2 = { version = "1", default-features = false, features = ["proc-macro"] }
 quote = { version = "1", default-features = false }
 syn = { version = "2", default-features = false, features = [
-	"derive", # minimal feature for writing custom derives
-	"parsing", # for syn::parse2, syn::Attribute::parse_args_with, syn::Path::is_ident
-	"printing", # for syn types: quote::ToTokens
+    "derive", # minimal feature for writing custom derives
+    "parsing", # for syn::parse2, syn::Attribute::parse_args_with, syn::Path::is_ident
+    "printing", # for syn types: quote::ToTokens
 ] }
 
 [lib]

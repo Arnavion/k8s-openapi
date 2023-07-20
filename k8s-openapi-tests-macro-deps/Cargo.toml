@@ -5,9 +5,9 @@ authors = ["Arnavion <me@arnavion.dev>"]
 publish = false
 edition = "2021"
 include = [
-	"build.rs",
-	"Cargo.toml",
-	"src/**/*",
+    "build.rs",
+    "Cargo.toml",
+    "src/**/*",
 ]
 
 [dependencies]

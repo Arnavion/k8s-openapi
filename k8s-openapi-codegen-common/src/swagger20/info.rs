@@ -2,6 +2,6 @@
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct Info {
-	pub title: String,
-	pub version: String,
+    pub title: String,
+    pub version: String,
 }

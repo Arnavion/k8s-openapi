@@ -5,42 +5,42 @@ authors = ["Arnavion <me@arnavion.dev>"]
 publish = false
 edition = "2021"
 include = [
-	"build.rs",
-	"Cargo.toml",
-	"src/**/*",
+    "build.rs",
+    "Cargo.toml",
+    "src/**/*",
 ]
 
 [dependencies]
 base64 = { version = "0.21", default-features = false, features = [
-	"alloc", # for base64::Engine::decode and base64::Engine::encode
+    "alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
 dirs = { version = "5", default-features = false }
 futures-core = { version = "0.3", default-features = false }
 futures-io = { version = "0.3", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
-	"io", # for futures_util::StreamExt::into_async_read
+    "io", # for futures_util::StreamExt::into_async_read
 ] }
 k8s-openapi = { path = "..", features = [
-	"schemars", # for resource types: schemars::JsonSchema
+    "schemars", # for resource types: schemars::JsonSchema
 ] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 openssl = { version = "0.10.46", default-features = false }
 pin-project = { version = "1", default-features = false }
 reqwest = { version = "0.11", default-features = false, features = [
-	"native-tls", # for TLS support
-	"stream", # for reqwest::Response::bytes_stream
+    "native-tls", # for TLS support
+    "stream", # for reqwest::Response::bytes_stream
 ] }
 schemars = { version = "0.8", default-features = false, features = [
-	"derive", # for #[derive(schemars::JsonSchema)]
+    "derive", # for #[derive(schemars::JsonSchema)]
 ] }
 serde = { version = "1", default-features = false, features = [
-	"derive",
+    "derive",
 ] }
 serde_yaml = { version = "0.9", default-features = false }
 tokio = { version = "1", default-features = false, features = [
-	"macros", # for #[tokio::test]
-	"test-util", # for tokio::time::pause
-	"time", # for tokio::time::sleep
+    "macros", # for #[tokio::test]
+    "test-util", # for tokio::time::pause
+    "time", # for tokio::time::sleep
 ] }
 
 [features]

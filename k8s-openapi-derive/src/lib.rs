@@ -11,28 +11,28 @@
 mod custom_resource_definition;
 
 trait CustomDerive: Sized {
-	fn parse(input: syn::DeriveInput, tokens: proc_macro2::TokenStream) -> Result<Self, syn::Error>;
-	fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error>;
+    fn parse(input: syn::DeriveInput, tokens: proc_macro2::TokenStream) -> Result<Self, syn::Error>;
+    fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error>;
 }
 
 fn run_custom_derive<T>(input: proc_macro::TokenStream) -> proc_macro::TokenStream where T: CustomDerive {
-	let input: proc_macro2::TokenStream = input.into();
-	let tokens = input.clone();
-	let token_stream = match syn::parse2(input).and_then(|input| <T as CustomDerive>::parse(input, tokens)).and_then(<T as CustomDerive>::emit) {
-		Ok(token_stream) => token_stream,
-		Err(err) => err.to_compile_error(),
-	};
-	token_stream.into()
+    let input: proc_macro2::TokenStream = input.into();
+    let tokens = input.clone();
+    let token_stream = match syn::parse2(input).and_then(|input| <T as CustomDerive>::parse(input, tokens)).and_then(<T as CustomDerive>::emit) {
+        Ok(token_stream) => token_stream,
+        Err(err) => err.to_compile_error(),
+    };
+    token_stream.into()
 }
 
 trait ResultExt<T> {
-	fn spanning(self, spanned: impl quote::ToTokens) -> Result<T, syn::Error>;
+    fn spanning(self, spanned: impl quote::ToTokens) -> Result<T, syn::Error>;
 }
 
 impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
-	fn spanning(self, spanned: impl quote::ToTokens) -> Result<T, syn::Error> {
-		self.map_err(|err| syn::Error::new_spanned(spanned, err))
-	}
+    fn spanning(self, spanned: impl quote::ToTokens) -> Result<T, syn::Error> {
+        self.map_err(|err| syn::Error::new_spanned(spanned, err))
+    }
 }
 
 /// This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object
@@ -331,5 +331,5 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// for a full example of using this custom derive.
 #[proc_macro_derive(CustomResourceDefinition, attributes(custom_resource_definition))]
 pub fn derive_custom_resource_definition(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-	run_custom_derive::<custom_resource_definition::CustomResourceDefinition>(input)
+    run_custom_derive::<custom_resource_definition::CustomResourceDefinition>(input)
 }

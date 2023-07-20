@@ -7,30 +7,30 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4", default-features = false, features = [
-	"derive", # for #[derive(clap::Parser)]
-	"std", # "`std` feature is currently required to build `clap`"
+    "derive", # for #[derive(clap::Parser)]
+    "std", # "`std` feature is currently required to build `clap`"
 ] }
 env_logger = { version = "0.10", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
-	"alloc", # for futures_util::stream::FuturesUnordered
+    "alloc", # for futures_util::stream::FuturesUnordered
 ] }
 http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features = [
-	"serde", # to parse OpenAPI specs from JSON files
+    "serde", # to parse OpenAPI specs from JSON files
 ] }
 log = { version = "0.4", default-features = false }
 reqwest = { version = "0.11", default-features = false, features = [
-	"default-tls", # for TLS support
-	"json", # for reqwest::Response::json
+    "default-tls", # for TLS support
+    "json", # for reqwest::Response::json
 ] }
 serde = { version = "1", default-features = false, features = [
-	"derive",
+    "derive",
 ] }
 serde_json = { version = "1", default-features = false, features = [
-	"alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
+    "alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
 ] }
 tokio = { version = "1", default-features = false, features = [
-	"macros",
-	"rt", # for tokio::task::spawn_blocking
+    "macros",
+    "rt", # for tokio::task::spawn_blocking
 ] }
 url = { version = "2", default-features = false }

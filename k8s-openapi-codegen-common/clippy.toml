@@ -1,4 +1,4 @@
 doc-valid-idents = [
-	"OpenAPI",
-	"OpenShift",
+    "OpenAPI",
+    "OpenShift",
 ]
