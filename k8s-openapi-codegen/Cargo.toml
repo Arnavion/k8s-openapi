@@ -20,7 +20,7 @@ k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features 
 ] }
 log = { version = "0.4", default-features = false }
 reqwest = { version = "0.11", default-features = false, features = [
-    "default-tls", # for TLS support
+    "rustls-tls", # for TLS support
     "json", # for reqwest::Response::json
 ] }
 serde = { version = "1", default-features = false, features = [
