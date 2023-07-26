@@ -165,8 +165,7 @@ impl Client {
         request: http::Request<Vec<u8>>,
         response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
     ) -> (R, http::StatusCode) where R: k8s_openapi::Response {
-        let stream = self.get_multiple_values(request, response_body);
-        futures_util::pin_mut!(stream);
+        let mut stream = std::pin::pin!(self.get_multiple_values(request, response_body));
         stream.next().await.expect("unexpected EOF")
     }
 

@@ -38,10 +38,9 @@ async fn get() {
         })
         .expect("couldn't get apiserver pod logs");
     let mut apiserver_logs = String::new();
-    let chunks = client.get_multiple_values(request, response_body);
-    futures_util::pin_mut!(chunks);
-    let mut found_line = false;
-    while let Some(chunk) = chunks.next().await {
+    let mut chunks = std::pin::pin!(client.get_multiple_values(request, response_body));
+    let found_line = loop {
+        let Some(chunk) = chunks.next().await else { break false; };
         let s = match chunk {
             (api::ReadPodLogResponse::Ok(s), _) => s,
             (other, status_code) => panic!("{other:?} {status_code}"),
@@ -49,14 +48,13 @@ async fn get() {
         apiserver_logs.push_str(&s);
 
         if apiserver_logs.contains("Serving securely on [::]:6443") {
-            found_line = true;
-            break;
+            break true;
         }
 
         if apiserver_logs.len() > 65536 {
-            break;
+            break false;
         }
-    }
+    };
     assert!(found_line, "did not find expected text in apiserver pod logs: {apiserver_logs}");
 }
 

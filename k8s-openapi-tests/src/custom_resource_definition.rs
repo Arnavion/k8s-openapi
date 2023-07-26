@@ -241,8 +241,7 @@ async fn test() {
     // Watch CR
     {
         let (request, response_body) = FooBar::watch("default", Default::default()).expect("couldn't watch FooBars");
-        let foo_bar_watch_events = client.get_multiple_values(request, response_body);
-        futures_util::pin_mut!(foo_bar_watch_events);
+        let foo_bar_watch_events = std::pin::pin!(client.get_multiple_values(request, response_body));
         let _ =
             foo_bar_watch_events
             .filter_map(|foo_bar_watch_event| {

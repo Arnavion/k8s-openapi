@@ -9,8 +9,7 @@ async fn watch_pods() {
 
     let (request, response_body) =
         api::Pod::watch("kube-system", Default::default()).expect("couldn't watch pods");
-    let pod_watch_events = client.get_multiple_values(request, response_body);
-    futures_util::pin_mut!(pod_watch_events);
+    let pod_watch_events = std::pin::pin!(client.get_multiple_values(request, response_body));
 
     let apiserver_pod =
         pod_watch_events
@@ -60,8 +59,7 @@ async fn watch_pods_without_initial_events() {
             send_initial_events: Some(true),
             ..Default::default()
         }).expect("couldn't watch pods");
-    let pod_watch_events = client.get_multiple_values(request, response_body);
-    futures_util::pin_mut!(pod_watch_events);
+    let pod_watch_events = std::pin::pin!(client.get_multiple_values(request, response_body));
 
     let initial_events_end_annotation =
         pod_watch_events
