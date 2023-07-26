@@ -384,10 +384,13 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
 
 #[derive(serde::Deserialize)]
 struct KubeConfig {
+    #[serde(deserialize_with = "deserialize_null_to_empty_vec")]
     clusters: Vec<KubeConfigClusterEntry>,
+    #[serde(deserialize_with = "deserialize_null_to_empty_vec")]
     contexts: Vec<KubeConfigContextEntry>,
     #[serde(rename = "current-context")]
     current_context: String,
+    #[serde(deserialize_with = "deserialize_null_to_empty_vec")]
     users: Vec<KubeConfigUserEntry>,
 }
 
@@ -490,6 +493,11 @@ mod methodstring {
     pub(super) fn serialize<S>(method: &http::Method, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         serde::Serialize::serialize(&method.to_string(), serializer)
     }
+}
+
+fn deserialize_null_to_empty_vec<'de, D, T>(deserializer: D) -> Result<Vec<T>, D::Error> where D: serde::Deserializer<'de>, T: serde::Deserialize<'de> {
+    let value: Option<Vec<T>> = serde::Deserialize::deserialize(deserializer)?;
+    Ok(value.unwrap_or_default())
 }
 
 mod api_versions;
