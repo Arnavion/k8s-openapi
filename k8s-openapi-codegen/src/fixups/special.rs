@@ -843,9 +843,9 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
                             }
 
                             if let Some(kubernetes_group_kind_version) = &operation.kubernetes_group_kind_version {
-                                let response_schema =
-                                    definitions.get(&*ref_path.path)
-                                    .unwrap_or_else(|| panic!("operation {} returns undefined type {kubernetes_group_kind_version:?}", operation.id));
+                                let Some(response_schema) = definitions.get(&*ref_path.path) else {
+                                    panic!("operation {} returns undefined type {kubernetes_group_kind_version:?}", operation.id);
+                                };
                                 if response_schema.kubernetes_group_kind_versions.contains(kubernetes_group_kind_version) {
                                     return true;
                                 }

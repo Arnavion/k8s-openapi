@@ -75,15 +75,17 @@ impl Client {
 
             let context = std::env::var("K8S_CONTEXT").unwrap_or(kubeconfig.current_context);
 
-            let KubeConfigContext { cluster, user } =
-                kubeconfig.contexts.into_iter()
-                .find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {context}"))
-                .context;
+            let Some(KubeConfigContext { cluster, user }) =
+                kubeconfig.contexts.into_iter().find_map(|c| (c.name == context).then_some(c.context))
+            else {
+                panic!("couldn't find context named {context}");
+            };
 
-            let KubeConfigCluster { certificate_authority, server } =
-                kubeconfig.clusters.into_iter()
-                .find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {cluster}"))
-                .cluster;
+            let Some(KubeConfigCluster { certificate_authority, server }) =
+                kubeconfig.clusters.into_iter().find_map(|c| (c.name == cluster).then_some(c.cluster))
+            else {
+                panic!("couldn't find cluster named {cluster}");
+            };
 
             let ca_certificate = {
                 let ca_cert_pem = match certificate_authority {
@@ -101,10 +103,11 @@ impl Client {
                 assert_eq!(path_and_query, "/", "server URL {server} has path and query {path_and_query}");
             }
 
-            let KubeConfigUser { client_certificate, client_key } =
-                kubeconfig.users.into_iter()
-                .find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {user}"))
-                .user;
+            let Some(KubeConfigUser { client_certificate, client_key }) =
+                kubeconfig.users.into_iter().find_map(|u| (u.name == user).then_some(u.user))
+            else {
+                panic!("couldn't find user named {user}");
+            };
 
             let client_tls_identity = {
                 // reqwest::Identity supports from_pem, which is implemented using rustls to parse the PEM.
