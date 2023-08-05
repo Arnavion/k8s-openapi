@@ -10,28 +10,38 @@ jobs:
 
     steps:
     - uses: 'actions/checkout@v3'
-    - name: 'Run'
-      run: ./ci/global.sh
+    - run: ./ci/global.sh
+
+
+  list_versions:
+    runs-on: 'ubuntu-22.04'
+
+    steps:
+    - uses: 'actions/checkout@v3'
+    - id: 'run'
+      run: |
+        (
+          printf 'matrix='
+          ./test.sh list-versions | jq --raw-input --null-input --compact-output '[inputs | { version: . }]'
+        ) >"$GITHUB_OUTPUT"
+
+    outputs:
+      matrix: "${{ steps.run.outputs.matrix }}"
 
 
   per_version:
     runs-on: 'ubuntu-22.04'
 
+    needs: 'list_versions'
+
     strategy:
       fail-fast: false
 
       matrix:
-        version:
-        - '1.22'
-        - '1.23'
-        - '1.24'
-        - '1.25'
-        - '1.26'
-        - '1.27'
+        include: "${{ fromJSON(needs.list_versions.outputs.matrix) }}"
 
     steps:
     - uses: 'actions/checkout@v3'
-    - name: 'Run'
-      run: ./ci/per_version.sh
+    - run: ./ci/per_version.sh
       env:
         K8S_OPENAPI_ENABLED_VERSION: "${{ matrix.version }}"

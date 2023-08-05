@@ -77,6 +77,14 @@ case "$1" in
         exit 0
         ;;
 
+    'list-versions')
+        for v in "${!K8S_VERSIONS[@]}"; do
+            echo "$v"
+        done
+
+        exit 0
+        ;;
+
     *)
         ;;
 esac
