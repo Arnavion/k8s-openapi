@@ -21,8 +21,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.20", doc = "v1_20")]
-#![cfg_attr(k8s_openapi_enabled_version="1.21", doc = "v1_21")]
 #![cfg_attr(k8s_openapi_enabled_version="1.22", doc = "v1_22")]
 #![cfg_attr(k8s_openapi_enabled_version="1.23", doc = "v1_23")]
 #![cfg_attr(k8s_openapi_enabled_version="1.24", doc = "v1_24")]
@@ -290,10 +288,10 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!
 //! For example:
 //!
-//! 1. Your crate creates a service spec and wants to set the cluster IP. This field is only available in Kubernetes 1.20+,
+//! 1. Your crate creates a `PodSpec` and wants to set the `host_users` field. This field is only available in Kubernetes 1.25+,
 //!    so you want your crate to fail to compile if a lower feature was enabled.
 //!
-//! 1. Your crate creates a service spec and wants to set the cluster IP, but you want it to be skipped when compiling for older versions.
+//! 1. Your crate creates a `PodSpec` and wants to set the `host_users` field, but it's okay to not set it when compiling for older versions.
 //!
 //! There are two ways for your crate to determine which feature of `k8s-openapi` is enabled:
 //!
@@ -302,26 +300,26 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.20 or lower is selected.
-//!      k8s_openapi::k8s_if_le_1_20! {
-//!          compile_error!("This crate requires the v1_21 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.24 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_24! {
+//!          compile_error!("This crate requires the v1_25 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
 //!
 //!      ...
 //!
-//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
-//!          cluster_ips: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          host_users: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let mut service_spec = k8s_openapi::api::core::v1::ServiceSpec {
+//!      let mut pod_spec = k8s_openapi::api::core::v1::PodSpec {
 //!          ...
 //!      };
 //!
-//!      k8s_openapi::k8s_if_ge_1_20! {
-//!          service_spec.cluster_ips = ...;
+//!      k8s_openapi::k8s_if_ge_1_25! {
+//!          pod_spec.host_users = ...;
 //!      }
 //!      ```
 //!
@@ -351,12 +349,12 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!        // - MM is the major version.
 //!        // - NN is the minor version.
 //!        //
-//!        // Thus, if the v1_20 feature was enabled, k8s_openapi_version would be 0x00_01_14_00
+//!        // Thus, if the v1_25 feature was enabled, k8s_openapi_version would be 0x00_01_19_00
 //!
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
-//!        if k8s_openapi_version >= 0x00_01_14_00 {
-//!            println!(r#"cargo:rustc-cfg=k8s_service_spec_supports_cluster_ips"#);
+//!        if k8s_openapi_version >= 0x00_01_19_00 {
+//!            println!(r#"cargo:rustc-cfg=k8s_pod_spec_supports_host_users"#);
 //!        }
 //!
 //!        // or emit new source code files under OUT_DIR, or anything else a build script can do.
@@ -366,22 +364,22 @@ The `api` feature has been disabled, so the client API is not available. See ["C
 //!    With these cfgs, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.19 or lower is selected.
-//!      #[cfg(not(k8s_service_spec_supports_cluster_ips))]
-//!      compile_error!("This crate requires the v1_20 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.24 or lower is selected.
+//!      #[cfg(not(k8s_pod_spec_supports_host_users))]
+//!      compile_error!("This crate requires the v1_25 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!
 //!      ...
 //!
-//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
-//!          cluster_ips: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          host_users: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let service_spec = k8s_openapi::api::core::v1::ServiceSpec {
-//!          #[cfg(not(k8s_service_spec_supports_cluster_ips))]
-//!          cluster_ips: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          #[cfg(not(k8s_pod_spec_supports_host_users))]
+//!          host_users: ...,
 //!          ...
 //!      };
 //!      ```
@@ -440,12 +438,6 @@ pub use _resource::{
     Metadata,
     api_version, group, kind, version,
 };
-
-#[cfg(k8s_openapi_enabled_version="1.20")] mod v1_20;
-#[cfg(k8s_openapi_enabled_version="1.20")] pub use self::v1_20::*;
-
-#[cfg(k8s_openapi_enabled_version="1.21")] mod v1_21;
-#[cfg(k8s_openapi_enabled_version="1.21")] pub use self::v1_21::*;
 
 #[cfg(k8s_openapi_enabled_version="1.22")] mod v1_22;
 #[cfg(k8s_openapi_enabled_version="1.22")] pub use self::v1_22::*;

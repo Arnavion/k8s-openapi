@@ -52,9 +52,7 @@ default = ["api"]
 api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
 
 # Each feature corresponds to a supported version of Kubernetes
-earliest = ["v1_20"]
-v1_20 = []
-v1_21 = []
+earliest = ["v1_22"]
 v1_22 = []
 v1_23 = []
 v1_24 = []

@@ -318,11 +318,9 @@ pub(crate) fn remove_delete_operations_query_parameters(spec: &mut crate::swagge
     }
 }
 
-// Read operations have `exact` and `export` parameters used for server-side export, and a `pretty` parameter to pretty-print the output.
-// The first two were removed in 1.21, were deprecated and known to be broken before that, and would've caused the response to not be able to be parsed
-// with the corresponding response type anyway. And the third is not useful for programmatic clients. So this fixup removes these parameters.
+// Read operations have a `pretty` parameter to pretty-print the output. This is not useful for programmatic clients, so this fixup removes it.
 //
-// Since almost all read operations have only these parameters, such operations have their optional parameters type eliminated entirely as a result.
+// Since almost all read operations have only this parameter, such operations have their optional parameters type eliminated entirely as a result.
 // To be precise, the only read operation that still has optional parameters is `readCoreV1NamespacedPodLog`.
 pub(crate) fn remove_read_operations_query_parameters(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
     let mut found = false;
@@ -330,7 +328,7 @@ pub(crate) fn remove_read_operations_query_parameters(spec: &mut crate::swagger2
     for operation in &mut spec.operations {
         if operation.kubernetes_action == Some(crate::swagger20::KubernetesAction::Get) {
             operation.parameters.retain(|p| match &*p.name {
-                "exact" | "export" | "pretty" => { found = true; false }
+                "pretty" => { found = true; false }
                 _ => true,
             });
         }
@@ -971,10 +969,7 @@ pub(crate) fn response_types(spec: &mut crate::swagger20::Spec) -> Result<(), cr
 
                 let mut response_status_codes: Vec<_> = responses.keys().copied().collect();
                 response_status_codes.sort();
-                if
-                    response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] &&
-                    response_status_codes != [http::StatusCode::OK] // 1.21 and earlier did not have 201
-                {
+                if response_status_codes != [http::StatusCode::OK, http::StatusCode::CREATED] {
                     return Err(format!("operation {} does not have the expected response status codes of a patch operation: {response_status_codes:?}",
                         operation.id).into());
                 }

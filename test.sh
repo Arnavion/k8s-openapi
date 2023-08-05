@@ -38,8 +38,6 @@
 set -euo pipefail
 
 declare -A K8S_VERSIONS=(
-    ['1.20']='1.20.15'
-    ['1.21']='1.21.14'
     ['1.22']='1.22.17'
     ['1.23']='1.23.17'
     ['1.24']='1.24.16'
@@ -50,8 +48,6 @@ declare -A K8S_VERSIONS=(
 
 # https://github.com/kubernetes-sigs/kind/releases
 declare -A KIND_VERSIONS=(
-    ['1.20']='0.20.0'
-    ['1.21']='0.20.0'
     ['1.22']='0.20.0'
     ['1.23']='0.20.0'
     ['1.24']='0.20.0'

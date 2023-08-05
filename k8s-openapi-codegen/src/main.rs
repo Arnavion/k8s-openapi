@@ -126,13 +126,13 @@ async fn main() -> Result<(), Error> {
 struct Options {
     /// This parameter specifies the versions of Kubernetes that the API bindings should be generated for.
     ///
-    /// `--generate=1.20` means "generate bindings for Kubernetes v1.20,
+    /// `--generate=1.27` means "generate bindings for Kubernetes v1.27,
     /// using that version's OpenAPI spec from the https://github.com/kubernetes/kubernetes repository".
     ///
-    /// `--generate=1.20:https://example.org/swagger.json` means "generate bindings for v1.20
+    /// `--generate=1.27:https://example.org/swagger.json` means "generate bindings for v1.27
     /// using the OpenAPI spec at the URL https://example.org/swagger.json".
     ///
-    /// `--generate=1.20:file:///path/to/swagger.json` means "generate binding for v1.20,
+    /// `--generate=1.27:file:///path/to/swagger.json` means "generate binding for v1.27,
     /// using the OpenAPI spec in the file /path/to/swagger.json".
     ///
     /// This parameter can be specified multiple times to generate bindings for multiple versions.
