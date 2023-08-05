@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ReadClusterCIDRResponse","ReadIPAddressResponse"],"struct":["ClusterCIDR","ClusterCIDRSpec","IPAddress","IPAddressSpec","ParentReference"]};

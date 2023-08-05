@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ReadCertificateSigningRequestApprovalResponse","ReadCertificateSigningRequestResponse","ReadCertificateSigningRequestStatusResponse"],"struct":["CertificateSigningRequest","CertificateSigningRequestCondition","CertificateSigningRequestSpec","CertificateSigningRequestStatus"]};

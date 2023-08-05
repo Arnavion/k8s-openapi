@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ReadLeaseResponse"],"struct":["Lease","LeaseSpec"]};

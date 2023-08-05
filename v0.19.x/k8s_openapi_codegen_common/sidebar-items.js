@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["GenerateSchema"],"fn":["get_rust_ident","run","write_operation"],"mod":["swagger20"],"struct":["Error","RunResult"],"trait":["MapNamespace","RunState"]};
