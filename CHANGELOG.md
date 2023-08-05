@@ -1,3 +1,32 @@
+# v0.19.0 (2023-08-05)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.27 under the `v1_27` feature.
+
+- FEATURE: The `k8s-openapi` now has two additional Cargo features `earliest` and `latest`, which select the earliest and latest supported version. For example, in this release, `earliest` is equivalent to `v1_20` and `latest` is equivalent to `v1_27`.
+
+Corresponding Kubernetes API server versions:
+
+- v1.20.15
+- v1.21.14
+- v1.22.17
+- v1.23.17
+- v1.24.16
+- v1.25.12
+- v1.26.7
+- v1.27.4
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes.
+
+---
+
 # v0.18.0 (2023-04-07)
 
 ## k8s-openapi
