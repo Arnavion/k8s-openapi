@@ -2,7 +2,7 @@
 name = "k8s-openapi-codegen-common"
 version = "0.19.0"
 license = "Apache-2.0"
-authors = ["Arnavion <me@arnavion.dev>"]
+authors = ["Arnav Singh <me@arnavion.dev>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Common code for the k8s-openapi code generator and k8s-openapi-derive"
 documentation = "https://arnavion.github.io/k8s-openapi/v0.19.x/k8s_openapi_codegen_common/"

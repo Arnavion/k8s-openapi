@@ -1,9 +1,10 @@
 [package]
 name = "k8s-openapi-tests"
 version = "0.1.0"
-authors = ["Arnavion <me@arnavion.dev>"]
-publish = false
+license = "Apache-2.0"
+authors = ["Arnav Singh <me@arnavion.dev>"]
 edition = "2021"
+publish = false
 include = [
     "build.rs",
     "Cargo.toml",
