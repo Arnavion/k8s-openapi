@@ -6,9 +6,14 @@ pub(crate) fn generate(
     derives: Option<Derives>,
     vis: &str,
 ) -> Result<(), crate::Error> {
-    let type_comment: String =
+    let type_comment =
         type_comment
-        .map(|type_comment| crate::get_comment_text(type_comment, "").map(|line| format!("///{line}\n")).collect())
+        .map(|type_comment| crate::get_comment_text(type_comment, "").fold(String::new(), |mut result, line| {
+            result.push_str("///");
+            result.push_str(&line);
+            result.push('\n');
+            result
+        }))
         .unwrap_or_default();
 
     let type_feature_attribute =
