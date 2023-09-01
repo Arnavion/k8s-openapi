@@ -36,21 +36,14 @@ chrono = { version = "0.4.1", default-features = false, features = [
     "alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
     "serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
 ] }
-http = { version = "0.2", optional = true, default-features = false }
-percent-encoding = { version = "2", optional = true, default-features = false }
 schemars = { version = "0.8", optional = true, default-features = false }
 serde = { version = "1", default-features = false }
 serde_json = { version = "1", default-features = false, features = [
     "alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
 ] }
 serde-value = { version = "0.7", default-features = false }
-url = { version = "2", optional = true, default-features = false }
 
 [features]
-default = ["api"]
-
-api = ["http", "percent-encoding", "url"] # Enables API operation functions and response types. If disabled, only the resource types will be exported.
-
 # Each feature corresponds to a supported version of Kubernetes
 earliest = ["v1_22"]
 v1_22 = []

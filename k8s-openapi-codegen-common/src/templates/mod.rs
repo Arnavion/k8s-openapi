@@ -16,11 +16,7 @@ pub(crate) mod json_schema_props_or;
 
 pub(crate) mod newtype;
 
-pub(crate) mod operation_response_common;
-
 pub(crate) mod patch;
-
-pub(crate) mod query_string_optional;
 
 pub(crate) mod r#struct;
 

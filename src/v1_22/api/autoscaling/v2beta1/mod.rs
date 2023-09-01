@@ -16,8 +16,6 @@ pub use self::external_metric_status::ExternalMetricStatus;
 
 mod horizontal_pod_autoscaler;
 pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerResponse;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerStatusResponse;
 
 mod horizontal_pod_autoscaler_condition;
 pub use self::horizontal_pod_autoscaler_condition::HorizontalPodAutoscalerCondition;

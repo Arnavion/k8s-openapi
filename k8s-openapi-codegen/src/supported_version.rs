@@ -58,33 +58,28 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
             ],
 
             SupportedVersion::V1_23 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
             ],
 
             SupportedVersion::V1_24 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
             ],
 
             SupportedVersion::V1_25 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
             ],
 
             SupportedVersion::V1_26 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
@@ -93,7 +88,6 @@ impl SupportedVersion {
             SupportedVersion::V1_27 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::pod_exec_command_parameter_type,
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
@@ -104,16 +98,9 @@ impl SupportedVersion {
             crate::fixups::special::json_ty::json_schema_props_or_array,
             crate::fixups::special::json_ty::json_schema_props_or_bool,
             crate::fixups::special::json_ty::json_schema_props_or_string_array,
-            crate::fixups::special::create_delete_optional,
-            crate::fixups::special::create_optionals,
             crate::fixups::special::patch,
-            crate::fixups::special::remove_delete_collection_operations_query_parameters,
-            crate::fixups::special::remove_delete_operations_query_parameters,
-            crate::fixups::special::remove_read_operations_query_parameters,
-            crate::fixups::special::separate_watch_from_list_operations,
             crate::fixups::special::watch_event,
-            crate::fixups::special::list, // Must run after separate_watch_from_list_operations
-            crate::fixups::special::response_types,
+            crate::fixups::special::list,
             crate::fixups::special::resource_metadata_not_optional,
         ];
 

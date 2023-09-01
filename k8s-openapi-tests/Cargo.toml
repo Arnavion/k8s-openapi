@@ -15,16 +15,19 @@ include = [
 base64 = { version = "0.21", default-features = false, features = [
     "alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
+bytes = { version = "1", default-features = false}
 dirs = { version = "5", default-features = false }
 futures-core = { version = "0.3", default-features = false }
 futures-io = { version = "0.3", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
     "io", # for futures_util::StreamExt::into_async_read
 ] }
+http = { version = "0.2", default-features = false }
 k8s-openapi = { path = "..", features = [
     "schemars", # for resource types: schemars::JsonSchema
 ] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
+percent-encoding = { version = "2", default-features = false }
 pin-project = { version = "1", default-features = false }
 reqwest = { version = "0.11.2", default-features = false, features = [
     "rustls-tls-manual-roots", # for TLS support
@@ -42,6 +45,7 @@ tokio = { version = "1", default-features = false, features = [
     "test-util", # for tokio::time::pause
     "time", # for tokio::time::sleep
 ] }
+url = { version = "2", default-features = false }
 
 [features]
 test_v1_22 = ["k8s-openapi/v1_22"]

@@ -13,57 +13,6 @@ pub struct TokenRequest {
     pub status: Option<crate::api::authentication::v1::TokenRequestStatus>,
 }
 
-// Begin authentication.k8s.io/v1/TokenRequest
-
-// Generated from operation createCoreV1NamespacedServiceAccountToken
-
-impl TokenRequest {
-    /// create token of a ServiceAccount
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `name`
-    ///
-    ///     name of the TokenRequest
-    ///
-    /// * `namespace`
-    ///
-    ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `body`
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    #[cfg(feature = "api")]
-    pub fn create_service_account_token(
-        name: &str,
-        namespace: &str,
-        body: &crate::api::authentication::v1::TokenRequest,
-        optional: crate::CreateOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
-        let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}/token?",
-            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
-        );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        optional.__serialize(&mut __query_pairs);
-        let __url = __query_pairs.finish();
-
-        let __request = crate::http::Request::post(__url);
-        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
-        match __request.body(__body) {
-            Ok(request) => Ok((request, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-// End authentication.k8s.io/v1/TokenRequest
-
 impl crate::Resource for TokenRequest {
     const API_VERSION: &'static str = "authentication.k8s.io/v1";
     const GROUP: &'static str = "authentication.k8s.io";

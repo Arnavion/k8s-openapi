@@ -13,7 +13,6 @@ pub use self::endpoint_port::EndpointPort;
 
 mod endpoint_slice;
 pub use self::endpoint_slice::EndpointSlice;
-#[cfg(feature = "api")] pub use self::endpoint_slice::ReadEndpointSliceResponse;
 
 mod for_zone;
 pub use self::for_zone::ForZone;

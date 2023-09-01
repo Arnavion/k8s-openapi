@@ -1,11 +1,9 @@
 
 mod csi_storage_capacity;
 pub use self::csi_storage_capacity::CSIStorageCapacity;
-#[cfg(feature = "api")] pub use self::csi_storage_capacity::ReadCSIStorageCapacityResponse;
 
 mod volume_attachment;
 pub use self::volume_attachment::VolumeAttachment;
-#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentResponse;
 
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;

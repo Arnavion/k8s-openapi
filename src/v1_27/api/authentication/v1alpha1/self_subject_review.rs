@@ -10,44 +10,6 @@ pub struct SelfSubjectReview {
     pub status: Option<crate::api::authentication::v1alpha1::SelfSubjectReviewStatus>,
 }
 
-// Begin authentication.k8s.io/v1alpha1/SelfSubjectReview
-
-// Generated from operation createAuthenticationV1alpha1SelfSubjectReview
-
-impl SelfSubjectReview {
-    /// create a SelfSubjectReview
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `body`
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    #[cfg(feature = "api")]
-    pub fn create(
-        body: &crate::api::authentication::v1alpha1::SelfSubjectReview,
-        optional: crate::CreateOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
-        let __url = "/apis/authentication.k8s.io/v1alpha1/selfsubjectreviews?".to_owned();
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        optional.__serialize(&mut __query_pairs);
-        let __url = __query_pairs.finish();
-
-        let __request = crate::http::Request::post(__url);
-        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
-        match __request.body(__body) {
-            Ok(request) => Ok((request, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-// End authentication.k8s.io/v1alpha1/SelfSubjectReview
-
 impl crate::Resource for SelfSubjectReview {
     const API_VERSION: &'static str = "authentication.k8s.io/v1alpha1";
     const GROUP: &'static str = "authentication.k8s.io";

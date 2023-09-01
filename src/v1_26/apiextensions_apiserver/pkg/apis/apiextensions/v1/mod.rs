@@ -7,8 +7,6 @@ pub use self::custom_resource_conversion::CustomResourceConversion;
 
 mod custom_resource_definition;
 pub use self::custom_resource_definition::CustomResourceDefinition;
-#[cfg(feature = "api")] pub use self::custom_resource_definition::ReadCustomResourceDefinitionResponse;
-#[cfg(feature = "api")] pub use self::custom_resource_definition::ReadCustomResourceDefinitionStatusResponse;
 
 mod custom_resource_definition_condition;
 pub use self::custom_resource_definition_condition::CustomResourceDefinitionCondition;

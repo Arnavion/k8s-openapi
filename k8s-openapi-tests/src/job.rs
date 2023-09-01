@@ -46,11 +46,9 @@ async fn create() {
         ..Default::default()
     };
 
-    let (request, response_body) =
-        batch::Job::create("default", &job, Default::default())
-        .expect("couldn't create job");
-    let job: batch::Job = match client.get_single_value(request, response_body).await {
-        (k8s_openapi::CreateResponse::Created(job), _) => job,
+    let (request, response_body) = crate::clientset::create_namespaced::<batch::Job>("default", &job);
+    let job = match client.get_single_value(request, response_body).await {
+        (crate::clientset::CreateResponse::Created(job), _) => job,
         (other, status_code) => panic!("{other:?} {status_code}"),
     };
 
@@ -70,9 +68,9 @@ async fn create() {
 
     // Wait for job to fail
     loop {
-        let (request, response_body) = batch::Job::read(&job_name, "default").expect("couldn't get job");
-        let job: batch::Job = match client.get_single_value(request, response_body).await {
-            (batch::ReadJobResponse::Ok(job), _) => job,
+        let (request, response_body) = crate::clientset::read_namespaced::<batch::Job>("default", &job_name);
+        let job = match client.get_single_value(request, response_body).await {
+            (crate::clientset::ReadResponse::Ok(job), _) => job,
             (other, status_code) => panic!("{other:?} {status_code}"),
         };
 
@@ -89,9 +87,9 @@ async fn create() {
 
     // Find a pod of the failed job using owner reference
     let job_pod_status = loop {
-        let (request, response_body) = api::Pod::list("default", Default::default()).expect("couldn't list pods");
+        let (request, response_body) = crate::clientset::list_namespaced::<api::Pod>("default");
         let pod_list = match client.get_single_value(request, response_body).await {
-            (k8s_openapi::ListResponse::Ok(pod_list), _) => pod_list,
+            (crate::clientset::ListResponse::Ok(pod_list), _) => pod_list,
             (other, status_code) => panic!("{other:?} {status_code}"),
         };
 
@@ -121,25 +119,18 @@ async fn create() {
         .terminated.expect("couldn't get job pod container termination info");
     assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
-    let (request, response_body) = batch::Job::delete(&job_name, "default", Default::default()).expect("couldn't delete job");
+    let (request, response_body) = crate::clientset::delete_namespaced::<batch::Job>("default", &job_name);
     match client.get_single_value(request, response_body).await {
-        (k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+        (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
     // Delete all pods of the job using label selector
-    let (request, response_body) =
-        api::Pod::delete_collection(
-            "default",
-            Default::default(),
-            k8s_openapi::ListOptional {
-                label_selector: Some("job-name=k8s-openapi-tests-create-job"),
-                ..Default::default()
-            },
-        )
-        .expect("couldn't delete pods collection");
+    let (request, response_body) = crate::clientset::delete_collection_namespaced::<api::Pod>("default", crate::clientset::ListOptional {
+        label_selector: Some("job-name=k8s-openapi-tests-create-job"),
+    });
     match client.get_single_value(request, response_body).await {
-        (k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+        (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 }

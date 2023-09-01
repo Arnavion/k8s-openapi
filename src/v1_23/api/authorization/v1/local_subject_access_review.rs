@@ -13,51 +13,6 @@ pub struct LocalSubjectAccessReview {
     pub status: Option<crate::api::authorization::v1::SubjectAccessReviewStatus>,
 }
 
-// Begin authorization.k8s.io/v1/LocalSubjectAccessReview
-
-// Generated from operation createAuthorizationV1NamespacedLocalSubjectAccessReview
-
-impl LocalSubjectAccessReview {
-    /// create a LocalSubjectAccessReview
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `namespace`
-    ///
-    ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `body`
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    #[cfg(feature = "api")]
-    pub fn create(
-        namespace: &str,
-        body: &crate::api::authorization::v1::LocalSubjectAccessReview,
-        optional: crate::CreateOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
-        let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?",
-            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
-        );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        optional.__serialize(&mut __query_pairs);
-        let __url = __query_pairs.finish();
-
-        let __request = crate::http::Request::post(__url);
-        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
-        match __request.body(__body) {
-            Ok(request) => Ok((request, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-// End authorization.k8s.io/v1/LocalSubjectAccessReview
-
 impl crate::Resource for LocalSubjectAccessReview {
     const API_VERSION: &'static str = "authorization.k8s.io/v1";
     const GROUP: &'static str = "authorization.k8s.io";

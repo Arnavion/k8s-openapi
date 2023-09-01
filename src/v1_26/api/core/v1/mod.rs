@@ -52,11 +52,9 @@ pub use self::component_condition::ComponentCondition;
 
 mod component_status;
 pub use self::component_status::ComponentStatus;
-#[cfg(feature = "api")] pub use self::component_status::ReadComponentStatusResponse;
 
 mod config_map;
 pub use self::config_map::ConfigMap;
-#[cfg(feature = "api")] pub use self::config_map::ReadConfigMapResponse;
 
 mod config_map_env_source;
 pub use self::config_map_env_source::ConfigMapEnvSource;
@@ -123,7 +121,6 @@ pub use self::endpoint_subset::EndpointSubset;
 
 mod endpoints;
 pub use self::endpoints::Endpoints;
-#[cfg(feature = "api")] pub use self::endpoints::ReadEndpointsResponse;
 
 mod env_from_source;
 pub use self::env_from_source::EnvFromSource;
@@ -142,7 +139,6 @@ pub use self::ephemeral_volume_source::EphemeralVolumeSource;
 
 mod event;
 pub use self::event::Event;
-#[cfg(feature = "api")] pub use self::event::ReadEventResponse;
 
 mod event_series;
 pub use self::event_series::EventSeries;
@@ -209,7 +205,6 @@ pub use self::lifecycle_handler::LifecycleHandler;
 
 mod limit_range;
 pub use self::limit_range::LimitRange;
-#[cfg(feature = "api")] pub use self::limit_range::ReadLimitRangeResponse;
 
 mod limit_range_item;
 pub use self::limit_range_item::LimitRangeItem;
@@ -234,8 +229,6 @@ pub use self::nfs_volume_source::NFSVolumeSource;
 
 mod namespace;
 pub use self::namespace::Namespace;
-#[cfg(feature = "api")] pub use self::namespace::ReadNamespaceResponse;
-#[cfg(feature = "api")] pub use self::namespace::ReadNamespaceStatusResponse;
 
 mod namespace_condition;
 pub use self::namespace_condition::NamespaceCondition;
@@ -248,18 +241,6 @@ pub use self::namespace_status::NamespaceStatus;
 
 mod node;
 pub use self::node::Node;
-#[cfg(feature = "api")] pub use self::node::ConnectDeleteNodeProxyOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectDeleteNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectGetNodeProxyOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectGetNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPatchNodeProxyOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPatchNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPostNodeProxyOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPostNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPutNodeProxyOptional;
-#[cfg(feature = "api")] pub use self::node::ConnectPutNodeProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::node::ReadNodeResponse;
-#[cfg(feature = "api")] pub use self::node::ReadNodeStatusResponse;
 
 mod node_address;
 pub use self::node_address::NodeAddress;
@@ -305,13 +286,9 @@ pub use self::object_reference::ObjectReference;
 
 mod persistent_volume;
 pub use self::persistent_volume::PersistentVolume;
-#[cfg(feature = "api")] pub use self::persistent_volume::ReadPersistentVolumeResponse;
-#[cfg(feature = "api")] pub use self::persistent_volume::ReadPersistentVolumeStatusResponse;
 
 mod persistent_volume_claim;
 pub use self::persistent_volume_claim::PersistentVolumeClaim;
-#[cfg(feature = "api")] pub use self::persistent_volume_claim::ReadPersistentVolumeClaimResponse;
-#[cfg(feature = "api")] pub use self::persistent_volume_claim::ReadPersistentVolumeClaimStatusResponse;
 
 mod persistent_volume_claim_condition;
 pub use self::persistent_volume_claim_condition::PersistentVolumeClaimCondition;
@@ -339,26 +316,6 @@ pub use self::photon_persistent_disk_volume_source::PhotonPersistentDiskVolumeSo
 
 mod pod;
 pub use self::pod::Pod;
-#[cfg(feature = "api")] pub use self::pod::ConnectDeletePodProxyOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectDeletePodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectGetPodAttachOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectGetPodExecOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectGetPodPortforwardOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectGetPodProxyOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectGetPodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPatchPodProxyOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPatchPodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPostPodAttachOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPostPodExecOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPostPodPortforwardOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPostPodProxyOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPostPodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPutPodProxyOptional;
-#[cfg(feature = "api")] pub use self::pod::ConnectPutPodProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::pod::ReadPodResponse;
-#[cfg(feature = "api")] pub use self::pod::ReadPodEphemeralcontainersResponse;
-#[cfg(feature = "api")] pub use self::pod::{ReadPodLogOptional, ReadPodLogResponse};
-#[cfg(feature = "api")] pub use self::pod::ReadPodStatusResponse;
 
 mod pod_affinity;
 pub use self::pod_affinity::PodAffinity;
@@ -404,7 +361,6 @@ pub use self::pod_status::PodStatus;
 
 mod pod_template;
 pub use self::pod_template::PodTemplate;
-#[cfg(feature = "api")] pub use self::pod_template::ReadPodTemplateResponse;
 
 mod pod_template_spec;
 pub use self::pod_template_spec::PodTemplateSpec;
@@ -435,8 +391,6 @@ pub use self::rbd_volume_source::RBDVolumeSource;
 
 mod replication_controller;
 pub use self::replication_controller::ReplicationController;
-#[cfg(feature = "api")] pub use self::replication_controller::ReadReplicationControllerResponse;
-#[cfg(feature = "api")] pub use self::replication_controller::ReadReplicationControllerStatusResponse;
 
 mod replication_controller_condition;
 pub use self::replication_controller_condition::ReplicationControllerCondition;
@@ -455,8 +409,6 @@ pub use self::resource_field_selector::ResourceFieldSelector;
 
 mod resource_quota;
 pub use self::resource_quota::ResourceQuota;
-#[cfg(feature = "api")] pub use self::resource_quota::ReadResourceQuotaResponse;
-#[cfg(feature = "api")] pub use self::resource_quota::ReadResourceQuotaStatusResponse;
 
 mod resource_quota_spec;
 pub use self::resource_quota_spec::ResourceQuotaSpec;
@@ -487,7 +439,6 @@ pub use self::seccomp_profile::SeccompProfile;
 
 mod secret;
 pub use self::secret::Secret;
-#[cfg(feature = "api")] pub use self::secret::ReadSecretResponse;
 
 mod secret_env_source;
 pub use self::secret_env_source::SecretEnvSource;
@@ -509,22 +460,9 @@ pub use self::security_context::SecurityContext;
 
 mod service;
 pub use self::service::Service;
-#[cfg(feature = "api")] pub use self::service::ConnectDeleteServiceProxyOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectDeleteServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectGetServiceProxyOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectGetServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPatchServiceProxyOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPatchServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPostServiceProxyOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPostServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPutServiceProxyOptional;
-#[cfg(feature = "api")] pub use self::service::ConnectPutServiceProxyWithPathOptional;
-#[cfg(feature = "api")] pub use self::service::ReadServiceResponse;
-#[cfg(feature = "api")] pub use self::service::ReadServiceStatusResponse;
 
 mod service_account;
 pub use self::service_account::ServiceAccount;
-#[cfg(feature = "api")] pub use self::service_account::ReadServiceAccountResponse;
 
 mod service_account_token_projection;
 pub use self::service_account_token_projection::ServiceAccountTokenProjection;

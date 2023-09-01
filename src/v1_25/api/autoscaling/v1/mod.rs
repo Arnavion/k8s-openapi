@@ -4,8 +4,6 @@ pub use self::cross_version_object_reference::CrossVersionObjectReference;
 
 mod horizontal_pod_autoscaler;
 pub use self::horizontal_pod_autoscaler::HorizontalPodAutoscaler;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerResponse;
-#[cfg(feature = "api")] pub use self::horizontal_pod_autoscaler::ReadHorizontalPodAutoscalerStatusResponse;
 
 mod horizontal_pod_autoscaler_spec;
 pub use self::horizontal_pod_autoscaler_spec::HorizontalPodAutoscalerSpec;
@@ -15,10 +13,6 @@ pub use self::horizontal_pod_autoscaler_status::HorizontalPodAutoscalerStatus;
 
 mod scale;
 pub use self::scale::Scale;
-#[cfg(feature = "api")] pub use self::scale::ReadDeploymentScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadReplicaSetScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadStatefulSetScaleResponse;
-#[cfg(feature = "api")] pub use self::scale::ReadReplicationControllerScaleResponse;
 
 mod scale_spec;
 pub use self::scale_spec::ScaleSpec;

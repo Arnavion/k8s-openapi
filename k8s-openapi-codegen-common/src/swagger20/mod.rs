@@ -46,10 +46,10 @@ impl<'de> serde::Deserialize<'de> for Spec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[derive(Debug, serde::Deserialize)]
         pub struct InnerSpec {
-            swagger: String,
             info: Info,
             definitions: std::collections::BTreeMap<DefinitionPath, Schema>,
             paths: std::collections::BTreeMap<Path, InnerPathItem>,
+            swagger: String,
         }
 
         #[derive(Debug, serde::Deserialize)]
@@ -59,77 +59,16 @@ impl<'de> serde::Deserialize<'de> for Spec {
             patch: Option<InnerOperation>,
             post: Option<InnerOperation>,
             put: Option<InnerOperation>,
-            #[serde(default)]
-            parameters: Vec<std::sync::Arc<Parameter>>,
         }
 
         #[derive(Debug, serde::Deserialize)]
         struct InnerOperation {
-            description: Option<String>,
             #[serde(rename = "operationId")]
             id: String,
             #[serde(rename = "x-kubernetes-action")]
             kubernetes_action: Option<KubernetesAction>,
             #[serde(rename = "x-kubernetes-group-version-kind")]
             kubernetes_group_kind_version: Option<KubernetesGroupKindVersion>,
-            #[serde(default)]
-            parameters: Vec<std::sync::Arc<Parameter>>,
-            responses: std::collections::BTreeMap<String, InnerResponse>,
-            tags: Option<(String,)>,
-        }
-
-        #[derive(Debug, serde::Deserialize)]
-        struct InnerResponse {
-            schema: Option<Schema>,
-        }
-
-        fn parse_operation<'de, D>(
-            value: InnerOperation,
-            method: Method,
-            path: Path,
-            mut parameters: Vec<std::sync::Arc<Parameter>>,
-        ) -> Result<Operation, D::Error> where D: serde::Deserializer<'de> {
-            let responses: Result<_, _> =
-                value.responses.into_iter()
-                .filter_map(|(status_code_str, response)| {
-                    let Ok(status_code) = status_code_str.parse() else {
-                        return Some(Err(serde::de::Error::invalid_value(
-                            serde::de::Unexpected::Str(&status_code_str),
-                            &"string representation of an HTTP status code")));
-                    };
-                    let schema = response.schema?;
-                    Some(Ok((status_code, schema)))
-                })
-                .collect();
-
-            for parameter in value.parameters {
-                if let Some(p) = parameters.iter_mut().find(|p| p.name == parameter.name) {
-                    *p = parameter;
-                }
-                else {
-                    parameters.push(parameter);
-                }
-            }
-
-            if method == Method::Get {
-                for parameter in &parameters {
-                    if parameter.location == ParameterLocation::Body {
-                        return Err(serde::de::Error::custom(format!("Operation {} has method GET but has a body parameter {}", value.id, parameter.name)));
-                    }
-                }
-            }
-
-            Ok(Operation {
-                description: value.description,
-                id: value.id,
-                path,
-                kubernetes_action: value.kubernetes_action,
-                kubernetes_group_kind_version: value.kubernetes_group_kind_version,
-                method,
-                parameters,
-                responses: OperationResponses::Map(responses?),
-                tag: value.tags.map(|t|t.0),
-            })
         }
 
         let result: InnerSpec = serde::Deserialize::deserialize(deserializer)?;
@@ -142,23 +81,48 @@ impl<'de> serde::Deserialize<'de> for Spec {
 
         for (path, path_item) in result.paths {
             if let Some(delete) = path_item.delete {
-                operations.push(parse_operation::<D>(delete, Method::Delete, path.clone(), path_item.parameters.clone())?);
+                operations.push(Operation {
+                    id: delete.id,
+                    kubernetes_action: delete.kubernetes_action,
+                    kubernetes_group_kind_version: delete.kubernetes_group_kind_version,
+                    path: path.clone(),
+                });
             }
 
             if let Some(get) = path_item.get {
-                operations.push(parse_operation::<D>(get, Method::Get, path.clone(), path_item.parameters.clone())?);
+                operations.push(Operation {
+                    id: get.id,
+                    kubernetes_action: get.kubernetes_action,
+                    kubernetes_group_kind_version: get.kubernetes_group_kind_version,
+                    path: path.clone(),
+                });
             }
 
             if let Some(patch) = path_item.patch {
-                operations.push(parse_operation::<D>(patch, Method::Patch, path.clone(), path_item.parameters.clone())?);
+                operations.push(Operation {
+                    id: patch.id,
+                    kubernetes_action: patch.kubernetes_action,
+                    kubernetes_group_kind_version: patch.kubernetes_group_kind_version,
+                    path: path.clone(),
+                });
             }
 
             if let Some(post) = path_item.post {
-                operations.push(parse_operation::<D>(post, Method::Post, path.clone(), path_item.parameters.clone())?);
+                operations.push(Operation {
+                    id: post.id,
+                    kubernetes_action: post.kubernetes_action,
+                    kubernetes_group_kind_version: post.kubernetes_group_kind_version,
+                    path: path.clone(),
+                });
             }
 
             if let Some(put) = path_item.put {
-                operations.push(parse_operation::<D>(put, Method::Put, path, path_item.parameters)?);
+                operations.push(Operation {
+                    id: put.id,
+                    kubernetes_action: put.kubernetes_action,
+                    kubernetes_group_kind_version: put.kubernetes_group_kind_version,
+                    path,
+                });
             }
         }
 

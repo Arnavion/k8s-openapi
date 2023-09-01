@@ -1,12 +1,9 @@
 
 mod controller_revision;
 pub use self::controller_revision::ControllerRevision;
-#[cfg(feature = "api")] pub use self::controller_revision::ReadControllerRevisionResponse;
 
 mod daemon_set;
 pub use self::daemon_set::DaemonSet;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetResponse;
-#[cfg(feature = "api")] pub use self::daemon_set::ReadDaemonSetStatusResponse;
 
 mod daemon_set_condition;
 pub use self::daemon_set_condition::DaemonSetCondition;
@@ -22,8 +19,6 @@ pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
 
 mod deployment;
 pub use self::deployment::Deployment;
-#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentResponse;
-#[cfg(feature = "api")] pub use self::deployment::ReadDeploymentStatusResponse;
 
 mod deployment_condition;
 pub use self::deployment_condition::DeploymentCondition;
@@ -39,8 +34,6 @@ pub use self::deployment_strategy::DeploymentStrategy;
 
 mod replica_set;
 pub use self::replica_set::ReplicaSet;
-#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetResponse;
-#[cfg(feature = "api")] pub use self::replica_set::ReadReplicaSetStatusResponse;
 
 mod replica_set_condition;
 pub use self::replica_set_condition::ReplicaSetCondition;
@@ -62,8 +55,6 @@ pub use self::rolling_update_stateful_set_strategy::RollingUpdateStatefulSetStra
 
 mod stateful_set;
 pub use self::stateful_set::StatefulSet;
-#[cfg(feature = "api")] pub use self::stateful_set::ReadStatefulSetResponse;
-#[cfg(feature = "api")] pub use self::stateful_set::ReadStatefulSetStatusResponse;
 
 mod stateful_set_condition;
 pub use self::stateful_set_condition::StatefulSetCondition;

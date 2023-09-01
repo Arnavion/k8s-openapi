@@ -4,10 +4,11 @@
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
     clippy::default_trait_access,
+    clippy::large_enum_variant,
     clippy::let_and_return,
-    clippy::let_underscore_untyped,
     clippy::let_unit_value,
     clippy::too_many_lines,
+    clippy::type_complexity,
 )]
 
 use std::{future::Future, pin::Pin, task::{Context, Poll}};
@@ -15,7 +16,7 @@ use std::{future::Future, pin::Pin, task::{Context, Poll}};
 use futures_core::Stream;
 use futures_io::AsyncRead;
 use futures_util::{StreamExt, TryStreamExt};
-use k8s_openapi::{http, serde_json};
+use k8s_openapi::serde_json;
 
 #[derive(Debug)]
 enum Client {
@@ -161,8 +162,8 @@ impl Client {
     async fn get_single_value<R>(
         &mut self,
         request: http::Request<Vec<u8>>,
-        response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
-    ) -> (R, http::StatusCode) where R: k8s_openapi::Response {
+        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
+    ) -> (R, http::StatusCode) where R: clientset::Response {
         let mut stream = std::pin::pin!(self.get_multiple_values(request, response_body));
         stream.next().await.expect("unexpected EOF")
     }
@@ -170,8 +171,8 @@ impl Client {
     fn get_multiple_values<'a, R>(
         &'a mut self,
         request: http::Request<Vec<u8>>,
-        response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
-    ) -> impl Stream<Item = (R, http::StatusCode)> + 'a where R: k8s_openapi::Response + 'a {
+        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
+    ) -> impl Stream<Item = (R, http::StatusCode)> + 'a where R: clientset::Response + 'a {
         MultipleValuesStream::ExecutingRequest {
             f: self.execute(request),
             response_body,
@@ -313,12 +314,12 @@ enum MultipleValuesStream<'a, TResponseFuture, TResponse, R> {
     ExecutingRequest {
         #[pin]
         f: TResponseFuture,
-        response_body: fn(http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
     },
     Response {
         #[pin]
         response: ClientResponse<'a, TResponse>,
-        response_body: k8s_openapi::ResponseBody<R>,
+        response_body: clientset::ResponseBody<R>,
         buf: Box<[u8; 4096]>,
     },
 }
@@ -326,7 +327,7 @@ enum MultipleValuesStream<'a, TResponseFuture, TResponse, R> {
 impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TResponseFuture, TResponse, R> where
     TResponseFuture: Future<Output = ClientResponse<'a, TResponse>>,
     ClientResponse<'a, TResponse>: AsyncRead,
-    R: k8s_openapi::Response,
+    R: clientset::Response,
 {
     type Item = (R, http::StatusCode);
 
@@ -362,7 +363,7 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
                     loop {
                         match response_body.parse() {
                             Ok(value) => return Poll::Ready(Some((value, response_body.status_code))),
-                            Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+                            Err(clientset::ResponseError::NeedMoreData) => (),
                             Err(err) => panic!("{err}"),
                         }
 
@@ -468,8 +469,6 @@ mod bytestring {
 }
 
 mod methodstring {
-    use super::http;
-
     pub(super) fn deserialize<'de, D>(deserializer: D) -> Result<http::Method, D::Error> where D: serde::Deserializer<'de> {
         struct Visitor;
 
@@ -500,6 +499,8 @@ fn deserialize_null_to_empty_vec<'de, D, T>(deserializer: D) -> Result<Vec<T>, D
 
 mod api_versions;
 
+mod clientset;
+
 mod custom_resource_definition;
 
 mod deserialize_leniency;
@@ -507,8 +508,6 @@ mod deserialize_leniency;
 mod deployment;
 
 mod job;
-
-mod logs;
 
 mod patch;
 

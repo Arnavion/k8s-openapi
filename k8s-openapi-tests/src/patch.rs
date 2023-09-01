@@ -45,11 +45,9 @@ async fn deployment() {
         spec: Some(deployment_spec),
         ..Default::default()
     };
-    let (request, response_body) =
-        apps::Deployment::create("default", &deployment, Default::default())
-        .expect("couldn't create deployment");
+    let (request, response_body) = crate::clientset::create_namespaced::<apps::Deployment>("default", &deployment);
     match client.get_single_value(request, response_body).await {
-        (k8s_openapi::CreateResponse::Created(_), _) => (),
+        (crate::clientset::CreateResponse::Created(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
@@ -119,39 +117,28 @@ async fn deployment() {
 
 
     // Delete deployment
-    let (request, response_body) =
-        apps::Deployment::delete("k8s-openapi-tests-patch-deployment", "default", Default::default())
-        .expect("couldn't delete deployment");
+    let (request, response_body) = crate::clientset::delete_namespaced::<apps::Deployment>("default", "k8s-openapi-tests-patch-deployment");
     match client.get_single_value(request, response_body).await {
-        (k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+        (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
     // Delete all pods of the deployment using label selector
-    let (request, response_body) =
-        api::Pod::delete_collection(
-            "default",
-            Default::default(),
-            k8s_openapi::ListOptional {
-                label_selector: Some("k8s-openapi-tests-patch-deployment-key=k8s-openapi-tests-patch-deployment-value"),
-                ..Default::default()
-            },
-        )
-        .expect("couldn't delete pods collection");
+    let (request, response_body) = crate::clientset::delete_collection_namespaced::<api::Pod>("default", crate::clientset::ListOptional {
+        label_selector: Some("k8s-openapi-tests-patch-deployment-key=k8s-openapi-tests-patch-deployment-value"),
+    });
     match client.get_single_value(request, response_body).await {
-        (k8s_openapi::DeleteResponse::OkStatus(_) | k8s_openapi::DeleteResponse::OkValue(_), _) => (),
+        (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 }
 
 /// Patch the deployment with the given path, and assert that the patched deployment has a container with the expected image
 async fn patch_and_assert_container_has_image(client: &mut crate::Client, patch: &meta::Patch, expected_image: &str) {
-    let (request, response_body) =
-        apps::Deployment::patch("k8s-openapi-tests-patch-deployment", "default", patch, Default::default())
-        .expect("couldn't create patch");
+    let (request, response_body) = crate::clientset::patch_namespaced::<apps::Deployment>("default", "k8s-openapi-tests-patch-deployment", patch);
 
     let deployment = match client.get_single_value(request, response_body).await {
-        (k8s_openapi::PatchResponse::Ok(deployment), _) => deployment,
+        (crate::clientset::PatchResponse::Ok(deployment), _) => deployment,
         (other, status_code) => panic!("{other:?} {status_code}"),
     };
 

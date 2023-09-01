@@ -1,6 +1,6 @@
 [
   {
-    "request_url": "/apis/apps/v1/namespaces/kube-system/deployments?",
+    "request_url": "/apis/apps/v1/namespaces/kube-system/deployments",
     "request_method": "GET",
     "request_body": "",
     "request_content_type": null,

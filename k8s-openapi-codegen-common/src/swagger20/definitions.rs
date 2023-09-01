@@ -315,22 +315,6 @@ pub enum Type {
     // Special type for lists
     ListDef { metadata: Box<SchemaKind> }, // The definition of the List type
     ListRef { items: Box<SchemaKind> }, // A reference to a specialization of the List type for a particular resource type, eg List<Pod> for PodList
-
-    // Special types for common parameters of some API operations
-    CreateOptional(std::collections::BTreeMap<PropertyName, Schema>),
-    DeleteOptional(std::collections::BTreeMap<PropertyName, Schema>),
-    ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
-    PatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
-    ReplaceOptional(std::collections::BTreeMap<PropertyName, Schema>),
-    WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
-
-    // Special types for responses of some API operations
-    CreateResponse,
-    DeleteResponse,
-    ListResponse,
-    PatchResponse,
-    ReplaceResponse,
-    WatchResponse,
 }
 
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]

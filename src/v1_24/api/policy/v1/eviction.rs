@@ -10,57 +10,6 @@ pub struct Eviction {
     pub metadata: crate::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 }
 
-// Begin policy/v1/Eviction
-
-// Generated from operation createCoreV1NamespacedPodEviction
-
-impl Eviction {
-    /// create eviction of a Pod
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`crate::CreateResponse`]`<Self>>` constructor, or [`crate::CreateResponse`]`<Self>` directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `name`
-    ///
-    ///     name of the Eviction
-    ///
-    /// * `namespace`
-    ///
-    ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `body`
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    #[cfg(feature = "api")]
-    pub fn create_pod(
-        name: &str,
-        namespace: &str,
-        body: &crate::api::policy::v1::Eviction,
-        optional: crate::CreateOptional<'_>,
-    ) -> Result<(crate::http::Request<Vec<u8>>, fn(crate::http::StatusCode) -> crate::ResponseBody<crate::CreateResponse<Self>>), crate::RequestError> {
-        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?",
-            name = crate::percent_encoding::percent_encode(name.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
-            namespace = crate::percent_encoding::percent_encode(namespace.as_bytes(), crate::percent_encoding2::PATH_SEGMENT_ENCODE_SET),
-        );
-        let mut __query_pairs = crate::url::form_urlencoded::Serializer::new(__url);
-        optional.__serialize(&mut __query_pairs);
-        let __url = __query_pairs.finish();
-
-        let __request = crate::http::Request::post(__url);
-        let __body = crate::serde_json::to_vec(body).map_err(crate::RequestError::Json)?;
-        let __request = __request.header(crate::http::header::CONTENT_TYPE, crate::http::header::HeaderValue::from_static("application/json"));
-        match __request.body(__body) {
-            Ok(request) => Ok((request, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-// End policy/v1/Eviction
-
 impl crate::Resource for Eviction {
     const API_VERSION: &'static str = "policy/v1";
     const GROUP: &'static str = "policy";

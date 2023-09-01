@@ -1,4 +1,4 @@
-This crate is a Rust Kubernetes API client. It contains bindings for the resources and operations in the Kubernetes client API, auto-generated from the OpenAPI spec.
+This crate is a Rust Kubernetes API client. It contains bindings for the resources in the Kubernetes client API, auto-generated from the OpenAPI spec.
 
 [crates.io](https://crates.io/crates/k8s-openapi)
 
@@ -15,59 +15,6 @@ This crate is *not* generated using Swagger or the OpenAPI Generator directly, a
 The upstream OpenAPI spec is not written by hand; it's itself generated from the API server's Go code. As such, the spec makes mistakes when trying to convert the representations of Go types to OpenAPI, such as incorrectly representing the `JSON` type used in CRD validation, and incorrectly representing the type of objects inside a `WatchEvent`. A client generated naively from the spec inherits all these mistakes, and it is hard for such a client to fix them in "post".
 
 Since this crate uses a custom code generator, it is able to work around these mistakes and emit correct bindings. See the list of fixes [here](https://github.com/Arnavion/k8s-openapi/blob/master/k8s-openapi-codegen/src/fixups/upstream_bugs.rs) and the breakdown of fixes applied to each Kubernetes version [here.](https://github.com/Arnavion/k8s-openapi/blob/master/k8s-openapi-codegen/src/supported_version.rs)
-
-
-### Better code organization, closer to the Go API
-
-Upstream's generated clients tend to place all the API operations in massive top-level modules. For example, the Python client contains a single [CoreV1Api class](https://github.com/kubernetes-client/python/blob/master/kubernetes/client/api/core_v1_api.py) with a couple of hundred methods, one for each `core/v1` API operation like `list_namespaced_pod`.
-
-This crate instead associates these functions with the corresponding resource type. The `list_namespaced_pod` function is accessed as `Pod::list`, where `Pod` is the resource type for pods. This is similar to the Go API's [PodInterface::List](https://godoc.org/k8s.io/client-go/kubernetes/typed/core/v1#PodInterface)
-
-Since all types are under the `io.k8s` namespace, this crate also removes those two components from the module path. The end result is that the path to `Pod` is `k8s_openapi::api::core::v1::Pod`, similar to the Go path `k8s.io/api/core/v1.Pod`.
-
-
-### Better handling of optional parameters, for a more Rust-like and ergonomic API
-
-Almost every API operation has optional parameters. For example, v1.23's `Pod::list` API has one required parameter (the namespace) and eight optional parameters.
-
-The clients of other languages use language features to allow the caller to not specify all these parameters when invoking the function. The Python client's functions parse optional parameters from `**kwargs`. The C# client's functions assign default values to these parameters in the function definition.
-
-Since Rust does not have such a feature, auto-generated Rust clients use `Option<>` parameters to represent optional parameters. This ends up requiring callers to pass in a lot of `None` parameters just to satisfy the compiler. Invoking the `Pod::list` of an auto-generated client would look like:
-
-```rust
-// List all pods in the kube-system namespace
-Pod::list("kube-system", None, None, None, None, None, None, None, None);
-
-// List all pods in the kube-system namespace with label foo=bar
-Pod::list("kube-system", None, None, /* label_selector */ Some("foo=bar"), None, None, None, None, None);
-```
-
-Apart from being hard to read, you could easily make a typo and pass in `Some("foo=bar")` for one of the five other optional String parameters without any errors from the compiler.
-
-This crate moves all optional parameters to separate structs, one for each API. Each of these structs implements `Default` and the names of the fields match the function parameter names, so that the above calls look like:
-
-```rust
-// List all pods in the kube-system namespace
-Pod::list("kube-system", Default::default());
-
-// List all pods in the kube-system namespace with label foo=bar
-Pod::list("kube-system", ListOptional { label_selector: Some("foo=bar"), ..Default::default() });
-```
-
-The second example uses struct update syntax to explicitly set one field of the struct and `Default` the rest.
-
-
-### Not restricted to a single HTTP client implementation, and works with both synchronous and asynchronous HTTP clients
-
-Auto-generated clients have to choose between providing a synchronous or asynchronous API, and have to choose what kind of HTTP client they want to use internally (`hyper::Client`, `reqwest::Client`, `reqwest::blocking::Client`, etc). If you want to use a different HTTP client, you cannot use the crate.
-
-This crate is instead based on the [sans-io approach](https://sans-io.readthedocs.io/) popularized by Python for network protocols and applications.
-
-For example, the `Pod::list` function does not return `Result<ListResponse<Pod>>` or `impl Future<Output = ListResponse<Pod>>`. It returns an `http::Request<Vec<u8>>` with the URL path, query string, request headers and request body filled out. You are free to execute this `http::Request` using any HTTP client you want to use.
-
-After you've executed the request, your HTTP client will give you the response's `http::StatusCode` and some `[u8]` bytes of the response body. To parse these into a `ListResponse<Pod>`, you use that type's `fn try_from_parts(http::StatusCode, &[u8]) -> Result<(Self, usize), crate::ResponseError>` function. The result is either a successful `ListResponse<Pod>` value, or an error that the response is incomplete and you need to get more bytes of the response body and try again, or a fatal error because the response is invalid JSON.
-
-To make this easier, the `Pod::list` function also returns a callback `fn(http::StatusCode) -> ResponseBody<ListResponse<Pod>>`. `ResponseBody` is a type that contains its own internal growable byte buffer, so you can use it if you don't want to manage a byte buffer yourself. It also ensures that you deserialize the response to the appropriate type corresponding to the request, ie `ListResponse<Pod>`, and not any other. See the crate docs for more details about this type.
 
 
 ### Supports more versions of Kubernetes

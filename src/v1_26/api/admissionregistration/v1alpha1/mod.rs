@@ -13,11 +13,9 @@ pub use self::param_ref::ParamRef;
 
 mod validating_admission_policy;
 pub use self::validating_admission_policy::ValidatingAdmissionPolicy;
-#[cfg(feature = "api")] pub use self::validating_admission_policy::ReadValidatingAdmissionPolicyResponse;
 
 mod validating_admission_policy_binding;
 pub use self::validating_admission_policy_binding::ValidatingAdmissionPolicyBinding;
-#[cfg(feature = "api")] pub use self::validating_admission_policy_binding::ReadValidatingAdmissionPolicyBindingResponse;
 
 mod validating_admission_policy_binding_spec;
 pub use self::validating_admission_policy_binding_spec::ValidatingAdmissionPolicyBindingSpec;

@@ -1,14 +1,12 @@
 
 mod csi_driver;
 pub use self::csi_driver::CSIDriver;
-#[cfg(feature = "api")] pub use self::csi_driver::ReadCSIDriverResponse;
 
 mod csi_driver_spec;
 pub use self::csi_driver_spec::CSIDriverSpec;
 
 mod csi_node;
 pub use self::csi_node::CSINode;
-#[cfg(feature = "api")] pub use self::csi_node::ReadCSINodeResponse;
 
 mod csi_node_driver;
 pub use self::csi_node_driver::CSINodeDriver;
@@ -18,19 +16,15 @@ pub use self::csi_node_spec::CSINodeSpec;
 
 mod csi_storage_capacity;
 pub use self::csi_storage_capacity::CSIStorageCapacity;
-#[cfg(feature = "api")] pub use self::csi_storage_capacity::ReadCSIStorageCapacityResponse;
 
 mod storage_class;
 pub use self::storage_class::StorageClass;
-#[cfg(feature = "api")] pub use self::storage_class::ReadStorageClassResponse;
 
 mod token_request;
 pub use self::token_request::TokenRequest;
 
 mod volume_attachment;
 pub use self::volume_attachment::VolumeAttachment;
-#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentResponse;
-#[cfg(feature = "api")] pub use self::volume_attachment::ReadVolumeAttachmentStatusResponse;
 
 mod volume_attachment_source;
 pub use self::volume_attachment_source::VolumeAttachmentSource;

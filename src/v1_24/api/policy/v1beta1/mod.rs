@@ -19,8 +19,6 @@ pub use self::id_range::IDRange;
 
 mod pod_disruption_budget;
 pub use self::pod_disruption_budget::PodDisruptionBudget;
-#[cfg(feature = "api")] pub use self::pod_disruption_budget::ReadPodDisruptionBudgetResponse;
-#[cfg(feature = "api")] pub use self::pod_disruption_budget::ReadPodDisruptionBudgetStatusResponse;
 
 mod pod_disruption_budget_spec;
 pub use self::pod_disruption_budget_spec::PodDisruptionBudgetSpec;
@@ -30,7 +28,6 @@ pub use self::pod_disruption_budget_status::PodDisruptionBudgetStatus;
 
 mod pod_security_policy;
 pub use self::pod_security_policy::PodSecurityPolicy;
-#[cfg(feature = "api")] pub use self::pod_security_policy::ReadPodSecurityPolicyResponse;
 
 mod pod_security_policy_spec;
 pub use self::pod_security_policy_spec::PodSecurityPolicySpec;

@@ -4,8 +4,6 @@ pub use self::flow_distinguisher_method::FlowDistinguisherMethod;
 
 mod flow_schema;
 pub use self::flow_schema::FlowSchema;
-#[cfg(feature = "api")] pub use self::flow_schema::ReadFlowSchemaResponse;
-#[cfg(feature = "api")] pub use self::flow_schema::ReadFlowSchemaStatusResponse;
 
 mod flow_schema_condition;
 pub use self::flow_schema_condition::FlowSchemaCondition;
@@ -33,8 +31,6 @@ pub use self::policy_rules_with_subjects::PolicyRulesWithSubjects;
 
 mod priority_level_configuration;
 pub use self::priority_level_configuration::PriorityLevelConfiguration;
-#[cfg(feature = "api")] pub use self::priority_level_configuration::ReadPriorityLevelConfigurationResponse;
-#[cfg(feature = "api")] pub use self::priority_level_configuration::ReadPriorityLevelConfigurationStatusResponse;
 
 mod priority_level_configuration_condition;
 pub use self::priority_level_configuration_condition::PriorityLevelConfigurationCondition;

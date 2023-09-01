@@ -2,7 +2,6 @@ pub(crate) fn generate(
     mut writer: impl std::io::Write,
     definition_path: &crate::swagger20::DefinitionPath,
     type_comment: Option<&str>,
-    type_feature: Option<&str>,
     derives: Option<Derives>,
     vis: &str,
 ) -> Result<(), crate::Error> {
@@ -14,11 +13,6 @@ pub(crate) fn generate(
             result.push('\n');
             result
         }))
-        .unwrap_or_default();
-
-    let type_feature_attribute =
-        type_feature
-        .map(|type_feature| format!("#[cfg(feature = {type_feature:?})]\n"))
         .unwrap_or_default();
 
     let derives =
@@ -40,7 +34,6 @@ pub(crate) fn generate(
         include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/type_header.rs")),
         definition_path = definition_path,
         type_comment = type_comment,
-        type_feature_attribute = type_feature_attribute,
         derives = derives,
         vis = vis,
     )?;
