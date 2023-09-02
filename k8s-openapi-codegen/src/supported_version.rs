@@ -5,6 +5,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
     SupportedVersion::V1_25,
     SupportedVersion::V1_26,
     SupportedVersion::V1_27,
+    SupportedVersion::V1_28,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -15,6 +16,7 @@ pub(crate) enum SupportedVersion {
     V1_25,
     V1_26,
     V1_27,
+    V1_28,
 }
 
 impl SupportedVersion {
@@ -26,6 +28,7 @@ impl SupportedVersion {
             SupportedVersion::V1_25 => "1.25",
             SupportedVersion::V1_26 => "1.26",
             SupportedVersion::V1_27 => "1.27",
+            SupportedVersion::V1_28 => "1.28",
         }
     }
 
@@ -37,6 +40,7 @@ impl SupportedVersion {
             SupportedVersion::V1_25 => "v1_25",
             SupportedVersion::V1_26 => "v1_26",
             SupportedVersion::V1_27 => "v1_27",
+            SupportedVersion::V1_28 => "v1_28",
         }
     }
 
@@ -48,6 +52,7 @@ impl SupportedVersion {
             SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.13/api/openapi-spec/swagger.json",
             SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.8/api/openapi-spec/swagger.json",
             SupportedVersion::V1_27 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.27.5/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.1/api/openapi-spec/swagger.json",
         }
     }
 
@@ -80,16 +85,26 @@ impl SupportedVersion {
             SupportedVersion::V1_26 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
             ],
 
             SupportedVersion::V1_27 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
+                crate::fixups::upstream_bugs::status_extra_gvk,
+            ],
+
+            SupportedVersion::V1_28 => &[
+                crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
+                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
+                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_binding_list,
+                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
             ],
         };

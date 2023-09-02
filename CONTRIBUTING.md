@@ -54,6 +54,8 @@ K8S_RECORD=1 ./test.sh all run-tests
 
    `diff` the mod root of the previous version and the new one to see precisely what changed between the two versions. This is useful to discover new fixups that could be backported to older versions.
 
+1. Search for `_[a-z]s:` to find new special idents that need to be handled in `get_rust_ident`. If found, handle them, and add tests in `fn special_idents`
+
 1. `/Cargo.toml`: Add a new feature for the new version.
 
 1. `/Cargo.toml`: Update `latest` feature to the new feature.
@@ -88,8 +90,6 @@ K8S_RECORD=1 ./test.sh all run-tests
     ./test.sh '...' delete-cluster
     ./test.sh '...' run-tests
     ```
-
-1. `/.github/workflows/ci.yaml`: Add a new `strategy` for the new version.
 
 1. `/devenv.sh`: Update `max_version`.
 

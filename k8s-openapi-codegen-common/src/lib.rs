@@ -1151,6 +1151,7 @@ pub fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
     match name {
         "clusterIPs" => return "cluster_ips".into(),
         "externalIPs" => return "external_ips".into(),
+        "hostIPs" => return "host_ips".into(),
         "nonResourceURLs" => return "non_resource_urls".into(),
         "podCIDRs" => return "pod_cidrs".into(),
         "podIPs" => return "pod_ips".into(),

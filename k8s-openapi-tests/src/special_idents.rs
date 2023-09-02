@@ -10,6 +10,9 @@ fn special_idents() {
     let _ = api::NodeSpec { pod_cidrs: Default::default(), ..Default::default() };
 
     let _ = api::PodStatus { pod_ips: Default::default(), ..Default::default() };
+    k8s_openapi::k8s_if_ge_1_28! {
+        let _ = api::PodStatus { host_ips: Default::default(), ..Default::default() };
+    }
 
     let _ = api::ServiceSpec { cluster_ips: Default::default(), external_ips: Default::default(), ..Default::default() };
 
