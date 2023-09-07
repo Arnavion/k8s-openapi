@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object and associated API functions."><title>CustomResourceDefinition in k8s_openapi_derive - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="k8s_openapi_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc derive"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../k8s_openapi_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../k8s_openapi_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In k8s_openapi_derive</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Derive Macro <a href="index.html">k8s_openapi_derive</a>::<wbr><a class="derive" href="#">CustomResourceDefinition</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/k8s_openapi_derive/lib.rs.html#159-161">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>#[derive(CustomResourceDefinition)]
+{
+    // Attributes available to this derive:
+    #[custom_resource_definition]
+}
+</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object
+and associated API functions.</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(
+    Clone, Debug, PartialEq,
+    k8s_openapi_derive::CustomResourceDefinition,
+    serde::Deserialize, serde::Serialize,
+)]
+#[custom_resource_definition(
+    group = <span class="string">&quot;k8s-openapi-tests-custom-resource-definition.com&quot;</span>,
+    version = <span class="string">&quot;v1&quot;</span>,
+    plural = <span class="string">&quot;foobars&quot;</span>,
+    generate_schema,
+    namespaced,
+    has_subresources = <span class="string">&quot;v1&quot;</span>,
+    impl_deep_merge,
+)]
+</span><span class="kw">struct </span>FooBarSpec {
+    prop1: String,
+    prop2: Vec&lt;bool&gt;,
+    <span class="attr">#[serde(skip_serializing_if = <span class="string">&quot;Option::is_none&quot;</span>)]
+    </span>prop3: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+}</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>
+<p>The spec type must impl the following traits (either manually or via <code>#[derive]</code>): <code>Clone</code>, <code>Debug</code>, <code>PartialEq</code>,
+<code>serde::Deserialize</code> and <code>serde::Serialize</code></p>
+</li>
+<li>
+<p>The name of the spec type must end with <code>Spec</code>. This suffix is trimmed to generate the names of the other types.</p>
+</li>
+<li>
+<p>The <code>k8s_openapi</code> crate must have been added as a dependency, since the macro expansion refers to types from it.</p>
+</li>
+</ul>
+<p>The custom derive then generates a <code>FooBar</code> type that represents a custom resource corresponding to this definition:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="doccomment">/// Custom resource for FooBarSpec
+</span><span class="attr">#[derive(Clone, Debug, Default, PartialEq)]
+</span><span class="kw">struct </span>FooBar {
+    metadata: k8s_openapi::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+    spec: <span class="prelude-ty">Option</span>&lt;FooBarSpec&gt;,
+    subresources: k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources,
+}
+
+<span class="kw">impl </span>k8s_openapi::Resource <span class="kw">for </span>FooBar { ... }
+
+<span class="kw">impl </span>k8s_openapi::ListableResource <span class="kw">for </span>FooBar { ... }
+
+<span class="kw">impl </span>k8s_openapi::Metadata <span class="kw">for </span>FooBar {
+    <span class="kw">type </span>Ty = k8s_openapi::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    ...
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; k8s_openapi::serde::Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>FooBar { ... }
+
+<span class="kw">impl </span>k8s_openapi::serde::Serialize <span class="kw">for </span>FooBar { ... }
+
+<span class="kw">impl </span>k8s_openapi::schemars::JsonSchema <span class="kw">for </span>FooBar { ... }</code></pre></div>
+<p>The name of this type is automatically derived from the name of the spec type by truncating the <code>Spec</code> suffix.</p>
+<p>The <code>group</code> and <code>version</code> meta items of the <code>#[custom_resource_definition]</code> attribute of the macro are used to set
+the “group” and “API version” in the <code>k8s_openapi::Resource</code> impl respectively. The “kind” is automatically set to be the same as the resource type name,
+ie <code>&quot;FooBar&quot;</code> in this example. The <code>plural</code> meta item is used to construct the URLs of API operations for this custom resource.</p>
+<p>The <code>generate_schema</code> meta item is optional. If set, the generated custom resource type will have an impl of <code>schemars::JsonSchema</code> from the <code>schemars</code> crate.
+The <code>schemars</code> feature of the <code>k8s-openapi</code> crate must be enabled so that the types in that crate also have their <code>schemars::JsonSchema</code> impls enabled.
+You will also need to impl <code>schemars::JsonSchema</code> on the <code>Spec</code> type itself, either manually or via <code>#[derive(schemars::JsonSchema)]</code>.</p>
+<p>The <code>has_subresources</code> meta item is optional. If set, the generated custom resource type will have a <code>subresources</code> field. The value of the meta item
+specifies which namespace the type will be used from. For example, setting <code>has_subresources = &quot;v1&quot;</code> causes the field to be of the
+<code>k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresources</code> type.</p>
+<p>The <code>impl_deep_merge</code> meta item is optional. If set, the generated custom resource type will impl the <code>k8s_openapi::DeepMerge</code> trait. This impl will require
+you to impl <code>k8s_openapi::DeepMerge</code> on the spec type yourself.</p>
+<p>You would then register this custom resource definition with Kubernetes, with code like this:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 <span class="kw">as </span>apiextensions;
+<span class="kw">use </span>k8s_openapi::apimachinery::pkg::apis::meta::v1 <span class="kw">as </span>meta;
+
+<span class="comment">// Same as the `plurals` meta item in the `#[custom_resource_definition]` attribute
+</span><span class="kw">let </span>plural = <span class="string">&quot;foobars&quot;</span>;
+
+<span class="kw">let </span>custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+    group: &lt;FooBar <span class="kw">as </span>k8s_openapi::Resource&gt;::GROUP.to_owned(),
+    names: apiextensions::CustomResourceDefinitionNames {
+        kind: &lt;FooBar <span class="kw">as </span>k8s_openapi::Resource&gt;::KIND.to_owned(),
+        plural: plural.to_owned(),
+        short_names: <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="string">&quot;fb&quot;</span>.to_owned()]),
+        singular: <span class="prelude-val">Some</span>(<span class="string">&quot;foobar&quot;</span>.to_owned()),
+        ..Default::default()
+    },
+    scope: <span class="string">&quot;Namespaced&quot;</span>.to_owned(),
+    version: &lt;FooBar <span class="kw">as </span>k8s_openapi::Resource&gt;::VERSION.to_owned().into(),
+    ..Default::default()
+};
+
+<span class="kw">let </span>custom_resource_definition = apiextensions::CustomResourceDefinition {
+    metadata: meta::ObjectMeta {
+        name: <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">&quot;{plural}.{}&quot;</span>, &lt;FooBar <span class="kw">as </span>k8s_openapi::Resource&gt;::GROUP)),
+        ..Default::default()
+    },
+    spec: custom_resource_definition_spec.into(),
+    ..Default::default()
+};
+
+client.create(custom_resource_definition);</code></pre></div>
+<p>(You may wish to generate run your crate through <code>cargo-expand</code> to see the macro expansion.)</p>
+<p>See the <a href="https://github.com/Arnavion/k8s-openapi/blob/master/k8s-openapi-tests/src/custom_resource_definition.rs"><code>custom_resource_definition</code> test in the repository</a>
+for a full example of using this custom derive.</p>
+</div></details></section></div></main></body></html>
