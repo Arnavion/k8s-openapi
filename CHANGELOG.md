@@ -1,3 +1,33 @@
+# v0.20.0 (2023-09-07)
+
+## k8s-openapi
+
+- BREAKING CHANGE: This release removes all associated methods of resource types that mapped API operations. For example, there is no more `fn api::core::v1::Pod::list()`, and all types related to API operations like `ListOptional` and `ResponseBody` have also been removed. See https://github.com/Arnavion/k8s-openapi/issues/149 for more details.
+
+- BREAKING CHANGE: Added support for Kubernetes 1.28 under the `v1_28` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.20 and 1.21.
+
+Corresponding Kubernetes API server versions:
+
+- v1.22.17
+- v1.23.17
+- v1.24.17
+- v1.25.13
+- v1.26.8
+- v1.27.5
+- v1.28.1
+
+## k8s-openapi-codegen-common
+
+- BREAKING CHANGE: `write_operation` and other things related to emitting API operations have been removed.
+
+## k8s-openapi-derive
+
+- BREAKING CHANGE: The generated resource type no longer has associated clientset methods for listing etc.
+
+---
+
 # v0.19.0 (2023-08-05)
 
 ## k8s-openapi

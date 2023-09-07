@@ -104,15 +104,15 @@ K8S_RECORD=1 ./test.sh all run-tests
 1. `/k8s-openapi-derive/Cargo.toml`: Update `package.version` value
 1. `/k8s-openapi-derive/Cargo.toml`: Update `package.documentation` value
 1. `/k8s-openapi-derive/Cargo.toml`: Update version req of `k8s-openapi-codegen-common` dependency
-1. Generate docs (change feature and directory name as appropriate).
+1. Generate docs (change directory name as appropriate).
 
     ```sh
     rm -rf ./target/doc/ &&
     cargo rustdoc --features 'latest' -- -A 'rustdoc::bare_urls' -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-codegen-common/Cargo.toml -- -Z unstable-options --enable-index-page &&
     CARGO_TARGET_DIR="$(realpath ./target)" cargo rustdoc --manifest-path ./k8s-openapi-derive/Cargo.toml -- -Z unstable-options --enable-index-page &&
-    rm -rf ../k8s-openapi-gh-pages/v0.19.x &&
-    cp -R ./target/doc ../k8s-openapi-gh-pages/v0.19.x
+    rm -rf ../k8s-openapi-gh-pages/v0.20.x &&
+    cp -R ./target/doc ../k8s-openapi-gh-pages/v0.20.x
     ```
 
 1. `../k8s-openapi-gh-pages/index.html`: Add new anchor if this is a new major release
