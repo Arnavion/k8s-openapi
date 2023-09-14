@@ -17,7 +17,7 @@ pub struct PodFailurePolicyRule {
     pub on_exit_codes: Option<crate::api::batch::v1::PodFailurePolicyOnExitCodesRequirement>,
 
     /// Represents the requirement on the pod conditions. The requirement is represented as a list of pod condition patterns. The requirement is satisfied if at least one pattern matches an actual pod condition. At most 20 elements are allowed.
-    pub on_pod_conditions: Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>,
+    pub on_pod_conditions: Option<Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>>,
 }
 
 impl crate::DeepMerge for PodFailurePolicyRule {
@@ -89,7 +89,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodFailurePolicyRule {
                 Ok(PodFailurePolicyRule {
                     action: value_action.unwrap_or_default(),
                     on_exit_codes: value_on_exit_codes,
-                    on_pod_conditions: value_on_pod_conditions.unwrap_or_default(),
+                    on_pod_conditions: value_on_pod_conditions,
                 })
             }
         }
@@ -110,14 +110,17 @@ impl crate::serde::Serialize for PodFailurePolicyRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodFailurePolicyRule",
-            2 +
-            self.on_exit_codes.as_ref().map_or(0, |_| 1),
+            1 +
+            self.on_exit_codes.as_ref().map_or(0, |_| 1) +
+            self.on_pod_conditions.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "action", &self.action)?;
         if let Some(value) = &self.on_exit_codes {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "onExitCodes", value)?;
         }
-        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "onPodConditions", &self.on_pod_conditions)?;
+        if let Some(value) = &self.on_pod_conditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "onPodConditions", value)?;
+        }
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
@@ -177,7 +180,6 @@ impl crate::schemars::JsonSchema for PodFailurePolicyRule {
                 ].into(),
                 required: [
                     "action".to_owned(),
-                    "onPodConditions".to_owned(),
                 ].into(),
                 ..Default::default()
             })),
