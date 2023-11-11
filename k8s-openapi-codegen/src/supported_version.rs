@@ -1,6 +1,4 @@
 pub(crate) const ALL: &[SupportedVersion] = &[
-    SupportedVersion::V1_22,
-    SupportedVersion::V1_23,
     SupportedVersion::V1_24,
     SupportedVersion::V1_25,
     SupportedVersion::V1_26,
@@ -10,8 +8,6 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum SupportedVersion {
-    V1_22,
-    V1_23,
     V1_24,
     V1_25,
     V1_26,
@@ -22,8 +18,6 @@ pub(crate) enum SupportedVersion {
 impl SupportedVersion {
     pub(crate) fn name(self) -> &'static str {
         match self {
-            SupportedVersion::V1_22 => "1.22",
-            SupportedVersion::V1_23 => "1.23",
             SupportedVersion::V1_24 => "1.24",
             SupportedVersion::V1_25 => "1.25",
             SupportedVersion::V1_26 => "1.26",
@@ -34,8 +28,6 @@ impl SupportedVersion {
 
     pub(crate) fn mod_root(self) -> &'static str {
         match self {
-            SupportedVersion::V1_22 => "v1_22",
-            SupportedVersion::V1_23 => "v1_23",
             SupportedVersion::V1_24 => "v1_24",
             SupportedVersion::V1_25 => "v1_25",
             SupportedVersion::V1_26 => "v1_26",
@@ -46,8 +38,6 @@ impl SupportedVersion {
 
     pub(crate) fn spec_url(self) -> &'static str {
         match self {
-            SupportedVersion::V1_22 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.22.17/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_23 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.23.17/api/openapi-spec/swagger.json",
             SupportedVersion::V1_24 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.24.17/api/openapi-spec/swagger.json",
             SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.15/api/openapi-spec/swagger.json",
             SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.10/api/openapi-spec/swagger.json",
@@ -59,18 +49,6 @@ impl SupportedVersion {
     pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         #[allow(clippy::match_same_arms, clippy::type_complexity)]
         let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
-            SupportedVersion::V1_22 => &[
-                crate::fixups::upstream_bugs::connect_options_gvk,
-                crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
-                crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-            ],
-
-            SupportedVersion::V1_23 => &[
-                crate::fixups::upstream_bugs::connect_options_gvk,
-                crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
-                crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-            ],
-
             SupportedVersion::V1_24 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1beta1_event,
