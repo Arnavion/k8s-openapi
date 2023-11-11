@@ -1,4 +1,4 @@
-This crate is a Rust Kubernetes API client. It contains bindings for the resources in the Kubernetes client API, auto-generated from the OpenAPI spec.
+This crate contains definitions of the resource types in the Kubernetes client API, auto-generated from the Kubernetes OpenAPI spec.
 
 [crates.io](https://crates.io/crates/k8s-openapi)
 
