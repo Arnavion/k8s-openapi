@@ -41,7 +41,7 @@ impl SupportedVersion {
             SupportedVersion::V1_24 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.24.17/api/openapi-spec/swagger.json",
             SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.15/api/openapi-spec/swagger.json",
             SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.10/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_27 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.27.7/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_27 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.27.8/api/openapi-spec/swagger.json",
             SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.4/api/openapi-spec/swagger.json",
         }
     }
