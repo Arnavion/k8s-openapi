@@ -18,7 +18,6 @@ include = [
 ]
 
 [dependencies]
-http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { version = "=0.20.0", path = "../k8s-openapi-codegen-common" }
 proc-macro2 = { version = "1", default-features = false, features = ["proc-macro"] }
 quote = { version = "1", default-features = false }
