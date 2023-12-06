@@ -160,8 +160,8 @@ async fn test() {
         let (request, response_body) = crate::clientset::create_cluster::<apiextensions::CustomResourceDefinition>(&custom_resource_definition);
         match client.get_single_value(request, response_body).await {
             (crate::clientset::CreateResponse::Created(_), _) |
-            (_, http::StatusCode::CONFLICT) => break,
-            (_, http::StatusCode::INTERNAL_SERVER_ERROR) => (),
+            (_, reqwest::StatusCode::CONFLICT) => break,
+            (_, reqwest::StatusCode::INTERNAL_SERVER_ERROR) => (),
             (other, status_code) => panic!("{other:?} {status_code}"),
         }
     }
@@ -289,7 +289,7 @@ async fn test() {
         .body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
         .expect("couldn't create custom resource");
     match client.get_single_value(request, crate::clientset::ResponseBody::<crate::clientset::CreateResponse<FooBar>>::new).await {
-        (_, http::StatusCode::UNPROCESSABLE_ENTITY) => (),
+        (_, reqwest::StatusCode::UNPROCESSABLE_ENTITY) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
@@ -311,7 +311,7 @@ async fn test() {
         .body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
         .expect("couldn't create custom resource");
     match client.get_single_value(request, crate::clientset::ResponseBody::<crate::clientset::CreateResponse<FooBar>>::new).await {
-        (_, http::StatusCode::UNPROCESSABLE_ENTITY) => (),
+        (_, reqwest::StatusCode::UNPROCESSABLE_ENTITY) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 

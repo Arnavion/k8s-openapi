@@ -24,13 +24,13 @@ pub(crate) use watch::{watch_namespaced, WatchResponse};
 pub(crate) use watch::WatchOptional;
 
 pub(crate) struct ResponseBody<T> {
-    pub(crate) status_code: http::StatusCode,
+    pub(crate) status_code: reqwest::StatusCode,
     buf: bytes::BytesMut,
     _response: std::marker::PhantomData<fn() -> T>,
 }
 
 impl<T> ResponseBody<T> where T: Response {
-    pub(crate) fn new(status_code: http::StatusCode) -> Self {
+    pub(crate) fn new(status_code: reqwest::StatusCode) -> Self {
         ResponseBody {
             status_code,
             buf: Default::default(),
@@ -67,7 +67,7 @@ impl<T> std::ops::Deref for ResponseBody<T> {
 }
 
 pub(crate) trait Response: Sized {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
 }
 
 #[derive(Debug)]
@@ -94,7 +94,7 @@ impl std::error::Error for ResponseError {
     }
 }
 
-pub(crate) fn get_api_versions() -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> ResponseBody<GetAPIVersionsResponse>) {
+pub(crate) fn get_api_versions() -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> ResponseBody<GetAPIVersionsResponse>) {
     let url = "/apis".to_owned();
 
     let request = http::Request::get(url);
@@ -109,10 +109,10 @@ pub(crate) enum GetAPIVersionsResponse {
 }
 
 impl Response for GetAPIVersionsResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError> {
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError> {
         #[allow(clippy::single_match_else)]
         match status_code {
-            http::StatusCode::OK => {
+            reqwest::StatusCode::OK => {
                 let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(err) if err.is_eof() => return Err(ResponseError::NeedMoreData),

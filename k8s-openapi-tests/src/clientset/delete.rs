@@ -2,7 +2,7 @@ use k8s_openapi::serde_json;
 
 pub(crate) fn delete_cluster<T>(
     name: &str,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<DeleteResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<DeleteResponse<T>>)
 where
     T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::ClusterResourceScope>,
 {
@@ -21,7 +21,7 @@ where
 pub(crate) fn delete_namespaced<T>(
     namespace: &str,
     name: &str,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<DeleteResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<DeleteResponse<T>>)
 where
     T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::NamespaceResourceScope>,
 {
@@ -46,10 +46,10 @@ pub(crate) enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
 }
 
 impl<T> super::Response for DeleteResponse<T> where T: serde::de::DeserializeOwned {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
         #[allow(clippy::single_match_else)]
         match status_code {
-            http::StatusCode::OK => {
+            reqwest::StatusCode::OK => {
                 let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(err) if err.is_eof() => return Err(super::ResponseError::NeedMoreData),

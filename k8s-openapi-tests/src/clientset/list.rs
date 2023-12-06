@@ -2,7 +2,7 @@ use k8s_openapi::serde_json;
 
 pub(crate) fn list_namespaced<T>(
     namespace: &str,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<ListResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<ListResponse<T>>)
 where
     T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::NamespaceResourceScope> + k8s_openapi::ListableResource,
 {
@@ -25,10 +25,10 @@ pub(crate) enum ListResponse<T> where T: serde::de::DeserializeOwned + k8s_opena
 }
 
 impl<T> super::Response for ListResponse<T> where T: serde::de::DeserializeOwned + k8s_openapi::ListableResource {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
         #[allow(clippy::single_match_else)]
         match status_code {
-            http::StatusCode::OK => {
+            reqwest::StatusCode::OK => {
                 let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(err) if err.is_eof() => return Err(super::ResponseError::NeedMoreData),

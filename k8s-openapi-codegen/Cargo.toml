@@ -15,7 +15,6 @@ env_logger = { version = "0.10", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
     "alloc", # for futures_util::stream::FuturesUnordered
 ] }
-http = { version = "0.2", default-features = false }
 k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features = [
     "serde", # to parse OpenAPI specs from JSON files
 ] }

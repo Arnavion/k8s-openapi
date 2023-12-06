@@ -150,7 +150,7 @@ fn bookmark_events() {
 
     for (input, expected) in success_test_cases {
         let watch_response =
-            crate::clientset::Response::try_from_parts(http::StatusCode::OK, input)
+            crate::clientset::Response::try_from_parts(reqwest::StatusCode::OK, input)
             .expect("expected hard-coded test case to be deserialized successfully but it failed to deserialize");
         let watch_event = match watch_response {
             (crate::clientset::WatchResponse::<api::Pod>::Ok(watch_event), read) if read == input.len() => watch_event,
@@ -161,7 +161,7 @@ fn bookmark_events() {
 
     for input in failure_test_cases {
         let err =
-            <crate::clientset::WatchResponse::<api::Pod> as crate::clientset::Response>::try_from_parts(http::StatusCode::OK, input)
+            <crate::clientset::WatchResponse::<api::Pod> as crate::clientset::Response>::try_from_parts(reqwest::StatusCode::OK, input)
             .expect_err("expected hard-coded failure test case to fail to deserialize but it deserialized successfully");
         match err {
             crate::clientset::ResponseError::Json(_) => (),

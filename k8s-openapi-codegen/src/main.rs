@@ -208,7 +208,7 @@ async fn run(
         else {
             let response = client.get(spec_url).send().await?;
             let status = response.status();
-            if status != http::StatusCode::OK {
+            if status != reqwest::StatusCode::OK {
                 return Err(status.to_string().into());
             }
             response.json().await?

@@ -161,8 +161,8 @@ impl Client {
     async fn get_single_value<R>(
         &mut self,
         request: http::Request<Vec<u8>>,
-        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
-    ) -> (R, http::StatusCode) where R: clientset::Response {
+        response_body: fn(reqwest::StatusCode) -> clientset::ResponseBody<R>,
+    ) -> (R, reqwest::StatusCode) where R: clientset::Response {
         let mut stream = std::pin::pin!(self.get_multiple_values(request, response_body));
         stream.next().await.expect("unexpected EOF")
     }
@@ -170,8 +170,8 @@ impl Client {
     fn get_multiple_values<'a, R>(
         &'a mut self,
         request: http::Request<Vec<u8>>,
-        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
-    ) -> impl Stream<Item = (R, http::StatusCode)> + 'a where R: clientset::Response + 'a {
+        response_body: fn(reqwest::StatusCode) -> clientset::ResponseBody<R>,
+    ) -> impl Stream<Item = (R, reqwest::StatusCode)> + 'a where R: clientset::Response + 'a {
         MultipleValuesStream::ExecutingRequest {
             f: self.execute(request),
             response_body,
@@ -212,10 +212,13 @@ impl Client {
                 url.path_and_query = Some(path);
                 let url = http::Uri::from_parts(url).expect("couldn't parse URL from parts");
 
+                // TODO(rustup): Remove this when reqwest updates to http v1 so that `reqwest::Method` == `http::Method`
+                let method = method.as_str().parse().expect("http::Method -> reqwest::Method");
+
                 let request = inner.request(method, url.to_string());
                 let request =
                     if let Some(content_type) = content_type {
-                        request.header(http::header::CONTENT_TYPE, content_type)
+                        request.header(reqwest::header::CONTENT_TYPE, content_type)
                     }
                     else {
                         request
@@ -243,7 +246,7 @@ impl Client {
                 assert_eq!(body, replay.request_body, "replay #{} does not have matching request body", i + 1);
                 assert_eq!(content_type, replay.request_content_type, "replay #{} does not have request content type", i + 1);
                 ClientResponse {
-                    status_code: http::StatusCode::from_u16(replay.response_status_code).unwrap(),
+                    status_code: reqwest::StatusCode::from_u16(replay.response_status_code).unwrap(),
                     body: ClientResponseBody::Replaying(std::io::Cursor::new(replay.response_body)),
                 }
             },
@@ -279,7 +282,7 @@ impl Drop for Client {
 #[derive(Debug)]
 #[pin_project::pin_project]
 struct ClientResponse<'a, TResponse> {
-    status_code: http::StatusCode,
+    status_code: reqwest::StatusCode,
     #[pin]
     body: ClientResponseBody<'a, TResponse>,
 }
@@ -313,7 +316,7 @@ enum MultipleValuesStream<'a, TResponseFuture, TResponse, R> {
     ExecutingRequest {
         #[pin]
         f: TResponseFuture,
-        response_body: fn(http::StatusCode) -> clientset::ResponseBody<R>,
+        response_body: fn(reqwest::StatusCode) -> clientset::ResponseBody<R>,
     },
     Response {
         #[pin]
@@ -328,7 +331,7 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
     ClientResponse<'a, TResponse>: AsyncRead,
     R: clientset::Response,
 {
-    type Item = (R, http::StatusCode);
+    type Item = (R, reqwest::StatusCode);
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         loop {

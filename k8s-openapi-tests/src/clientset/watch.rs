@@ -3,7 +3,7 @@ use k8s_openapi::serde_json;
 pub(crate) fn watch_namespaced<T>(
     namespace: &str,
     optional: WatchOptional<'_>,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<WatchResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<WatchResponse<T>>)
 where
     T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::NamespaceResourceScope>,
 {
@@ -58,10 +58,10 @@ pub(crate) enum WatchResponse<T> where T: serde::de::DeserializeOwned {
 }
 
 impl<T> super::Response for WatchResponse<T> where T: serde::de::DeserializeOwned {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
         #[allow(clippy::single_match_else)]
         match status_code {
-            http::StatusCode::OK => {
+            reqwest::StatusCode::OK => {
                 let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),

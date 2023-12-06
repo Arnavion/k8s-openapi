@@ -1,7 +1,7 @@
 pub(crate) fn delete_collection_namespaced<T>(
     namespace: &str,
     list_optional: ListOptional<'_>,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<super::DeleteResponse<k8s_openapi::List<T>>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<super::DeleteResponse<k8s_openapi::List<T>>>)
 where
     T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::NamespaceResourceScope> + k8s_openapi::ListableResource,
 {

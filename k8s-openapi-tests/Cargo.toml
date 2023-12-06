@@ -22,7 +22,9 @@ futures-io = { version = "0.3", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
     "io", # for futures_util::StreamExt::into_async_read
 ] }
-http = { version = "0.2", default-features = false }
+http = { version = "1", default-features = false, features = [
+    "std", # "`std` feature currently required, support for `no_std` may be added later"
+] }
 k8s-openapi = { path = "..", features = [
     "schemars", # for resource types: schemars::JsonSchema
 ] }

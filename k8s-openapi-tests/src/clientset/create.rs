@@ -2,7 +2,7 @@ use k8s_openapi::serde_json;
 
 pub(crate) fn create_cluster<T>(
     body: &T,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<CreateResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<CreateResponse<T>>)
 where
     T: serde::de::DeserializeOwned + serde::Serialize + k8s_openapi::Resource<Scope = k8s_openapi::ClusterResourceScope>,
 {
@@ -22,7 +22,7 @@ where
 pub(crate) fn create_namespaced<T>(
     namespace: &str,
     body: &T,
-) -> (http::Request<Vec<u8>>, fn(http::StatusCode) -> super::ResponseBody<CreateResponse<T>>)
+) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<CreateResponse<T>>)
 where
     T: serde::de::DeserializeOwned + serde::Serialize + k8s_openapi::Resource<Scope = k8s_openapi::NamespaceResourceScope>,
 {
@@ -48,9 +48,9 @@ pub(crate) enum CreateResponse<T> where T: serde::de::DeserializeOwned {
 }
 
 impl<T> super::Response for CreateResponse<T> where T: serde::de::DeserializeOwned {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
+    fn try_from_parts(status_code: reqwest::StatusCode, buf: &[u8]) -> Result<(Self, usize), super::ResponseError> {
         match status_code {
-            http::StatusCode::OK => {
+            reqwest::StatusCode::OK => {
                 let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(err) if err.is_eof() => return Err(super::ResponseError::NeedMoreData),
@@ -58,7 +58,7 @@ impl<T> super::Response for CreateResponse<T> where T: serde::de::DeserializeOwn
                 };
                 Ok((Self::Ok(result), buf.len()))
             },
-            http::StatusCode::CREATED => {
+            reqwest::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(err) if err.is_eof() => return Err(super::ResponseError::NeedMoreData),
