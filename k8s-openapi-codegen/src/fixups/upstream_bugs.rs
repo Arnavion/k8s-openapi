@@ -161,8 +161,8 @@ pub(crate) mod required_properties {
     }
 }
 
-/// `Status` has extra group-version-kind entries than the original `"":v1:Status` that cause it to not be detected as a `Resource`.
-/// Remove the extras.
+// `Status` has extra group-version-kind entries than the original `"":v1:Status` that cause it to not be detected as a `Resource`.
+// Remove the extras.
 pub(crate) fn status_extra_gvk(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
     let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned());
     if let Some(definition) = spec.definitions.get_mut(&definition_path) {
@@ -180,4 +180,70 @@ pub(crate) fn status_extra_gvk(spec: &mut crate::swagger20::Spec) -> Result<(), 
     }
 
     Err("never applied Status extra group-version-kinds override".into())
+}
+
+// `PodSchedulingContextSpec` has `set` merge strategy in versions before v1.29
+// but v1.29 decided it would like clients to treat it as `atomic`.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/119962
+pub(crate) fn pod_scheduling_context_spec_potential_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha2.PodSchedulingContextSpec".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+            if let Some(property) = properties.get_mut("potentialNodes") {
+                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
+                    if *strategy == crate::swagger20::KubernetesListType::Set {
+                        *strategy = crate::swagger20::KubernetesListType::Atomic;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+    }
+
+    Err("never applied PodSchedulingContextSpec.potentialNodes merge strategy override".into())
+}
+
+// `ResourceClaimSchedulingStatus` has `set` merge strategy in versions before v1.29
+// but v1.29 decided it would like clients to treat it as `atomic`.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/119962
+pub(crate) fn v1alpha1_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha1.ResourceClaimSchedulingStatus".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+            if let Some(property) = properties.get_mut("unsuitableNodes") {
+                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
+                    if *strategy == crate::swagger20::KubernetesListType::Set {
+                        *strategy = crate::swagger20::KubernetesListType::Atomic;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+    }
+
+    Err("never applied ResourceClaimSchedulingStatus.unsuitableNodes merge strategy override".into())
+}
+
+// `ResourceClaimSchedulingStatus` has `set` merge strategy in versions before v1.29
+// but v1.29 decided it would like clients to treat it as `atomic`.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/119962
+pub(crate) fn v1alpha2_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha2.ResourceClaimSchedulingStatus".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+            if let Some(property) = properties.get_mut("unsuitableNodes") {
+                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
+                    if *strategy == crate::swagger20::KubernetesListType::Set {
+                        *strategy = crate::swagger20::KubernetesListType::Atomic;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+    }
+
+    Err("never applied ResourceClaimSchedulingStatus.unsuitableNodes merge strategy override".into())
 }

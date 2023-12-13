@@ -71,6 +71,7 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
+                crate::fixups::upstream_bugs::v1alpha1_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy,
             ],
 
             SupportedVersion::V1_27 => &[
@@ -78,7 +79,9 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
+                crate::fixups::upstream_bugs::pod_scheduling_context_spec_potential_nodes_merge_strategy,
                 crate::fixups::upstream_bugs::status_extra_gvk,
+                crate::fixups::upstream_bugs::v1alpha2_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy,
             ],
 
             SupportedVersion::V1_28 => &[
@@ -88,7 +91,9 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_list,
+                crate::fixups::upstream_bugs::pod_scheduling_context_spec_potential_nodes_merge_strategy,
                 crate::fixups::upstream_bugs::status_extra_gvk,
+                crate::fixups::upstream_bugs::v1alpha2_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy,
             ],
 
             SupportedVersion::V1_29 => &[
