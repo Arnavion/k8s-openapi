@@ -50,6 +50,7 @@ impl Client {
         #[cfg(feature = "test_v1_26")] let replays_directory = "v1-26";
         #[cfg(feature = "test_v1_27")] let replays_directory = "v1-27";
         #[cfg(feature = "test_v1_28")] let replays_directory = "v1-28";
+        #[cfg(feature = "test_v1_29")] let replays_directory = "v1-29";
 
         let replays_directory =
             std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR")))

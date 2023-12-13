@@ -50,7 +50,8 @@ v1_25 = []
 v1_26 = []
 v1_27 = []
 v1_28 = []
-latest = ["v1_28"]
+v1_29 = []
+latest = ["v1_29"]
 
 [package.metadata.docs.rs]
 # docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
