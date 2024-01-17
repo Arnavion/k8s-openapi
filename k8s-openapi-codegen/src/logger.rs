@@ -13,7 +13,7 @@ pub(crate) struct Logger;
 impl log::Log for Logger {
     fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
         TASK_LOCAL_LOGGER.try_with(|logger| logger.enabled(metadata)).unwrap_or_else(|_|
-            THREAD_LOCAL_LOGGER.with(|thread_local_logger| thread_local_logger.borrow().as_ref().map(|logger| logger.enabled(metadata)).unwrap_or_default()))
+            THREAD_LOCAL_LOGGER.with(|thread_local_logger| thread_local_logger.borrow().as_ref().is_some_and(|logger| logger.enabled(metadata))))
     }
 
     fn log(&self, record: &log::Record<'_>) {
@@ -36,5 +36,5 @@ pub(crate) fn register_thread_local_logger(logger: env_logger::Logger) {
 }
 
 thread_local! {
-    static THREAD_LOCAL_LOGGER: std::cell::RefCell<Option<env_logger::Logger>> = std::cell::RefCell::new(None);
+    static THREAD_LOCAL_LOGGER: std::cell::RefCell<Option<env_logger::Logger>> = const { std::cell::RefCell::new(None) };
 }
