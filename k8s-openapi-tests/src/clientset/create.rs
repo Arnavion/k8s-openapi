@@ -44,7 +44,7 @@ where
 pub(crate) enum CreateResponse<T> where T: serde::de::DeserializeOwned {
     Ok(T),
     Created(T),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl<T> super::Response for CreateResponse<T> where T: serde::de::DeserializeOwned {

@@ -21,7 +21,7 @@ where
 #[derive(Debug)]
 pub(crate) enum ListResponse<T> where T: serde::de::DeserializeOwned + k8s_openapi::ListableResource {
     Ok(k8s_openapi::List<T>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl<T> super::Response for ListResponse<T> where T: serde::de::DeserializeOwned + k8s_openapi::ListableResource {

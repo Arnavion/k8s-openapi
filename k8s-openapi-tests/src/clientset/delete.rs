@@ -40,9 +40,9 @@ where
 
 #[derive(Debug)]
 pub(crate) enum DeleteResponse<T> where T: serde::de::DeserializeOwned {
-    OkStatus(k8s_openapi::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(#[allow(dead_code)] k8s_openapi::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(T),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl<T> super::Response for DeleteResponse<T> where T: serde::de::DeserializeOwned {

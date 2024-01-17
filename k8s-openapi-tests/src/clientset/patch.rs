@@ -30,7 +30,7 @@ where
 #[derive(Debug)]
 pub(crate) enum PatchResponse<T> where T: serde::de::DeserializeOwned {
     Ok(T),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl<T> super::Response for PatchResponse<T> where T: serde::de::DeserializeOwned {

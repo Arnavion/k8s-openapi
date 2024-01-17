@@ -105,7 +105,7 @@ pub(crate) fn get_api_versions() -> (http::Request<Vec<u8>>, fn(reqwest::StatusC
 #[derive(Debug)]
 pub(crate) enum GetAPIVersionsResponse {
     Ok(k8s_openapi::apimachinery::pkg::apis::meta::v1::APIGroupList),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl Response for GetAPIVersionsResponse {

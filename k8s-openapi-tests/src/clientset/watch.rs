@@ -54,7 +54,7 @@ impl<'a> WatchOptional<'a> {
 #[derive(Debug)]
 pub(crate) enum WatchResponse<T> where T: serde::de::DeserializeOwned {
     Ok(k8s_openapi::apimachinery::pkg::apis::meta::v1::WatchEvent<T>),
-    Other(Result<Option<serde_json::Value>, serde_json::Error>),
+    Other(#[allow(dead_code)] Result<Option<serde_json::Value>, serde_json::Error>),
 }
 
 impl<T> super::Response for WatchResponse<T> where T: serde::de::DeserializeOwned {
