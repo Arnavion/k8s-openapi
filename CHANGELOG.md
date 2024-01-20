@@ -1,3 +1,30 @@
+# v0.21.0 (2024-01-19)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.29 under the `v1_29` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.22 and 1.23.
+
+Corresponding Kubernetes API server versions:
+
+- v1.24.17
+- v1.25.16
+- v1.26.13
+- v1.27.10
+- v1.28.6
+- v1.29.1
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes.
+
+---
+
 # v0.20.0 (2023-09-07)
 
 ## k8s-openapi
