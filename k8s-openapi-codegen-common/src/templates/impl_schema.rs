@@ -353,9 +353,9 @@ fn gen_type(
         }
 
         swagger20::Type::IntOrString => {
-            writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::String))),")?;
-            writeln!(out, r#"{indent}format: Some("int-or-string".to_owned()),"#)?;
+            writeln!(out, r#"{indent}extensions: crate::schemars::Map::from(["#)?;
+            writeln!(out, r#"{indent}    ("x-kubernetes-int-or-string".to_owned(), crate::serde_json::Value::Bool(true))"#)?;
+            writeln!(out, r#"{indent}]),"#)?;
         }
 
         swagger20::Type::Patch => {
