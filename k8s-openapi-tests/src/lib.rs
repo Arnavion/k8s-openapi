@@ -354,7 +354,7 @@ impl<'a, TResponseFuture, TResponse, R> Stream for MultipleValuesStream<'a, TRes
                     // Perform one read of the response body before trying to parse it. This ensures that bodies
                     // corresponding to the `Other(Option<serde_json::Value>)` variant are fully
                     // parsed and printed in case of errors.
-                    {
+                    if response_body.is_empty() {
                         let read = match response.as_mut().poll_read(cx, &mut buf[..]) {
                             Poll::Ready(Ok(read)) => read,
                             Poll::Ready(Err(err)) => panic!("{err}"),

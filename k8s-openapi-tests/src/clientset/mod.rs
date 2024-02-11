@@ -42,6 +42,10 @@ impl<T> ResponseBody<T> where T: Response {
         self.buf.extend_from_slice(buf);
     }
 
+    pub(crate) fn is_empty(&self) -> bool {
+        self.buf.is_empty()
+    }
+
     pub(crate) fn parse(&mut self) -> Result<T, ResponseError> {
         match T::try_from_parts(self.status_code, &self.buf) {
             Ok((result, read)) => {
