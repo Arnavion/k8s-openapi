@@ -3,8 +3,13 @@ use k8s_openapi::{schemars, serde_json};
 
 #[tokio::test]
 async fn test() {
-    use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions;
-    use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
+    use k8s_openapi::{
+        apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions,
+        apimachinery::pkg::{
+            apis::meta::v1 as meta,
+            util::intstr::IntOrString,
+        },
+    };
 
     #[derive(
         Clone, Debug, PartialEq,
@@ -26,6 +31,7 @@ async fn test() {
         prop2: Vec<bool>,
         #[serde(skip_serializing_if = "Option::is_none")]
         prop3: Option<i32>,
+        prop4: IntOrString,
     }
 
     impl k8s_openapi::DeepMerge for FooBarSpec {
@@ -45,9 +51,9 @@ async fn test() {
 
     {
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6 } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6) }),
             metadata: Default::default(),
             subresources: Default::default(),
         });
@@ -57,14 +63,31 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5}\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6}\
             }\
         ");
 
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5 }, "status": { "bar": "baz" } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar" } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()) }),
+            metadata: Default::default(),
+            subresources: Default::default(),
+        });
+        let fb = serde_json::to_string(&fb).unwrap();
+        assert_eq!(fb, "\
+            {\
+                \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
+                \"kind\":\"FooBar\",\
+                \"metadata\":{},\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\"}\
+            }\
+        ");
+
+        let fb: FooBar =
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6 }, "status": { "bar": "baz" } }"#).unwrap();
+        assert_eq!(fb, FooBar {
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6) }),
             metadata: Default::default(),
             subresources: apiextensions::CustomResourceSubresources {
                 status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
@@ -77,7 +100,28 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5},\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6},\
+                \"status\":{\"bar\":\"baz\"}\
+            }\
+        ");
+
+        let fb: FooBar =
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar" }, "status": { "bar": "baz" } }"#).unwrap();
+        assert_eq!(fb, FooBar {
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()) }),
+            metadata: Default::default(),
+            subresources: apiextensions::CustomResourceSubresources {
+                status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
+                ..Default::default()
+            },
+        });
+        let fb = serde_json::to_string(&fb).unwrap();
+        assert_eq!(fb, "\
+            {\
+                \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
+                \"kind\":\"FooBar\",\
+                \"metadata\":{},\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\"},\
                 \"status\":{\"bar\":\"baz\"}\
             }\
         ");
@@ -110,10 +154,15 @@ async fn test() {
                             type_: Some("integer".to_string()),
                             ..Default::default()
                         }),
+                        ("prop4".to_string(), apiextensions::JSONSchemaProps {
+                            x_kubernetes_int_or_string: Some(true),
+                            ..Default::default()
+                        }),
                     ].into()),
                     required: Some(vec![
                         "prop1".to_string(),
                         "prop2".to_string(),
+                        "prop4".to_string(),
                     ]),
                     ..Default::default()
                 }),
@@ -199,6 +248,7 @@ async fn test() {
             prop1: "value1".to_string(),
             prop2: vec![true, false, true],
             prop3: None,
+            prop4: IntOrString::Int(6),
         }),
         subresources: Default::default(),
     };
@@ -208,61 +258,101 @@ async fn test() {
         (other, status_code) => panic!("{other:?} {status_code}"),
     };
 
-
-    // List CR
-    let (request, response_body) = crate::clientset::list_namespaced::<FooBar>("default");
-    let foo_bar_list = match client.get_single_value(request, response_body).await {
-        (crate::clientset::ListResponse::Ok(foo_bar_list), _) => foo_bar_list,
+    let fb2 = FooBar {
+        metadata: meta::ObjectMeta {
+            name: Some("fb2".to_string()),
+            ..Default::default()
+        },
+        spec: Some(FooBarSpec {
+            prop1: "value1".to_string(),
+            prop2: vec![true, false, true],
+            prop3: Some(5),
+            prop4: IntOrString::String("value4".to_owned()),
+        }),
+        subresources: Default::default(),
+    };
+    let (request, response_body) = crate::clientset::create_namespaced::<FooBar>("default", &fb2);
+    let fb2 = match client.get_single_value(request, response_body).await {
+        (crate::clientset::CreateResponse::Ok(fb) | crate::clientset::CreateResponse::Created(fb), _) => fb,
         (other, status_code) => panic!("{other:?} {status_code}"),
     };
-    assert_eq!(k8s_openapi::kind(&foo_bar_list), "FooBarList");
-    let _ =
-        foo_bar_list
-        .items.into_iter()
-        .find(|fb| fb.metadata.name.as_ref().map_or(false, |name| name == "fb1"))
-        .expect("couldn't find FooBar");
+
+
+    // List CR
+    {
+        let (request, response_body) = crate::clientset::list_namespaced::<FooBar>("default");
+        let mut foo_bar_list = match client.get_single_value(request, response_body).await {
+            (crate::clientset::ListResponse::Ok(foo_bar_list), _) => foo_bar_list,
+            (other, status_code) => panic!("{other:?} {status_code}"),
+        };
+        assert_eq!(k8s_openapi::kind(&foo_bar_list), "FooBarList");
+
+        foo_bar_list.items.sort_by(|item1, item2| item1.metadata.name.as_deref().cmp(&item2.metadata.name.as_deref()));
+        let [fb1_2, fb2_2] = &foo_bar_list.items[..] else {
+            panic!("didn't find expected FooBars in {foo_bar_list:?}");
+        };
+        assert_eq!(*fb1_2, fb1);
+        assert_eq!(*fb2_2, fb2);
+    }
 
 
     // Read CR
-    let (request, response_body) = crate::clientset::read_namespaced::<FooBar>("default", "fb1");
-    let fb1_2 = match client.get_single_value(request, response_body).await {
-        (crate::clientset::ReadResponse::Ok(fb), _) => fb,
-        (other, status_code) => panic!("{other:?} {status_code}"),
-    };
-    assert_eq!(fb1_2.metadata.name.as_ref().unwrap(), "fb1");
+    {
+        let (request, response_body) = crate::clientset::read_namespaced::<FooBar>("default", "fb1");
+        let fb1_2 = match client.get_single_value(request, response_body).await {
+            (crate::clientset::ReadResponse::Ok(fb), _) => fb,
+            (other, status_code) => panic!("{other:?} {status_code}"),
+        };
+        assert_eq!(fb1_2, fb1);
+
+        let (request, response_body) = crate::clientset::read_namespaced::<FooBar>("default", "fb2");
+        let fb2_2 = match client.get_single_value(request, response_body).await {
+            (crate::clientset::ReadResponse::Ok(fb), _) => fb,
+            (other, status_code) => panic!("{other:?} {status_code}"),
+        };
+        assert_eq!(fb2_2, fb2);
+    }
 
 
     // Watch CR
     {
         let (request, response_body) = crate::clientset::watch_namespaced::<FooBar>("default", Default::default());
         let foo_bar_watch_events = std::pin::pin!(client.get_multiple_values(request, response_body));
-        let _ =
+        let mut items: Vec<_> =
             foo_bar_watch_events
-            .filter_map(|foo_bar_watch_event| {
-                let fb = match foo_bar_watch_event {
-                    (crate::clientset::WatchResponse::Ok(meta::WatchEvent::Added(fb)), _) => fb,
-                    (crate::clientset::WatchResponse::Ok(_), _) => return std::future::ready(None),
-                    (other, status_code) => panic!("{other:?} {status_code}"),
-                };
-
-                let name = fb.metadata.name.as_deref();
-                if name == Some("fb1") {
-                    std::future::ready(Some(fb))
-                }
-                else {
-                    std::future::ready(None)
-                }
+            .filter_map(|foo_bar_watch_event| match foo_bar_watch_event {
+                (crate::clientset::WatchResponse::Ok(meta::WatchEvent::Added(fb)), _) => std::future::ready(Some(fb)),
+                (crate::clientset::WatchResponse::Ok(_), _) => std::future::ready(None),
+                (other, status_code) => panic!("{other:?} {status_code}"),
             })
-            .next().await
-            .expect("couldn't find FooBar");
+            .take(2)
+            .collect().await;
+
+        items.sort_by(|item1, item2| item1.metadata.name.as_deref().cmp(&item2.metadata.name.as_deref()));
+        let [fb1_2, fb2_2] = &items[..] else {
+            panic!("didn't find expected FooBars in {items:?}");
+        };
+        assert_eq!(*fb1_2, fb1);
+        assert_eq!(*fb2_2, fb2);
     }
 
 
     // Delete CR
     let (request, response_body) = {
         let metadata = &fb1.metadata;
-        let name = metadata.name.as_ref().expect("create FooBar response did not set metadata.name");
-        let namespace = metadata.namespace.as_ref().expect("create FooBar response did not set metadata.namespace");
+        let name = metadata.name.as_deref().expect("create FooBar response did not set metadata.name");
+        let namespace = metadata.namespace.as_deref().expect("create FooBar response did not set metadata.namespace");
+        crate::clientset::delete_namespaced::<FooBar>(namespace, name)
+    };
+    let () = match client.get_single_value(request, response_body).await {
+        (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
+        (other, status_code) => panic!("{other:?} {status_code}"),
+    };
+
+    let (request, response_body) = {
+        let metadata = &fb2.metadata;
+        let name = metadata.name.as_deref().expect("create FooBar response did not set metadata.name");
+        let namespace = metadata.namespace.as_deref().expect("create FooBar response did not set metadata.namespace");
         crate::clientset::delete_namespaced::<FooBar>(namespace, name)
     };
     let () = match client.get_single_value(request, response_body).await {
@@ -272,24 +362,32 @@ async fn test() {
 
 
     // Create invalid CR.
-    let fb2 = serde_json::Value::Object([
+    let fb3 = serde_json::Value::Object([
         ("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
         ("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
         ("metadata".to_string(), serde_json::Value::Object([
-            ("name".to_string(), serde_json::Value::String("fb2".to_string())),
+            ("name".to_string(), serde_json::Value::String("fb3".to_string())),
         ].into_iter().collect())),
         ("spec".to_string(), serde_json::Value::Object([
             ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
+            ("prop4".to_string(), serde_json::Value::String("value4".to_string())),
         ].into_iter().collect())),
     ].into_iter().collect());
     let request =
         http::Request::post(format!("/apis/{}/{}/namespaces/default/{plural}",
             <FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION))
         .header(http::header::CONTENT_TYPE, "application/json")
-        .body(serde_json::to_vec(&fb2).expect("couldn't create custom resource definition"))
+        .body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
         .expect("couldn't create custom resource");
     match client.get_single_value(request, crate::clientset::ResponseBody::<crate::clientset::CreateResponse<FooBar>>::new).await {
-        (_, reqwest::StatusCode::UNPROCESSABLE_ENTITY) => (),
+        (crate::clientset::CreateResponse::Other(Ok(Some(value))), reqwest::StatusCode::UNPROCESSABLE_ENTITY) => {
+            let status = <meta::Status as serde::Deserialize>::deserialize(value).unwrap();
+            let causes = status.details.as_ref().unwrap().causes.as_deref().unwrap();
+            match causes {
+                [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueRequired" && field == "spec.prop2" => (),
+                _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
+            };
+        },
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
@@ -302,6 +400,7 @@ async fn test() {
         ("spec".to_string(), serde_json::Value::Object([
             ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
             ("prop2".to_string(), serde_json::Value::Bool(true)),
+            ("prop4".to_string(), serde_json::Value::String("value4".to_string())),
         ].into_iter().collect())),
     ].into_iter().collect());
     let request =
@@ -311,7 +410,44 @@ async fn test() {
         .body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
         .expect("couldn't create custom resource");
     match client.get_single_value(request, crate::clientset::ResponseBody::<crate::clientset::CreateResponse<FooBar>>::new).await {
-        (_, reqwest::StatusCode::UNPROCESSABLE_ENTITY) => (),
+        (crate::clientset::CreateResponse::Other(Ok(Some(value))), reqwest::StatusCode::UNPROCESSABLE_ENTITY) => {
+            let status = <meta::Status as serde::Deserialize>::deserialize(value).unwrap();
+            let causes = status.details.as_ref().unwrap().causes.as_deref().unwrap();
+            match causes {
+                [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueTypeInvalid" && field == "spec.prop2" => (),
+                _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
+            };
+        },
+        (other, status_code) => panic!("{other:?} {status_code}"),
+    }
+
+    let fb3 = serde_json::Value::Object([
+        ("apiVersion".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::API_VERSION.to_owned())),
+        ("kind".to_string(), serde_json::Value::String(<FooBar as k8s_openapi::Resource>::KIND.to_owned())),
+        ("metadata".to_string(), serde_json::Value::Object([
+            ("name".to_string(), serde_json::Value::String("fb3".to_string())),
+        ].into_iter().collect())),
+        ("spec".to_string(), serde_json::Value::Object([
+            ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
+            ("prop2".to_string(), serde_json::Value::Array(vec![serde_json::Value::Bool(true)])),
+            ("prop4".to_string(), serde_json::Value::Bool(true)),
+        ].into_iter().collect())),
+    ].into_iter().collect());
+    let request =
+        http::Request::post(format!("/apis/{}/{}/namespaces/default/{plural}",
+            <FooBar as k8s_openapi::Resource>::GROUP, <FooBar as k8s_openapi::Resource>::VERSION))
+        .header(http::header::CONTENT_TYPE, "application/json")
+        .body(serde_json::to_vec(&fb3).expect("couldn't create custom resource definition"))
+        .expect("couldn't create custom resource");
+    match client.get_single_value(request, crate::clientset::ResponseBody::<crate::clientset::CreateResponse<FooBar>>::new).await {
+        (crate::clientset::CreateResponse::Other(Ok(Some(value))), reqwest::StatusCode::UNPROCESSABLE_ENTITY) => {
+            let status = <meta::Status as serde::Deserialize>::deserialize(value).unwrap();
+            let causes = status.details.as_ref().unwrap().causes.as_deref().unwrap();
+            match causes {
+                [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueTypeInvalid" && field == "spec.prop4" => (),
+                _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
+            };
+        },
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
 
