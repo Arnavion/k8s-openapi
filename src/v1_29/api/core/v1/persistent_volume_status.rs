@@ -3,7 +3,7 @@
 /// PersistentVolumeStatus is the current status of a persistent volume.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeStatus {
-    /// lastPhaseTransitionTime is the time the phase transitioned from one to another and automatically resets to current time everytime a volume phase transitions. This is an alpha field and requires enabling PersistentVolumeLastPhaseTransitionTime feature.
+    /// lastPhaseTransitionTime is the time the phase transitioned from one to another and automatically resets to current time everytime a volume phase transitions. This is a beta field and requires the PersistentVolumeLastPhaseTransitionTime feature to be enabled (enabled by default).
     pub last_phase_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// message is a human-readable message indicating details about why the volume is in this state.
@@ -154,7 +154,7 @@ impl crate::schemars::JsonSchema for PersistentVolumeStatus {
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
                             schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("lastPhaseTransitionTime is the time the phase transitioned from one to another and automatically resets to current time everytime a volume phase transitions. This is an alpha field and requires enabling PersistentVolumeLastPhaseTransitionTime feature.".to_owned()),
+                                description: Some("lastPhaseTransitionTime is the time the phase transitioned from one to another and automatically resets to current time everytime a volume phase transitions. This is a beta field and requires the PersistentVolumeLastPhaseTransitionTime feature to be enabled (enabled by default).".to_owned()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
