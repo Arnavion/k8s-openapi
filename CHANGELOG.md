@@ -1,3 +1,28 @@
+# v0.21.1 (2024-02-17)
+
+## k8s-openapi
+
+- BUGFIX: Fix `schemars::JsonSchema` impl of `k8s_openapi::apimachinery::pkg::util::intstr::IntOrString` to be in line with what Kubernetes expects of int-or-string fields in CRDs.
+
+Corresponding Kubernetes API server versions:
+
+- v1.24.17
+- v1.25.16
+- v1.26.14
+- v1.27.11
+- v1.28.7
+- v1.29.2
+
+## k8s-openapi-codegen-common
+
+- BUGFIX: See the bugfix mentioned above.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.21.0 (2024-01-19)
 
 ## k8s-openapi
