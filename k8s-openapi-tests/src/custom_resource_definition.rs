@@ -1,5 +1,11 @@
 use futures_util::StreamExt;
-use k8s_openapi::{schemars, serde_json};
+
+// rustc wants us to remove this redundant import because we already have it as a dep.
+// But it's a good test that `schemars` is actually re-exported from `k8s-openapi`.
+#[allow(unused_imports)]
+use k8s_openapi::schemars;
+
+use k8s_openapi::{serde_json};
 
 #[tokio::test]
 async fn test() {
