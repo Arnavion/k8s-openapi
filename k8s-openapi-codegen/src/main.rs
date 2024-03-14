@@ -126,10 +126,10 @@ struct Options {
     /// This parameter specifies the versions of Kubernetes that the API bindings should be generated for.
     ///
     /// `--generate=1.27` means "generate bindings for Kubernetes v1.27,
-    /// using that version's OpenAPI spec from the https://github.com/kubernetes/kubernetes repository".
+    /// using that version's OpenAPI spec from the <https://github.com/kubernetes/kubernetes> repository".
     ///
     /// `--generate=1.27:https://example.org/swagger.json` means "generate bindings for v1.27
-    /// using the OpenAPI spec at the URL https://example.org/swagger.json".
+    /// using the OpenAPI spec at the URL <https://example.org/swagger.json>".
     ///
     /// `--generate=1.27:file:///path/to/swagger.json` means "generate binding for v1.27,
     /// using the OpenAPI spec in the file /path/to/swagger.json".
@@ -137,7 +137,7 @@ struct Options {
     /// This parameter can be specified multiple times to generate bindings for multiple versions.
     ///
     /// If this parameter isn't specified, bindings will be generated for all supported versions,
-    /// using their respective OpenAPI specs from the https://github.com/kubernetes/kubernetes repository.
+    /// using their respective OpenAPI specs from the <https://github.com/kubernetes/kubernetes> repository.
     #[clap(long = "generate", value_name = "VERSION")]
     versions: Vec<RequestedVersion>,
 }

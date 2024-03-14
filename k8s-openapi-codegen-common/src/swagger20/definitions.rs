@@ -192,7 +192,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
             kubernetes_patch_merge_key: Option<String>,
 
             /// Comma-separated list of strategy tags.
-            /// Ref: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md
+            /// Ref: <https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/strategic-merge-patch.md>
             #[serde(default, rename = "x-kubernetes-patch-strategy")]
             kubernetes_patch_strategy: String,
 
