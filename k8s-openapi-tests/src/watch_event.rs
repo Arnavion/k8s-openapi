@@ -20,7 +20,7 @@ async fn watch_pods() {
             };
 
             let name = pod.metadata.name.as_deref();
-            if name.map(|name| name.starts_with("kube-apiserver-")).unwrap_or_default() {
+            if name.is_some_and(|name| name.starts_with("kube-apiserver-")) {
                 std::future::ready(Some(pod))
             }
             else {
