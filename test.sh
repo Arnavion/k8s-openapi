@@ -164,6 +164,7 @@ case "$2" in
             rm -f "/tmp/kubeconfig-v$K8S_VERSION"
         fi
 
+        mkdir -p ~/.kube
         flock -x ~/.kube -c "'kind-$KIND_VERSION' export kubeconfig --name '$K8S_CLUSTER_NAME'"
         ;;
 
@@ -183,6 +184,7 @@ case "$2" in
 
         docker image rm -f "kindest/node:v$K8S_VERSION"
 
+        mkdir -p ~/.kube
         flock -x ~/.kube -c "kubectl config delete-context 'kind-$K8S_CLUSTER_NAME'" || :
         flock -x ~/.kube -c "kubectl config delete-cluster 'kind-$K8S_CLUSTER_NAME'" || :
         flock -x ~/.kube -c "kubectl config unset 'users.kind-$K8S_CLUSTER_NAME'" || :
