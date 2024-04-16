@@ -213,9 +213,6 @@ impl Client {
                 url.path_and_query = Some(path);
                 let url = http::Uri::from_parts(url).expect("couldn't parse URL from parts");
 
-                // TODO(rustup): Remove this when reqwest updates to http v1 so that `reqwest::Method` == `http::Method`
-                let method = method.as_str().parse().expect("http::Method -> reqwest::Method");
-
                 let request = inner.request(method, url.to_string());
                 let request =
                     if let Some(content_type) = content_type {
