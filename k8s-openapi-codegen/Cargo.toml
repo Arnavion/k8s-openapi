@@ -11,7 +11,7 @@ clap = { version = "4", default-features = false, features = [
     "derive", # for #[derive(clap::Parser)]
     "std", # "`std` feature is currently required to build `clap`"
 ] }
-env_logger = { version = "0.10", default-features = false }
+env_logger = { version = "0.11", default-features = false }
 futures-util = { version = "0.3", default-features = false, features = [
     "alloc", # for futures_util::stream::FuturesUnordered
 ] }
