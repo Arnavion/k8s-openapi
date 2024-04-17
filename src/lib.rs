@@ -27,6 +27,7 @@
 #![cfg_attr(k8s_openapi_enabled_version="1.27", doc = "v1_27")]
 #![cfg_attr(k8s_openapi_enabled_version="1.28", doc = "v1_28")]
 #![cfg_attr(k8s_openapi_enabled_version="1.29", doc = "v1_29")]
+#![cfg_attr(k8s_openapi_enabled_version="1.30", doc = "v1_30")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -265,5 +266,8 @@ pub use _resource::{
 
 #[cfg(k8s_openapi_enabled_version="1.29")] mod v1_29;
 #[cfg(k8s_openapi_enabled_version="1.29")] pub use self::v1_29::*;
+
+#[cfg(k8s_openapi_enabled_version="1.30")] mod v1_30;
+#[cfg(k8s_openapi_enabled_version="1.30")] pub use self::v1_30::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
