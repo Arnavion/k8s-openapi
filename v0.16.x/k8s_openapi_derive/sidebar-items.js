@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"derive":[["CustomResourceDefinition","This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object and associated API functions."]]};
