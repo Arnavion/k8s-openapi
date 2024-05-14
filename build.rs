@@ -61,6 +61,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("cargo::metadata=version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
 
+    {
+        let mut enabled_version_possible_values = String::new();
+        for v in MIN..=MAX {
+            use std::fmt::Write;
+
+            if !enabled_version_possible_values.is_empty() {
+                enabled_version_possible_values.push_str(", ");
+            }
+            write!(enabled_version_possible_values, r#""1.{v}""#).unwrap();
+        }
+        println!("cargo::rustc-check-cfg=cfg(k8s_openapi_enabled_version, values({enabled_version_possible_values}))");
+    }
     println!(r#"cargo::rustc-cfg=k8s_openapi_enabled_version="1.{enabled_version}""#);
 
     let mut f = {
