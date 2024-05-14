@@ -179,7 +179,7 @@
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
 //!        if k8s_openapi_version >= 0x00_01_19_00 {
-//!            println!(r#"cargo:rustc-cfg=k8s_pod_spec_supports_host_users"#);
+//!            println!(r#"cargo::rustc-cfg=k8s_pod_spec_supports_host_users"#);
 //!        }
 //!
 //!        // or emit new source code files under OUT_DIR, or anything else a build script can do.

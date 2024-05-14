@@ -4,7 +4,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     const MIN: usize = 24;
     const MAX: usize = 30;
 
-    println!("cargo:rerun-if-env-changed=K8S_OPENAPI_ENABLED_VERSION");
+    println!("cargo::rerun-if-env-changed=K8S_OPENAPI_ENABLED_VERSION");
 
     let enabled_version = {
         let mut enabled_versions =
@@ -59,8 +59,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         v1
     };
 
-    println!("cargo:version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
-    println!(r#"cargo:rustc-cfg=k8s_openapi_enabled_version="1.{enabled_version}""#);
+    println!("cargo::metadata=version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
+
+    println!(r#"cargo::rustc-cfg=k8s_openapi_enabled_version="1.{enabled_version}""#);
 
     let mut f = {
         let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or("OUT_DIR not set")?.into();

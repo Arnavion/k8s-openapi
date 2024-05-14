@@ -28,6 +28,6 @@ fn main() {
     assert_eq!(actual_k8s_openapi_version, expected_k8s_openapi_version);
 
     if actual_k8s_openapi_version >= 0x00_01_1b_00 {
-        println!(r#"cargo:rustc-cfg=k8s_watch_send_initial_events"#);
+        println!(r#"cargo::rustc-cfg=k8s_watch_send_initial_events"#);
     }
 }
