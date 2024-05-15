@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct LocalObjectReference {
     /// Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-    pub name: Option<String>,
+    pub name: String,
 }
 
 impl crate::DeepMerge for LocalObjectReference {
@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for LocalObjectReference {
                 }
 
                 Ok(LocalObjectReference {
-                    name: value_name,
+                    name: value_name.unwrap_or_default(),
                 })
             }
         }
@@ -83,11 +83,9 @@ impl crate::serde::Serialize for LocalObjectReference {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LocalObjectReference",
-            self.name.as_ref().map_or(0, |_| 1),
+            1,
         )?;
-        if let Some(value) = &self.name {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
@@ -118,6 +116,9 @@ impl crate::schemars::JsonSchema for LocalObjectReference {
                             ..Default::default()
                         }),
                     ),
+                ].into(),
+                required: [
+                    "name".to_owned(),
                 ].into(),
                 ..Default::default()
             })),

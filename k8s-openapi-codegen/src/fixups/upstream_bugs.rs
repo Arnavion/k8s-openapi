@@ -92,6 +92,177 @@ pub(crate) mod optional_properties {
 //
 // Override it to be required.
 pub(crate) mod required_properties {
+    // `ConfigMapEnvSource::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn config_map_env_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapEnvSource".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied ConfigMapEnvSource required properties override".into())
+    }
+
+    // `ConfigMapKeySelector::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn config_map_key_selector(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapKeySelector".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied ConfigMapKeySelector required properties override".into())
+    }
+
+    // `ConfigMapProjection::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn config_map_projection(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapProjection".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied ConfigMapProjection required properties override".into())
+    }
+
+    // `ConfigMapVolumeSource::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn config_map_volume_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapVolumeSource".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied ConfigMapVolumeSource required properties override".into())
+    }
+
+    // `HostAlias::ip`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn host_alias(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.HostAlias".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("ip") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied HostAlias required properties override".into())
+    }
+
+    // `LocalObjectReference::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn local_object_reference(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.LocalObjectReference".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied LocalObjectReference required properties override".into())
+    }
+
+    // `SecretEnvSource::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn secret_env_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretEnvSource".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied SecretEnvSource required properties override".into())
+    }
+
+    // `SecretKeySelector::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn secret_key_selector(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretKeySelector".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied SecretKeySelector required properties override".into())
+    }
+
+    // `SecretProjection::name`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
+    pub(crate) fn secret_projection(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretProjection".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("name") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied SecretProjection required properties override".into())
+    }
+
     // `ValidatingAdmissionPolicyBindingList::items`
     pub(crate) fn alpha1_validating_admission_policy_binding_list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingList".to_owned());

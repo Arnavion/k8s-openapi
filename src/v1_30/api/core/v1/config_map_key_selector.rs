@@ -7,7 +7,7 @@ pub struct ConfigMapKeySelector {
     pub key: String,
 
     /// Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-    pub name: Option<String>,
+    pub name: String,
 
     /// Specify whether the ConfigMap or its key must be defined
     pub optional: Option<bool>,
@@ -81,7 +81,7 @@ impl<'de> crate::serde::Deserialize<'de> for ConfigMapKeySelector {
 
                 Ok(ConfigMapKeySelector {
                     key: value_key.unwrap_or_default(),
-                    name: value_name,
+                    name: value_name.unwrap_or_default(),
                     optional: value_optional,
                 })
             }
@@ -103,14 +103,11 @@ impl crate::serde::Serialize for ConfigMapKeySelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ConfigMapKeySelector",
-            1 +
-            self.name.as_ref().map_or(0, |_| 1) +
+            2 +
             self.optional.as_ref().map_or(0, |_| 1),
         )?;
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
-        if let Some(value) = &self.name {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.optional {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;
         }
@@ -169,6 +166,7 @@ impl crate::schemars::JsonSchema for ConfigMapKeySelector {
                 ].into(),
                 required: [
                     "key".to_owned(),
+                    "name".to_owned(),
                 ].into(),
                 ..Default::default()
             })),

@@ -7,7 +7,7 @@ pub struct HostAlias {
     pub hostnames: Option<Vec<String>>,
 
     /// IP address of the host file entry.
-    pub ip: Option<String>,
+    pub ip: String,
 }
 
 impl crate::DeepMerge for HostAlias {
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for HostAlias {
 
                 Ok(HostAlias {
                     hostnames: value_hostnames,
-                    ip: value_ip,
+                    ip: value_ip.unwrap_or_default(),
                 })
             }
         }
@@ -93,15 +93,13 @@ impl crate::serde::Serialize for HostAlias {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HostAlias",
-            self.hostnames.as_ref().map_or(0, |_| 1) +
-            self.ip.as_ref().map_or(0, |_| 1),
+            1 +
+            self.hostnames.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostnames {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", value)?;
         }
-        if let Some(value) = &self.ip {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &self.ip)?;
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
@@ -152,6 +150,9 @@ impl crate::schemars::JsonSchema for HostAlias {
                             ..Default::default()
                         }),
                     ),
+                ].into(),
+                required: [
+                    "ip".to_owned(),
                 ].into(),
                 ..Default::default()
             })),

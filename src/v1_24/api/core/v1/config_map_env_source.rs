@@ -6,7 +6,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ConfigMapEnvSource {
     /// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-    pub name: Option<String>,
+    pub name: String,
 
     /// Specify whether the ConfigMap must be defined
     pub optional: Option<bool>,
@@ -74,7 +74,7 @@ impl<'de> crate::serde::Deserialize<'de> for ConfigMapEnvSource {
                 }
 
                 Ok(ConfigMapEnvSource {
-                    name: value_name,
+                    name: value_name.unwrap_or_default(),
                     optional: value_optional,
                 })
             }
@@ -95,12 +95,10 @@ impl crate::serde::Serialize for ConfigMapEnvSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ConfigMapEnvSource",
-            self.name.as_ref().map_or(0, |_| 1) +
+            1 +
             self.optional.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.name {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.optional {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "optional", value)?;
         }
@@ -145,6 +143,9 @@ impl crate::schemars::JsonSchema for ConfigMapEnvSource {
                             ..Default::default()
                         }),
                     ),
+                ].into(),
+                required: [
+                    "name".to_owned(),
                 ].into(),
                 ..Default::default()
             })),
