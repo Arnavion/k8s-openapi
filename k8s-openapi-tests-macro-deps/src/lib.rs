@@ -6,6 +6,7 @@
 //! Test that the custom derive expansion compiles successfully. All third-party crates in the expansion
 //! must be referenced as the re-exports from the k8s-openapi crate, so k8s-openapi is the only required dependency.
 
+#[allow(unused)]
 #[derive(
     Clone, Debug, PartialEq,
     k8s_openapi_derive::CustomResourceDefinition,

@@ -469,6 +469,7 @@ async fn test() {
 
 #[test]
 fn dont_require_deep_merge_when_not_requested() {
+    #[allow(unused)]
     #[derive(
         Clone, Debug, PartialEq,
         k8s_openapi_derive::CustomResourceDefinition,
