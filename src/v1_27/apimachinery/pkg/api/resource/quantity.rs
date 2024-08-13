@@ -4,7 +4,7 @@
 ///
 /// The serialization format is:
 ///
-/// ``` \<quantity\>        ::= \<signedNumber\>\<suffix\>
+///  \<quantity\>        ::= \<signedNumber\>\<suffix\>
 ///
 ///   (Note that \<suffix\> may be empty, from the "" case in \<decimalSI\>.)
 ///
@@ -16,7 +16,7 @@
 ///
 ///   (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)
 ///
-/// \<decimalExponent\> ::= "e" \<signedNumber\> | "E" \<signedNumber\> ```
+/// \<decimalExponent\> ::= "e" \<signedNumber\> | "E" \<signedNumber\>
 ///
 /// No matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.
 ///

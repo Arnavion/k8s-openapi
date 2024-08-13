@@ -1093,7 +1093,8 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
                 .replace(']', r"\]")
                 .replace('<', r"\<")
                 .replace('>', r"\>")
-                .replace('\t', "    ");
+                .replace('\t', "    ")
+                .replace("```", "");
 
             let line =
                 if *previous_line_was_empty && line.starts_with("    ") {
@@ -1103,6 +1104,7 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
                 else {
                     line
                 };
+            let line = line.trim_end();
 
             *previous_line_was_empty = false;
 
