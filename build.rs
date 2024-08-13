@@ -2,7 +2,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
 
     const MIN: usize = 24;
-    const MAX: usize = 30;
+    const MAX: usize = 31;
 
     println!("cargo::rerun-if-env-changed=K8S_OPENAPI_ENABLED_VERSION");
 

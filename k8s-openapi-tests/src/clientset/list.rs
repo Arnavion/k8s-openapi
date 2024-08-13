@@ -1,5 +1,21 @@
 use k8s_openapi::serde_json;
 
+#[allow(dead_code)]
+pub(crate) fn list_cluster<T>() -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<ListResponse<T>>)
+where
+    T: serde::de::DeserializeOwned + k8s_openapi::Resource<Scope = k8s_openapi::ClusterResourceScope> + k8s_openapi::ListableResource,
+{
+    let first_segment = if T::GROUP.is_empty() { "api" } else { "apis" };
+    let url = format!("/{first_segment}/{api_version}/{url_path_segment}",
+        api_version = T::API_VERSION,
+        url_path_segment = T::URL_PATH_SEGMENT,
+    );
+
+    let request = http::Request::get(url);
+    let request = request.body(vec![]).unwrap();
+    (request, super::ResponseBody::new)
+}
+
 pub(crate) fn list_namespaced<T>(
     namespace: &str,
 ) -> (http::Request<Vec<u8>>, fn(reqwest::StatusCode) -> super::ResponseBody<ListResponse<T>>)

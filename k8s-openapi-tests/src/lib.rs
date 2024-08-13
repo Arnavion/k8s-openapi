@@ -52,6 +52,7 @@ impl Client {
         #[cfg(feature = "test_v1_28")] let replays_directory = "v1-28";
         #[cfg(feature = "test_v1_29")] let replays_directory = "v1-29";
         #[cfg(feature = "test_v1_30")] let replays_directory = "v1-30";
+        #[cfg(feature = "test_v1_31")] let replays_directory = "v1-31";
 
         let replays_directory =
             std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR")))
@@ -214,7 +215,7 @@ impl Client {
                 url.path_and_query = Some(path);
                 let url = http::Uri::from_parts(url).expect("couldn't parse URL from parts");
 
-                let request = inner.request(method, url.to_string());
+                let request = inner.request(method, dbg!(url.to_string()));
                 let request =
                     if let Some(content_type) = content_type {
                         request.header(reqwest::header::CONTENT_TYPE, content_type)

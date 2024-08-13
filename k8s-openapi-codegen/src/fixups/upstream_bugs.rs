@@ -452,3 +452,30 @@ pub(crate) fn v1alpha2_resource_claim_scheduling_status_unsuitable_nodes_merge_s
 
     Err("never applied ResourceClaimSchedulingStatus.unsuitableNodes merge strategy override".into())
 }
+
+// `ResourceSliceList` is a list with a standard `metadata: ListMeta` field,
+// but the spec thinks it has a `listMeta: ListMeta` field instead.
+//
+// This fixup fixes the OpenAPI spec so that the type is detected as a list, but actually deserializing the JSON object
+// will be broken because there is nothing in the generated code to parse a `"listMeta"` object key as if it was
+// `"metadata"`. That would require a bunch of changes in codegen-common, which are not worth it for a single alpha type,
+// especially since the API server will presumably be fixed at some point anyway.
+//
+// Ref: https://github.com/kubernetes/kubernetes/issues/126659
+pub(crate) fn v1alpha3_resource_slice_list_metadata(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha3.ResourceSliceList".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+            if let Some(property) = properties.remove("listMeta") {
+                let metadata = properties.insert(crate::swagger20::PropertyName("metadata".to_owned()), property);
+                if metadata.is_some() {
+                    return Err("ResourceSliceList has both listMeta and metadata properties".into());
+                }
+
+                return Ok(());
+            }
+        }
+    }
+
+    Err("never applied ResourceSliceList.metadata field rename override".into())
+}

@@ -6,6 +6,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
     SupportedVersion::V1_28,
     SupportedVersion::V1_29,
     SupportedVersion::V1_30,
+    SupportedVersion::V1_31,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -17,6 +18,7 @@ pub(crate) enum SupportedVersion {
     V1_28,
     V1_29,
     V1_30,
+    V1_31,
 }
 
 impl SupportedVersion {
@@ -29,6 +31,7 @@ impl SupportedVersion {
             SupportedVersion::V1_28 => "1.28",
             SupportedVersion::V1_29 => "1.29",
             SupportedVersion::V1_30 => "1.30",
+            SupportedVersion::V1_31 => "1.31",
         }
     }
 
@@ -41,6 +44,7 @@ impl SupportedVersion {
             SupportedVersion::V1_28 => "v1_28",
             SupportedVersion::V1_29 => "v1_29",
             SupportedVersion::V1_30 => "v1_30",
+            SupportedVersion::V1_31 => "v1_31",
         }
     }
 
@@ -53,6 +57,7 @@ impl SupportedVersion {
             SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.12/api/openapi-spec/swagger.json",
             SupportedVersion::V1_29 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.29.7/api/openapi-spec/swagger.json",
             SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.3/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.0/api/openapi-spec/swagger.json",
         }
     }
 
@@ -175,6 +180,20 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
                 crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
+            ],
+
+            SupportedVersion::V1_31 => &[
+                crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::required_properties::config_map_env_source,
+                crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
+                crate::fixups::upstream_bugs::required_properties::config_map_projection,
+                crate::fixups::upstream_bugs::required_properties::config_map_volume_source,
+                crate::fixups::upstream_bugs::required_properties::local_object_reference,
+                crate::fixups::upstream_bugs::required_properties::secret_env_source,
+                crate::fixups::upstream_bugs::required_properties::secret_key_selector,
+                crate::fixups::upstream_bugs::required_properties::secret_projection,
+                crate::fixups::upstream_bugs::v1alpha3_resource_slice_list_metadata,
             ],
         };
 

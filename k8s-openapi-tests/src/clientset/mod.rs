@@ -10,7 +10,8 @@ mod delete_collection;
 pub(crate) use delete_collection::{delete_collection_namespaced, ListOptional};
 
 mod list;
-pub(crate) use list::{list_namespaced, ListResponse};
+#[allow(unused_imports)]
+pub(crate) use list::{list_cluster, list_namespaced, ListResponse};
 
 mod patch;
 pub(crate) use patch::{patch_namespaced, PatchResponse};
@@ -47,6 +48,7 @@ impl<T> ResponseBody<T> where T: Response {
     }
 
     pub(crate) fn parse(&mut self) -> Result<T, ResponseError> {
+        println!("===== [{}]", self.buf.escape_ascii());
         match T::try_from_parts(self.status_code, &self.buf) {
             Ok((result, read)) => {
                 self.advance(read);
