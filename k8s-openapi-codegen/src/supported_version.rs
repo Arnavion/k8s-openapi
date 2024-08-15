@@ -54,9 +54,9 @@ impl SupportedVersion {
             SupportedVersion::V1_25 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.25.16/api/openapi-spec/swagger.json",
             SupportedVersion::V1_26 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.26.15/api/openapi-spec/swagger.json",
             SupportedVersion::V1_27 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.27.16/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.12/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_29 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.29.7/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.3/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.13/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_29 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.29.8/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.4/api/openapi-spec/swagger.json",
             SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.0/api/openapi-spec/swagger.json",
         }
     }
@@ -125,10 +125,6 @@ impl SupportedVersion {
             SupportedVersion::V1_28 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -146,10 +142,6 @@ impl SupportedVersion {
             SupportedVersion::V1_29 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -165,10 +157,6 @@ impl SupportedVersion {
             SupportedVersion::V1_30 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::alpha1_validating_admission_policy_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::beta1_validating_admission_policy_list,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -177,8 +165,6 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::required_properties::secret_env_source,
                 crate::fixups::upstream_bugs::required_properties::secret_key_selector,
                 crate::fixups::upstream_bugs::required_properties::secret_projection,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_binding_list,
-                crate::fixups::upstream_bugs::required_properties::validating_admission_policy_list,
                 crate::fixups::upstream_bugs::status_extra_gvk,
             ],
 
