@@ -50,14 +50,14 @@ declare -A K8S_VERSIONS=(
 
 # https://github.com/kubernetes-sigs/kind/releases
 declare -A KIND_VERSIONS=(
-    ['1.24']='0.23.0'
-    ['1.25']='0.23.0'
-    ['1.26']='0.23.0'
-    ['1.27']='0.23.0'
-    ['1.28']='0.23.0'
-    ['1.29']='0.23.0'
-    ['1.30']='0.23.0'
-    ['1.31']='0.23.0'
+    ['1.24']='0.24.0'
+    ['1.25']='0.24.0'
+    ['1.26']='0.24.0'
+    ['1.27']='0.24.0'
+    ['1.28']='0.24.0'
+    ['1.29']='0.24.0'
+    ['1.30']='0.24.0'
+    ['1.31']='0.24.0'
 )
 
 case "$1" in
@@ -123,14 +123,7 @@ case "$2" in
 
         if ! docker image inspect "kindest/node:v$K8S_VERSION"; then
             docker pull "kindest/node:v$K8S_VERSION" ||
-            (
-                trap "rm -rf '/tmp/kubernetes-v$K8S_VERSION'" EXIT
-
-                rm -rf "/tmp/kubernetes-v$K8S_VERSION"
-                git clone --recurse-submodules "--branch=v$K8S_VERSION" --depth=1 'https://github.com/kubernetes/kubernetes' "/tmp/kubernetes-v$K8S_VERSION"
-
-                "kind-$KIND_VERSION" build node-image --image "kindest/node:v$K8S_VERSION" --kube-root "/tmp/kubernetes-v$K8S_VERSION"
-            )
+                "kind-$KIND_VERSION" build node-image --type release --image "kindest/node:v$K8S_VERSION" "v$K8S_VERSION"
         fi
 
         mkdir -p "$3"
