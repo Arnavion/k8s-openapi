@@ -131,7 +131,7 @@ Keep these in mind when dropping support for older versions:
     ```sh
     az account list-locations --query '[].name' --output tsv |
         while read -r location; do
-            (</dev/null az aks get-versions --location "$location" --query 'orchestrators[].orchestratorVersion' --output tsv 2>/dev/null) & :
+            (</dev/null az aks get-versions --location "$location" --query 'values[].patchVersions.keys(@)[]' --output tsv 2>/dev/null) & :
         done |
         sort --version-sort |
         head -1
