@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodIP {
     /// IP is the IP address assigned to the pod
-    pub ip: Option<String>,
+    pub ip: String,
 }
 
 impl crate::DeepMerge for PodIP {
@@ -64,7 +64,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodIP {
                 }
 
                 Ok(PodIP {
-                    ip: value_ip,
+                    ip: value_ip.unwrap_or_default(),
                 })
             }
         }
@@ -83,11 +83,9 @@ impl crate::serde::Serialize for PodIP {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodIP",
-            self.ip.as_ref().map_or(0, |_| 1),
+            1,
         )?;
-        if let Some(value) = &self.ip {
-            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", value)?;
-        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ip", &self.ip)?;
         crate::serde::ser::SerializeStruct::end(state)
     }
 }
@@ -118,6 +116,9 @@ impl crate::schemars::JsonSchema for PodIP {
                             ..Default::default()
                         }),
                     ),
+                ].into(),
+                required: [
+                    "ip".to_owned(),
                 ].into(),
                 ..Default::default()
             })),

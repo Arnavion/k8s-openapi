@@ -187,6 +187,25 @@ pub(crate) mod required_properties {
         Err("never applied HostAlias required properties override".into())
     }
 
+    // `HostIP::ip`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/126057
+    pub(crate) fn host_ip(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.HostIP".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("ip") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied HostIP required properties override".into())
+    }
+
     // `LocalObjectReference::name`
     //
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
@@ -204,6 +223,25 @@ pub(crate) mod required_properties {
         }
 
         Err("never applied LocalObjectReference required properties override".into())
+    }
+
+    // `PodIP::ip`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/126057
+    pub(crate) fn pod_ip(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.PodIP".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("ip") {
+                    if !property.1 {
+                        property.1 = true;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied PodIP required properties override".into())
     }
 
     // `SecretEnvSource::name`
