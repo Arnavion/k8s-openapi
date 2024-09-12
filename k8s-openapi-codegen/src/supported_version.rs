@@ -56,8 +56,8 @@ impl SupportedVersion {
             SupportedVersion::V1_27 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.27.16/api/openapi-spec/swagger.json",
             SupportedVersion::V1_28 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.28.14/api/openapi-spec/swagger.json",
             SupportedVersion::V1_29 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.29.9/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.4/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.0/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.5/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.1/api/openapi-spec/swagger.json",
         }
     }
 
@@ -179,7 +179,6 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::required_properties::secret_env_source,
                 crate::fixups::upstream_bugs::required_properties::secret_key_selector,
                 crate::fixups::upstream_bugs::required_properties::secret_projection,
-                crate::fixups::upstream_bugs::v1alpha3_resource_slice_list_metadata,
             ],
         };
 
