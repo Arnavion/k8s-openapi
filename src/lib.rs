@@ -23,8 +23,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.24", doc = "v1_24")]
-#![cfg_attr(k8s_openapi_enabled_version="1.25", doc = "v1_25")]
 #![cfg_attr(k8s_openapi_enabled_version="1.26", doc = "v1_26")]
 #![cfg_attr(k8s_openapi_enabled_version="1.27", doc = "v1_27")]
 #![cfg_attr(k8s_openapi_enabled_version="1.28", doc = "v1_28")]
@@ -54,8 +52,8 @@
 //! # Crate features
 //!
 //! This crate contains several `v1_*` features. Enabling one of the `v1_*` features selects which version of the Kubernetes API server this crate should target.
-//! For example, enabling the `v1_23` feature means the crate will only contain the API exposed by Kubernetes 1.23. It will not expose API
-//! that were removed in 1.23 or earlier, nor any API added in 1.24 or later.
+//! For example, enabling the `v1_50` feature means the crate will only contain the API exposed by Kubernetes 1.50. It will not expose API
+//! that were removed in 1.50 or earlier, nor any API added in 1.51 or later.
 //!
 //! One and only one of the `v1_*` features must be enabled at the same time, otherwise the crate will not compile. This ensures that all crates in the crate graph
 //! use the same types. If it was possible for one library crate to use `api::core::v1::Pod` corresponding to v1.50 and another to use the type
@@ -116,10 +114,10 @@
 //!
 //! For example:
 //!
-//! 1. Your crate creates a `PodSpec` and wants to set the `host_users` field. This field is only available in Kubernetes 1.25+,
+//! 1. Your crate creates a `PodSecurityContext` and wants to set the `supplemental_groups_policy` field. This field is only available in Kubernetes 1.31+,
 //!    so you want your crate to fail to compile if a lower feature was enabled.
 //!
-//! 1. Your crate creates a `PodSpec` and wants to set the `host_users` field, but it's okay to not set it when compiling for older versions.
+//! 1. Your crate creates a `PodSecurityContext` and wants to set the `supplemental_groups_policy` field, but it's okay to not set it when compiling for older versions.
 //!
 //! There are two ways for your crate to determine which feature of `k8s-openapi` is enabled:
 //!
@@ -128,26 +126,26 @@
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.24 or lower is selected.
-//!      k8s_openapi::k8s_if_le_1_24! {
-//!          compile_error!("This crate requires the v1_25 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.30 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_30! {
+//!          compile_error!("This crate requires the v1_31 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
 //!
 //!      ...
 //!
-//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
-//!          host_users: ...,
+//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
+//!          supplemental_groups_policy: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let mut pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!      let mut pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
 //!          ...
 //!      };
 //!
-//!      k8s_openapi::k8s_if_ge_1_25! {
-//!          pod_spec.host_users = ...;
+//!      k8s_openapi::k8s_if_ge_1_31! {
+//!          pod_security_context.supplemental_groups_policy = ...;
 //!      }
 //!      ```
 //!
@@ -177,37 +175,37 @@
 //!        // - MM is the major version.
 //!        // - NN is the minor version.
 //!        //
-//!        // Thus, if the v1_25 feature was enabled, k8s_openapi_version would be 0x00_01_19_00
+//!        // Thus, if the v1_31 feature was enabled, k8s_openapi_version would be 0x00_01_1F_00
 //!
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
-//!        if k8s_openapi_version >= 0x00_01_19_00 {
-//!            println!(r#"cargo::rustc-cfg=k8s_pod_spec_supports_host_users"#);
+//!        if k8s_openapi_version >= 0x00_01_1F_00 {
+//!            println!(r#"cargo::rustc-cfg=k8s_pod_security_context_supports_supplemental_groups_policy"#);
 //!        }
 //!
-//!        // or emit new source code files under OUT_DIR, or anything else a build script can do.
+//!        // ... or emit new source code files under OUT_DIR, or anything else a build script can do.
 //!    }
 //!    ```
 //!
-//!    With these cfgs, the two cases above would be solved like this:
+//!    With this cfg, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.24 or lower is selected.
-//!      #[cfg(not(k8s_pod_spec_supports_host_users))]
-//!      compile_error!("This crate requires the v1_25 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.30 or lower is selected.
+//!      #[cfg(not(k8s_pod_security_context_supports_supplemental_groups_policy))]
+//!      compile_error!("This crate requires the v1_31 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!
 //!      ...
 //!
-//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
-//!          host_users: ...,
+//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
+//!          supplemental_groups_policy: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
-//!          #[cfg(not(k8s_pod_spec_supports_host_users))]
-//!          host_users: ...,
+//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
+//!          #[cfg(not(k8s_pod_security_context_supports_supplemental_groups_policy))]
+//!          supplemental_groups_policy: ...,
 //!          ...
 //!      };
 //!      ```
@@ -251,12 +249,6 @@ pub use _resource::{
     Metadata,
     api_version, group, kind, version,
 };
-
-#[cfg(k8s_openapi_enabled_version="1.24")] mod v1_24;
-#[cfg(k8s_openapi_enabled_version="1.24")] pub use self::v1_24::*;
-
-#[cfg(k8s_openapi_enabled_version="1.25")] mod v1_25;
-#[cfg(k8s_openapi_enabled_version="1.25")] pub use self::v1_25::*;
 
 #[cfg(k8s_openapi_enabled_version="1.26")] mod v1_26;
 #[cfg(k8s_openapi_enabled_version="1.26")] pub use self::v1_26::*;

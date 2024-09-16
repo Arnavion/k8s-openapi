@@ -54,23 +54,6 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
 // Override it to be optional to achieve the same effect.
 pub(crate) mod optional_properties {
     // `Event::eventTime`
-    pub(crate) fn eventsv1beta1_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.events.v1beta1.Event".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("eventTime") {
-                    if property.1 {
-                        property.1 = false;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied events.k8s.io/v1beta1.Event optional properties override".into())
-    }
-
-    // `Event::eventTime`
     pub(crate) fn eventsv1_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.events.v1.Event".to_owned());
         if let Some(definition) = spec.definitions.get_mut(&definition_path) {

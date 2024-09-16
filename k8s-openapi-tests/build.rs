@@ -3,7 +3,7 @@
 fn main() {
     // Assert that the DEP_K8S_OPENAPI_*_VERSION is set by the k8s-openapi crate's build script correctly.
 
-    const MIN: usize = 24;
+    const MIN: usize = 26;
     const MAX: usize = 31;
 
     let enabled_version = {
