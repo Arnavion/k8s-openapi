@@ -1,3 +1,5 @@
+#![allow(clippy::needless_raw_string_hashes)]
+
 pub(crate) mod impl_deserialize;
 
 pub(crate) mod impl_listable_resource;
