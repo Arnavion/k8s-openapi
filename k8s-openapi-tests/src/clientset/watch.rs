@@ -30,7 +30,7 @@ pub(crate) struct WatchOptional<'a> {
     pub(crate) send_initial_events: Option<bool>,
 }
 
-impl<'a> WatchOptional<'a> {
+impl WatchOptional<'_> {
     fn serialize<T>(
         self,
         query_pairs: &mut url::form_urlencoded::Serializer<'_, T>,

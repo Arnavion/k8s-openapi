@@ -45,7 +45,7 @@ impl<'de> crate::serde::Deserialize<'de> for MigrationCondition {
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+                impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

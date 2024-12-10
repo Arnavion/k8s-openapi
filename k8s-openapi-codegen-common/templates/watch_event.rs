@@ -23,7 +23,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
                 struct Visitor;
 
-                impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+                impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
@@ -55,7 +55,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
                 struct Visitor;
 
-                impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+                impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = WatchEventType;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
@@ -222,7 +222,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObject<'static> {{
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
                 struct Visitor;
 
-                impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+                impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
@@ -290,7 +290,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
                 struct Visitor;
 
-                impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+                impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
@@ -349,7 +349,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
     }}
 }}
 
-impl<'a> {local}serde::Serialize for BookmarkObject<'a> {{
+impl {local}serde::Serialize for BookmarkObject<'_> {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: {local}serde::Serializer {{
         let mut state = serializer.serialize_struct(
             "BookmarkObject",
@@ -360,7 +360,7 @@ impl<'a> {local}serde::Serialize for BookmarkObject<'a> {{
     }}
 }}
 
-impl<'a> {local}serde::Serialize for BookmarkObjectMeta<'a> {{
+impl {local}serde::Serialize for BookmarkObjectMeta<'_> {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: {local}serde::Serializer {{
         let mut state = serializer.serialize_struct(
             "ObjectMeta",

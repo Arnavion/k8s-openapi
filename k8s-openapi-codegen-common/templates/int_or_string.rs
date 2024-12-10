@@ -19,7 +19,7 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
         struct Visitor;
 
-        impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+        impl {local}serde::de::Visitor<'_> for Visitor {{
             type Value = {type_name};
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{

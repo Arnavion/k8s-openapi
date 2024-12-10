@@ -9,7 +9,7 @@ impl{type_generics_impl} {local}serde::Deserialize<'de> for {type_name}{type_gen
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: {local}serde::Deserializer<'de> {{
                 struct Visitor;
 
-                impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
+                impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
                     fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{

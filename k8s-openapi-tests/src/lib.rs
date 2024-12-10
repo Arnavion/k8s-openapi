@@ -292,7 +292,7 @@ enum ClientResponseBody<'a, TResponse> {
     Replaying(std::io::Cursor<Vec<u8>>),
 }
 
-impl<'a, TResponse> AsyncRead for ClientResponse<'a, TResponse>
+impl<TResponse> AsyncRead for ClientResponse<'_, TResponse>
 where
     TResponse: AsyncRead,
 {
@@ -472,7 +472,7 @@ mod methodstring {
     pub(super) fn deserialize<'de, D>(deserializer: D) -> Result<http::Method, D::Error> where D: serde::Deserializer<'de> {
         struct Visitor;
 
-        impl<'de> serde::de::Visitor<'de> for Visitor {
+        impl serde::de::Visitor<'_> for Visitor {
             type Value = http::Method;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

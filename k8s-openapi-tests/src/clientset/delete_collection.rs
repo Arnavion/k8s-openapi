@@ -25,7 +25,7 @@ pub(crate) struct ListOptional<'a> {
     pub(crate) label_selector: Option<&'a str>,
 }
 
-impl<'a> ListOptional<'a> {
+impl ListOptional<'_> {
     fn serialize<T>(
         self,
         query_pairs: &mut url::form_urlencoded::Serializer<'_, T>,
