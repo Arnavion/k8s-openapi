@@ -41,9 +41,9 @@ declare -A K8S_VERSIONS=(
     ['1.26']='1.26.15'
     ['1.27']='1.27.16'
     ['1.28']='1.28.15'
-    ['1.29']='1.29.11'
-    ['1.30']='1.30.7'
-    ['1.31']='1.31.3'
+    ['1.29']='1.29.12'
+    ['1.30']='1.30.8'
+    ['1.31']='1.31.4'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
@@ -119,7 +119,7 @@ case "$2" in
 
         if ! docker image inspect "kindest/node:v$K8S_VERSION"; then
             docker pull "kindest/node:v$K8S_VERSION" ||
-                "kind-$KIND_VERSION" build node-image --type release --image "kindest/node:v$K8S_VERSION" "v$K8S_VERSION"
+                "kind-$KIND_VERSION" build node-image --type file --image "kindest/node:v$K8S_VERSION" ~/Downloads/foo/"$K8S_VERSION".tar.gz
         fi
 
         mkdir -p "$3"
