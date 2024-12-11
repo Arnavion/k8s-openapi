@@ -283,40 +283,6 @@ pub(crate) mod required_properties {
 
         Err("never applied SecretProjection required properties override".into())
     }
-
-    // `ValidatingAdmissionPolicyBindingList::items`
-    pub(crate) fn alpha1_validating_admission_policy_binding_list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingList".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("items") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied admissionregistration.k8s.io/v1alpha1.ValidatingAdmissionPolicyBindingList required properties override".into())
-    }
-
-    // `ValidatingAdmissionPolicyList::items`
-    pub(crate) fn alpha1_validating_admission_policy_list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyList".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("items") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied admissionregistration.k8s.io/v1alpha1.ValidatingAdmissionPolicyList required properties override".into())
-    }
 }
 
 // `Status` has extra group-version-kind entries than the original `"":v1:Status` that cause it to not be detected as a `Resource`.
@@ -360,28 +326,6 @@ pub(crate) fn pod_scheduling_context_spec_potential_nodes_merge_strategy(spec: &
     }
 
     Err("never applied PodSchedulingContextSpec.potentialNodes merge strategy override".into())
-}
-
-// `ResourceClaimSchedulingStatus` has `set` merge strategy in versions before v1.29
-// but v1.29 decided it would like clients to treat it as `atomic`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/119962
-pub(crate) fn v1alpha1_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha1.ResourceClaimSchedulingStatus".to_owned());
-    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-            if let Some(property) = properties.get_mut("unsuitableNodes") {
-                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
-                    if *strategy == crate::swagger20::KubernetesListType::Set {
-                        *strategy = crate::swagger20::KubernetesListType::Atomic;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-    }
-
-    Err("never applied ResourceClaimSchedulingStatus.unsuitableNodes merge strategy override".into())
 }
 
 // `ResourceClaimSchedulingStatus` has `set` merge strategy in versions before v1.29

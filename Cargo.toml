@@ -44,9 +44,7 @@ serde-value = { version = "0.7", default-features = false }
 
 [features]
 # Each feature corresponds to a supported version of Kubernetes
-earliest = ["v1_26"]
-v1_26 = []
-v1_27 = []
+earliest = ["v1_28"]
 v1_28 = []
 v1_29 = []
 v1_30 = []
