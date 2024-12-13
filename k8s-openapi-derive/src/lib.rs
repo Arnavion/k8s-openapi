@@ -34,8 +34,8 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
     }
 }
 
-/// This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object
-/// and associated API functions.
+/// This custom derive can be used on a Kubernetes custom resource spec type to generate a custom resource definition object type
+/// and related trait impls.
 ///
 /// # Example
 ///
@@ -67,7 +67,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// - The spec type must impl the following traits (either manually or via `#[derive]`): `Clone`, `Debug`, `PartialEq`,
 ///   `serde::Deserialize` and `serde::Serialize`
 ///
-/// - The name of the spec type must end with `Spec`. This suffix is trimmed to generate the names of the other types.
+/// - The name of the spec type must end with `Spec`. This suffix is trimmed to generate the name of the object type.
 ///
 /// - The `k8s_openapi` crate must have been added as a dependency, since the macro expansion refers to types from it.
 ///

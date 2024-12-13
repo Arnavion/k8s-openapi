@@ -220,7 +220,7 @@
 //!
 //! # Custom resource definitions
 //!
-//! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating clientsets
+//! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating types
 //! for custom resources. See that crate's docs for more information.
 
 pub use chrono;
