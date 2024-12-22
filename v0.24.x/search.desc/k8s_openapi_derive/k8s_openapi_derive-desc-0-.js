@@ -1,0 +1,1 @@
+searchState.loadedDescShard("k8s_openapi_derive", 0, "This crate contains custom derives related to the …\nThis custom derive can be used on a Kubernetes custom …")
