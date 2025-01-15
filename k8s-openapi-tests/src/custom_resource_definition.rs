@@ -236,7 +236,7 @@ async fn test() {
 
             accepted_names.map(|accepted_names| &accepted_names.kind)
         };
-        if accepted_names_kind.map_or(false, |accepted_names_kind| accepted_names_kind == "FooBar") {
+        if accepted_names_kind.is_some_and(|accepted_names_kind| accepted_names_kind == "FooBar") {
             break;
         }
 
