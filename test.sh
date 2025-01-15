@@ -39,10 +39,10 @@ set -euo pipefail
 
 declare -A K8S_VERSIONS=(
     ['1.28']='1.28.15'
-    ['1.29']='1.29.12'
-    ['1.30']='1.30.8'
-    ['1.31']='1.31.4'
-    ['1.32']='1.32.0'
+    ['1.29']='1.29.13'
+    ['1.30']='1.30.9'
+    ['1.31']='1.31.5'
+    ['1.32']='1.32.1'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
@@ -117,7 +117,7 @@ case "$2" in
 
         if ! docker image inspect "kindest/node:v$K8S_VERSION"; then
             docker pull "kindest/node:v$K8S_VERSION" ||
-                "kind-$KIND_VERSION" build node-image --type file --image "kindest/node:v$K8S_VERSION" ~/Downloads/foo/"$K8S_VERSION".tar.gz
+                "kind-$KIND_VERSION" build node-image --type release --image "kindest/node:v$K8S_VERSION" "v$K8S_VERSION"
         fi
 
         mkdir -p "$3"
