@@ -102,7 +102,7 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_type: Option<WatchEventType> = None;
-                let mut value_object: Option<crate::serde_value::Value> = None;
+                let mut value_object: Option<crate::serde_json::Value> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -117,20 +117,16 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
 
                 Ok(match value_type {
                     WatchEventType::Added => {
-                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Added(crate::serde::Deserialize::deserialize(value_object)?)
+                        WatchEvent::Added(crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?)
                     },
                     WatchEventType::Deleted => {
-                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Deleted(crate::serde::Deserialize::deserialize(value_object)?)
+                        WatchEvent::Deleted(crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?)
                     },
                     WatchEventType::Modified => {
-                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
-                        WatchEvent::Modified(crate::serde::Deserialize::deserialize(value_object)?)
+                        WatchEvent::Modified(crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?)
                     },
                     WatchEventType::Bookmark => {
-                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
-                        let value: BookmarkObject<'static> = crate::serde::Deserialize::deserialize(value_object)?;
+                        let value: BookmarkObject<'static> = crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?;
                         WatchEvent::Bookmark {
                             annotations: value.metadata.annotations.into_owned(),
                             resource_version: value.metadata.resource_version.into_owned(),
@@ -138,18 +134,17 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
                     },
                     WatchEventType::Error => {
                         let is_status =
-                            if let crate::serde_value::Value::Map(map) = &value_object {
-                                matches!(map.get(&crate::serde_value::Value::String("kind".to_owned())), Some(crate::serde_value::Value::String(s)) if s == "Status")
+                            if let crate::serde_json::Value::Object(map) = &value_object {
+                                matches!(map.get("kind"), Some(crate::serde_json::Value::String(s)) if s == "Status")
                             }
                             else {
                                 false
                             };
-                        let value_object = crate::serde_value::ValueDeserializer::new(value_object);
                         if is_status {
-                            WatchEvent::ErrorStatus(crate::serde::Deserialize::deserialize(value_object)?)
+                            WatchEvent::ErrorStatus(crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?)
                         }
                         else {
-                            WatchEvent::ErrorOther(crate::serde::Deserialize::deserialize(value_object)?)
+                            WatchEvent::ErrorOther(crate::serde::Deserialize::deserialize(value_object).map_err(crate::serde::de::Error::custom)?)
                         }
                     },
                 })
