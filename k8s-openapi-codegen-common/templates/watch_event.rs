@@ -92,7 +92,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: {local}serde::de::MapAccess<'de> {{
                 let mut value_type: Option<WatchEventType> = None;
-                let mut value_object: Option<{local}serde_value::Value> = None;
+                let mut value_object: Option<{local}serde_json::Value> = None;
 
                 while let Some(key) = {local}serde::de::MapAccess::next_key::<Field>(&mut map)? {{
                     match key {{
@@ -107,39 +107,27 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
 
                 Ok(match value_type {{
                     WatchEventType::Added => {{
-                        let value_object = {local}serde_value::ValueDeserializer::new(value_object);
-                        {type_name}::Added({local}serde::Deserialize::deserialize(value_object)?)
+                        {type_name}::Added({local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?)
                     }},
                     WatchEventType::Deleted => {{
-                        let value_object = {local}serde_value::ValueDeserializer::new(value_object);
-                        {type_name}::Deleted({local}serde::Deserialize::deserialize(value_object)?)
+                        {type_name}::Deleted({local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?)
                     }},
                     WatchEventType::Modified => {{
-                        let value_object = {local}serde_value::ValueDeserializer::new(value_object);
-                        {type_name}::Modified({local}serde::Deserialize::deserialize(value_object)?)
+                        {type_name}::Modified({local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?)
                     }},
                     WatchEventType::Bookmark => {{
-                        let value_object = {local}serde_value::ValueDeserializer::new(value_object);
-                        let value: BookmarkObject<'static> = {local}serde::Deserialize::deserialize(value_object)?;
+                        let value: BookmarkObject<'static> = {local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?;
                         {type_name}::Bookmark {{
                             annotations: value.metadata.annotations.into_owned(),
                             resource_version: value.metadata.resource_version.into_owned(),
                         }}
                     }},
                     WatchEventType::Error => {{
-                        let is_status =
-                            if let {local}serde_value::Value::Map(map) = &value_object {{
-                                matches!(map.get(&{local}serde_value::Value::String("kind".to_owned())), Some({local}serde_value::Value::String(s)) if s == "Status")
-                            }}
-                            else {{
-                                false
-                            }};
-                        let value_object = {local}serde_value::ValueDeserializer::new(value_object);
-                        if is_status {{
-                            {type_name}::ErrorStatus({local}serde::Deserialize::deserialize(value_object)?)
+                        if value_object.as_object().is_some_and(|object| object.get("kind").is_some_and(|kind| kind == "Status")) {{
+                            {type_name}::ErrorStatus({local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?)
                         }}
                         else {{
-                            {type_name}::ErrorOther({local}serde::Deserialize::deserialize(value_object)?)
+                            {type_name}::ErrorOther({local}serde::Deserialize::deserialize(value_object).map_err({local}serde::de::Error::custom)?)
                         }}
                     }},
                 }})

@@ -40,7 +40,6 @@ serde = { version = "1", default-features = false }
 serde_json = { version = "1", default-features = false, features = [
     "alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"
 ] }
-serde-value = { version = "0.7", default-features = false }
 
 [features]
 # Each feature corresponds to a supported version of Kubernetes

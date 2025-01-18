@@ -69,7 +69,7 @@ pub(crate) fn generate(
             flattened_field = Some((field_name, field_type_name));
 
             writeln!(field_value_defs,
-                r#"                let mut value_{field_name}: std::collections::BTreeMap<{local}serde_value::Value, {local}serde_value::Value> = Default::default();"#)?;
+                r#"                let mut value_{field_name}: {local}serde_json::Map<String, {local}serde_json::Value> = Default::default();"#)?;
         }
         else {
             writeln!(fields_string, "            Key_{field_name},")?;
@@ -133,16 +133,12 @@ pub(crate) fn generate(
         writeln!(str_to_field_match_arms, "                            v => Field::Other(v.to_owned()),")?;
 
         writeln!(field_value_match_arms,
-            "                        Field::Other(key) => {{ value_{field_name}.insert({local}serde_value::Value::String(key), {local}serde::de::MapAccess::next_value(&mut map)?); }},")?;
+            "                        Field::Other(key) => {{ value_{field_name}.insert(key, {local}serde::de::MapAccess::next_value(&mut map)?); }},")?;
 
         writeln!(field_value_assignment,
             "                    {field_name}: {{")?;
         writeln!(field_value_assignment,
-            "                        let value_{field_name} = {local}serde_value::Value::Map(value_{field_name});")?;
-        writeln!(field_value_assignment,
-            "                        let value_{field_name} = {local}serde_value::ValueDeserializer::new(value_{field_name});")?;
-        writeln!(field_value_assignment,
-            "                        let value_{field_name} = {local}serde::Deserialize::deserialize(value_{field_name})?;")?;
+            "                        let value_{field_name} = {local}serde::Deserialize::deserialize(value_{field_name}).map_err({local}serde::de::Error::custom)?;")?;
         writeln!(field_value_assignment,
             "                        value_{field_name}")?;
         writeln!(field_value_assignment,
