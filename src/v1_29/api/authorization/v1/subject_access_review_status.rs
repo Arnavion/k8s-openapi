@@ -10,10 +10,10 @@ pub struct SubjectAccessReviewStatus {
     pub denied: Option<bool>,
 
     /// EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.
-    pub evaluation_error: Option<String>,
+    pub evaluation_error: Option<std::string::String>,
 
     /// Reason is optional.  It indicates why a request was allowed or denied.
-    pub reason: Option<String>,
+    pub reason: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for SubjectAccessReviewStatus {
@@ -43,7 +43,7 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -67,15 +67,15 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SubjectAccessReviewStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("SubjectAccessReviewStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_allowed: Option<bool> = None;
                 let mut value_denied: Option<bool> = None;
-                let mut value_evaluation_error: Option<String> = None;
-                let mut value_reason: Option<String> = None;
+                let mut value_evaluation_error: Option<std::string::String> = None;
+                let mut value_reason: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -134,66 +134,66 @@ impl crate::serde::Serialize for SubjectAccessReviewStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for SubjectAccessReviewStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.authorization.v1.SubjectAccessReviewStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.authorization.v1.SubjectAccessReviewStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("SubjectAccessReviewStatus".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("SubjectAccessReviewStatus".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "allowed".to_owned(),
+                        "allowed".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Allowed is required. True if the action would be allowed, false otherwise.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Allowed is required. True if the action would be allowed, false otherwise.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "denied".to_owned(),
+                        "denied".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Denied is optional. True if the action would be denied, otherwise false. If both allowed is false and denied is false, then the authorizer has no opinion on whether to authorize the action. Denied may not be true if Allowed is true.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Denied is optional. True if the action would be denied, otherwise false. If both allowed is false and denied is false, then the authorizer has no opinion on whether to authorize the action. Denied may not be true if Allowed is true.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "evaluationError".to_owned(),
+                        "evaluationError".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "reason".to_owned(),
+                        "reason".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Reason is optional.  It indicates why a request was allowed or denied.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Reason is optional.  It indicates why a request was allowed or denied.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "allowed".to_owned(),
+                    "allowed".into(),
                 ].into(),
                 ..Default::default()
             })),

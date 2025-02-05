@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for DriverAllocationResult {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,7 +55,7 @@ impl<'de> crate::serde::Deserialize<'de> for DriverAllocationResult {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DriverAllocationResult;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DriverAllocationResult")
             }
 
@@ -108,36 +108,36 @@ impl crate::serde::Serialize for DriverAllocationResult {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DriverAllocationResult {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1alpha2.DriverAllocationResult".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1alpha2.DriverAllocationResult".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("DriverAllocationResult contains vendor parameters and the allocation result for one request.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DriverAllocationResult contains vendor parameters and the allocation result for one request.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "namedResources".to_owned(),
+                        "namedResources".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesAllocationResult>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NamedResources describes the allocation result when using the named resources model.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("NamedResources describes the allocation result when using the named resources model.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "vendorRequestParameters".to_owned(),
+                        "vendorRequestParameters".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("VendorRequestParameters are the per-request configuration parameters from the time that the claim was allocated.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("VendorRequestParameters are the per-request configuration parameters from the time that the claim was allocated.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)

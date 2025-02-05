@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenRequestSpec {
     /// Audiences are the intendend audiences of the token. A recipient of a token must identify themself with an identifier in the list of audiences of the token, and otherwise should reject the token. A token issued for multiple audiences may be used to authenticate against any of the audiences listed but implies a high degree of trust between the target audiences.
-    pub audiences: Vec<String>,
+    pub audiences: std::vec::Vec<std::string::String>,
 
     /// BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.
     pub bound_object_ref: Option<crate::api::authentication::v1::BoundObjectReference>,
@@ -38,7 +38,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -61,12 +61,12 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TokenRequestSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("TokenRequestSpec")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_audiences: Option<Vec<String>> = None;
+                let mut value_audiences: Option<std::vec::Vec<std::string::String>> = None;
                 let mut value_bound_object_ref: Option<crate::api::authentication::v1::BoundObjectReference> = None;
                 let mut value_expiration_seconds: Option<i64> = None;
 
@@ -120,31 +120,31 @@ impl crate::serde::Serialize for TokenRequestSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for TokenRequestSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.authentication.v1.TokenRequestSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.authentication.v1.TokenRequestSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("TokenRequestSpec contains client provided parameters of a token request.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("TokenRequestSpec contains client provided parameters of a token request.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "audiences".to_owned(),
+                        "audiences".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Audiences are the intendend audiences of the token. A recipient of a token must identify themself with an identifier in the list of audiences of the token, and otherwise should reject the token. A token issued for multiple audiences may be used to authenticate against any of the audiences listed but implies a high degree of trust between the target audiences.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Audiences are the intendend audiences of the token. A recipient of a token must identify themself with an identifier in the list of audiences of the token, and otherwise should reject the token. A token issued for multiple audiences may be used to authenticate against any of the audiences listed but implies a high degree of trust between the target audiences.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),
@@ -154,31 +154,31 @@ impl crate::schemars::JsonSchema for TokenRequestSpec {
                         }),
                     ),
                     (
-                        "boundObjectRef".to_owned(),
+                        "boundObjectRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::authentication::v1::BoundObjectReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "expirationSeconds".to_owned(),
+                        "expirationSeconds".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "audiences".to_owned(),
+                    "audiences".into(),
                 ].into(),
                 ..Default::default()
             })),

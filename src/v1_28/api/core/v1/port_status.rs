@@ -6,13 +6,13 @@ pub struct PortStatus {
     ///   CamelCase names
     /// - cloud provider specific error values must have names that comply with the
     ///   format foo.example.com/CamelCase.
-    pub error: Option<String>,
+    pub error: Option<std::string::String>,
 
     /// Port is the port number of the service port of which status is recorded here
     pub port: i32,
 
     /// Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
-    pub protocol: String,
+    pub protocol: std::string::String,
 }
 
 impl crate::DeepMerge for PortStatus {
@@ -40,7 +40,7 @@ impl<'de> crate::serde::Deserialize<'de> for PortStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -63,14 +63,14 @@ impl<'de> crate::serde::Deserialize<'de> for PortStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PortStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PortStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_error: Option<String> = None;
+                let mut value_error: Option<std::string::String> = None;
                 let mut value_port: Option<i32> = None;
-                let mut value_protocol: Option<String> = None;
+                let mut value_protocol: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -119,53 +119,53 @@ impl crate::serde::Serialize for PortStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PortStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.PortStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PortStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "error".to_owned(),
+                        "error".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use\n  CamelCase names\n- cloud provider specific error values must have names that comply with the\n  format foo.example.com/CamelCase.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use\n  CamelCase names\n- cloud provider specific error values must have names that comply with the\n  format foo.example.com/CamelCase.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "port".to_owned(),
+                        "port".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Port is the port number of the service port of which status is recorded here".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Port is the port number of the service port of which status is recorded here".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "protocol".to_owned(),
+                        "protocol".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "port".to_owned(),
-                    "protocol".to_owned(),
+                    "port".into(),
+                    "protocol".into(),
                 ].into(),
                 ..Default::default()
             })),

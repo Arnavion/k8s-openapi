@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeStatus {
     /// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See https://pr.k8s.io/79391 for an example. Consumers should assume that addresses can change during the lifetime of a Node. However, there are some exceptions where this may not be possible, such as Pods that inherit a Node's address in its own status or consumers of the downward API (status.hostIP).
-    pub addresses: Option<Vec<crate::api::core::v1::NodeAddress>>,
+    pub addresses: Option<std::vec::Vec<crate::api::core::v1::NodeAddress>>,
 
     /// Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
-    pub allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub allocatable: Option<std::collections::BTreeMap<std::string::String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-    pub capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
+    pub capacity: Option<std::collections::BTreeMap<std::string::String, crate::apimachinery::pkg::api::resource::Quantity>>,
 
     /// Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition
-    pub conditions: Option<Vec<crate::api::core::v1::NodeCondition>>,
+    pub conditions: Option<std::vec::Vec<crate::api::core::v1::NodeCondition>>,
 
     /// Status of the config assigned to the node via the dynamic Kubelet config feature.
     pub config: Option<crate::api::core::v1::NodeConfigStatus>,
@@ -22,19 +22,19 @@ pub struct NodeStatus {
     pub daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints>,
 
     /// List of container images on this node
-    pub images: Option<Vec<crate::api::core::v1::ContainerImage>>,
+    pub images: Option<std::vec::Vec<crate::api::core::v1::ContainerImage>>,
 
     /// Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info
     pub node_info: Option<crate::api::core::v1::NodeSystemInfo>,
 
     /// NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.
-    pub phase: Option<String>,
+    pub phase: Option<std::string::String>,
 
     /// List of volumes that are attached to the node.
-    pub volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>>,
+    pub volumes_attached: Option<std::vec::Vec<crate::api::core::v1::AttachedVolume>>,
 
     /// List of attachable volumes in use (mounted) by the node.
-    pub volumes_in_use: Option<Vec<String>>,
+    pub volumes_in_use: Option<std::vec::Vec<std::string::String>>,
 }
 
 impl crate::DeepMerge for NodeStatus {
@@ -96,7 +96,7 @@ impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -127,22 +127,22 @@ impl<'de> crate::serde::Deserialize<'de> for NodeStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NodeStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("NodeStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_addresses: Option<Vec<crate::api::core::v1::NodeAddress>> = None;
-                let mut value_allocatable: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_capacity: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
-                let mut value_conditions: Option<Vec<crate::api::core::v1::NodeCondition>> = None;
+                let mut value_addresses: Option<std::vec::Vec<crate::api::core::v1::NodeAddress>> = None;
+                let mut value_allocatable: Option<std::collections::BTreeMap<std::string::String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_capacity: Option<std::collections::BTreeMap<std::string::String, crate::apimachinery::pkg::api::resource::Quantity>> = None;
+                let mut value_conditions: Option<std::vec::Vec<crate::api::core::v1::NodeCondition>> = None;
                 let mut value_config: Option<crate::api::core::v1::NodeConfigStatus> = None;
                 let mut value_daemon_endpoints: Option<crate::api::core::v1::NodeDaemonEndpoints> = None;
-                let mut value_images: Option<Vec<crate::api::core::v1::ContainerImage>> = None;
+                let mut value_images: Option<std::vec::Vec<crate::api::core::v1::ContainerImage>> = None;
                 let mut value_node_info: Option<crate::api::core::v1::NodeSystemInfo> = None;
-                let mut value_phase: Option<String> = None;
-                let mut value_volumes_attached: Option<Vec<crate::api::core::v1::AttachedVolume>> = None;
-                let mut value_volumes_in_use: Option<Vec<String>> = None;
+                let mut value_phase: Option<std::string::String> = None;
+                let mut value_volumes_attached: Option<std::vec::Vec<crate::api::core::v1::AttachedVolume>> = None;
+                let mut value_volumes_in_use: Option<std::vec::Vec<std::string::String>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -252,165 +252,165 @@ impl crate::serde::Serialize for NodeStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NodeStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.NodeStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.NodeStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("NodeStatus is information about the current status of a node.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("NodeStatus is information about the current status of a node.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "addresses".to_owned(),
+                        "addresses".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See https://pr.k8s.io/79391 for an example. Consumers should assume that addresses can change during the lifetime of a Node. However, there are some exceptions where this may not be possible, such as Pods that inherit a Node's address in its own status or consumers of the downward API (status.hostIP).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See https://pr.k8s.io/79391 for an example. Consumers should assume that addresses can change during the lifetime of a Node. However, there are some exceptions where this may not be possible, such as Pods that inherit a Node's address in its own status or consumers of the downward API (status.hostIP).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::NodeAddress>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::NodeAddress>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "allocatable".to_owned(),
+                        "allocatable".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(__gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>())),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>())),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "capacity".to_owned(),
+                        "capacity".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(__gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>())),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>())),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "conditions".to_owned(),
+                        "conditions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::NodeCondition>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::NodeCondition>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "config".to_owned(),
+                        "config".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeConfigStatus>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Status of the config assigned to the node via the dynamic Kubelet config feature.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Status of the config assigned to the node via the dynamic Kubelet config feature.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "daemonEndpoints".to_owned(),
+                        "daemonEndpoints".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeDaemonEndpoints>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Endpoints of daemons running on the Node.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Endpoints of daemons running on the Node.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "images".to_owned(),
+                        "images".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("List of container images on this node".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("List of container images on this node".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::ContainerImage>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::ContainerImage>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "nodeInfo".to_owned(),
+                        "nodeInfo".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSystemInfo>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "phase".to_owned(),
+                        "phase".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "volumesAttached".to_owned(),
+                        "volumesAttached".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("List of volumes that are attached to the node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("List of volumes that are attached to the node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::AttachedVolume>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::AttachedVolume>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "volumesInUse".to_owned(),
+                        "volumesInUse".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("List of attachable volumes in use (mounted) by the node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("List of attachable volumes in use (mounted) by the node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),

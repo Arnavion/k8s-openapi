@@ -63,7 +63,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -91,7 +91,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeploymentSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DeploymentSpec")
             }
 
@@ -187,106 +187,106 @@ impl crate::serde::Serialize for DeploymentSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeploymentSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.apps.v1.DeploymentSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.apps.v1.DeploymentSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeploymentSpec is the specification of the desired behavior of the Deployment.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DeploymentSpec is the specification of the desired behavior of the Deployment.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "minReadySeconds".to_owned(),
+                        "minReadySeconds".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "paused".to_owned(),
+                        "paused".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Indicates that the deployment is paused.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Indicates that the deployment is paused.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "progressDeadlineSeconds".to_owned(),
+                        "progressDeadlineSeconds".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The maximum time in seconds for a deployment to make progress before it is considered to be failed. The deployment controller will continue to process failed deployments and a condition with a ProgressDeadlineExceeded reason will be surfaced in the deployment status. Note that progress will not be estimated during the time a deployment is paused. Defaults to 600s.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The maximum time in seconds for a deployment to make progress before it is considered to be failed. The deployment controller will continue to process failed deployments and a condition with a ProgressDeadlineExceeded reason will be surfaced in the deployment status. Note that progress will not be estimated during the time a deployment is paused. Defaults to 600s.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "replicas".to_owned(),
+                        "replicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Number of desired pods. This is a pointer to distinguish between explicit zero and not specified. Defaults to 1.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Number of desired pods. This is a pointer to distinguish between explicit zero and not specified. Defaults to 1.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "revisionHistoryLimit".to_owned(),
+                        "revisionHistoryLimit".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "selector".to_owned(),
+                        "selector".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "strategy".to_owned(),
+                        "strategy".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::apps::v1::DeploymentStrategy>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The deployment strategy to use to replace existing pods with new ones.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The deployment strategy to use to replace existing pods with new ones.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "template".to_owned(),
+                        "template".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PodTemplateSpec>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is \"Always\".".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is \"Always\".".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -294,8 +294,8 @@ impl crate::schemars::JsonSchema for DeploymentSpec {
                     ),
                 ].into(),
                 required: [
-                    "selector".to_owned(),
-                    "template".to_owned(),
+                    "selector".into(),
+                    "template".into(),
                 ].into(),
                 ..Default::default()
             })),

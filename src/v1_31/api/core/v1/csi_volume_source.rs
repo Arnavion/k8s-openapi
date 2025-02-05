@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSIVolumeSource {
     /// driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
-    pub driver: String,
+    pub driver: std::string::String,
 
     /// fsType to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.
-    pub fs_type: Option<String>,
+    pub fs_type: Option<std::string::String>,
 
     /// nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.
     pub node_publish_secret_ref: Option<crate::api::core::v1::LocalObjectReference>,
@@ -16,7 +16,7 @@ pub struct CSIVolumeSource {
     pub read_only: Option<bool>,
 
     /// volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
-    pub volume_attributes: Option<std::collections::BTreeMap<String, String>>,
+    pub volume_attributes: Option<std::collections::BTreeMap<std::string::String, std::string::String>>,
 }
 
 impl crate::DeepMerge for CSIVolumeSource {
@@ -50,7 +50,7 @@ impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -75,16 +75,16 @@ impl<'de> crate::serde::Deserialize<'de> for CSIVolumeSource {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = CSIVolumeSource;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("CSIVolumeSource")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_driver: Option<String> = None;
-                let mut value_fs_type: Option<String> = None;
+                let mut value_driver: Option<std::string::String> = None;
+                let mut value_fs_type: Option<std::string::String> = None;
                 let mut value_node_publish_secret_ref: Option<crate::api::core::v1::LocalObjectReference> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_volume_attributes: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut value_volume_attributes: Option<std::collections::BTreeMap<std::string::String, std::string::String>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -150,75 +150,75 @@ impl crate::serde::Serialize for CSIVolumeSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for CSIVolumeSource {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.CSIVolumeSource".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.CSIVolumeSource".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("Represents a source location of a volume to mount, managed by an external CSI driver".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("Represents a source location of a volume to mount, managed by an external CSI driver".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "driver".to_owned(),
+                        "driver".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "fsType".to_owned(),
+                        "fsType".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("fsType to mount. Ex. \"ext4\", \"xfs\", \"ntfs\". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("fsType to mount. Ex. \"ext4\", \"xfs\", \"ntfs\". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "nodePublishSecretRef".to_owned(),
+                        "nodePublishSecretRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::LocalObjectReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "readOnly".to_owned(),
+                        "readOnly".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("readOnly specifies a read-only configuration for the volume. Defaults to false (read/write).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("readOnly specifies a read-only configuration for the volume. Defaults to false (read/write).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "volumeAttributes".to_owned(),
+                        "volumeAttributes".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 )),
@@ -229,7 +229,7 @@ impl crate::schemars::JsonSchema for CSIVolumeSource {
                     ),
                 ].into(),
                 required: [
-                    "driver".to_owned(),
+                    "driver".into(),
                 ].into(),
                 ..Default::default()
             })),

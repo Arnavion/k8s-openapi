@@ -10,6 +10,7 @@
 #[derive(
     Clone, Debug, PartialEq,
     k8s_openapi_derive::CustomResourceDefinition,
+    schemars::JsonSchema,
 )]
 #[custom_resource_definition(
     group = "k8s-openapi-tests-custom-resource-definition.com",

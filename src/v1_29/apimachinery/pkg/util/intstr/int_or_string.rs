@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IntOrString {
     Int(i32),
-    String(String),
+    String(std::string::String),
 }
 
 impl Default for IntOrString {
@@ -26,7 +26,7 @@ impl<'de> crate::serde::Deserialize<'de> for IntOrString {
         impl crate::serde::de::Visitor<'_> for Visitor {
             type Value = IntOrString;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("IntOrString")
             }
 
@@ -45,10 +45,10 @@ impl<'de> crate::serde::Deserialize<'de> for IntOrString {
             }
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
-                self.visit_string(v.to_owned())
+                self.visit_string(v.into())
             }
 
-            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+            fn visit_string<E>(self, v: std::string::String) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                 Ok(IntOrString::String(v))
             }
         }
@@ -68,18 +68,18 @@ impl crate::serde::Serialize for IntOrString {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for IntOrString {
-    fn schema_name() -> String {
-        "io.k8s.apimachinery.pkg.util.intstr.IntOrString".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.util.intstr.IntOrString".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.".into()),
                 ..Default::default()
             })),
             extensions: [
-                ("x-kubernetes-int-or-string".to_owned(), crate::serde_json::Value::Bool(true)),
+                ("x-kubernetes-int-or-string".into(), crate::serde_json::Value::Bool(true)),
             ].into(),
             ..Default::default()
         })

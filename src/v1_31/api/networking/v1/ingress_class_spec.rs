@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressClassSpec {
     /// controller refers to the name of the controller that should handle this class. This allows for different "flavors" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. "acme.io/ingress-controller". This field is immutable.
-    pub controller: Option<String>,
+    pub controller: Option<std::string::String>,
 
     /// parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
     pub parameters: Option<crate::api::networking::v1::IngressClassParametersReference>,
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for IngressClassSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,12 +55,12 @@ impl<'de> crate::serde::Deserialize<'de> for IngressClassSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = IngressClassSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("IngressClassSpec")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_controller: Option<String> = None;
+                let mut value_controller: Option<std::string::String> = None;
                 let mut value_parameters: Option<crate::api::networking::v1::IngressClassParametersReference> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -108,36 +108,36 @@ impl crate::serde::Serialize for IngressClassSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for IngressClassSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.networking.v1.IngressClassSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.networking.v1.IngressClassSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("IngressClassSpec provides information about the class of an Ingress.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("IngressClassSpec provides information about the class of an Ingress.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "controller".to_owned(),
+                        "controller".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("controller refers to the name of the controller that should handle this class. This allows for different \"flavors\" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. \"acme.io/ingress-controller\". This field is immutable.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("controller refers to the name of the controller that should handle this class. This allows for different \"flavors\" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. \"acme.io/ingress-controller\". This field is immutable.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "parameters".to_owned(),
+                        "parameters".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::networking::v1::IngressClassParametersReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)

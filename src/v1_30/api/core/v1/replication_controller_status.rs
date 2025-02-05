@@ -7,7 +7,7 @@ pub struct ReplicationControllerStatus {
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replication controller's current state.
-    pub conditions: Option<Vec<crate::api::core::v1::ReplicationControllerCondition>>,
+    pub conditions: Option<std::vec::Vec<crate::api::core::v1::ReplicationControllerCondition>>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replication controller.
     pub fully_labeled_replicas: Option<i32>,
@@ -60,7 +60,7 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -86,13 +86,13 @@ impl<'de> crate::serde::Deserialize<'de> for ReplicationControllerStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ReplicationControllerStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ReplicationControllerStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_available_replicas: Option<i32> = None;
-                let mut value_conditions: Option<Vec<crate::api::core::v1::ReplicationControllerCondition>> = None;
+                let mut value_conditions: Option<std::vec::Vec<crate::api::core::v1::ReplicationControllerCondition>> = None;
                 let mut value_fully_labeled_replicas: Option<i32> = None;
                 let mut value_observed_generation: Option<i64> = None;
                 let mut value_ready_replicas: Option<i32> = None;
@@ -169,97 +169,97 @@ impl crate::serde::Serialize for ReplicationControllerStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ReplicationControllerStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.ReplicationControllerStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.ReplicationControllerStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("ReplicationControllerStatus represents the current status of a replication controller.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("ReplicationControllerStatus represents the current status of a replication controller.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "availableReplicas".to_owned(),
+                        "availableReplicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of available replicas (ready for at least minReadySeconds) for this replication controller.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The number of available replicas (ready for at least minReadySeconds) for this replication controller.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "conditions".to_owned(),
+                        "conditions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents the latest available observations of a replication controller's current state.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Represents the latest available observations of a replication controller's current state.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::ReplicationControllerCondition>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::ReplicationControllerCondition>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "fullyLabeledReplicas".to_owned(),
+                        "fullyLabeledReplicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of pods that have labels matching the labels of the pod template of the replication controller.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The number of pods that have labels matching the labels of the pod template of the replication controller.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "observedGeneration".to_owned(),
+                        "observedGeneration".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ObservedGeneration reflects the generation of the most recently observed replication controller.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ObservedGeneration reflects the generation of the most recently observed replication controller.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "readyReplicas".to_owned(),
+                        "readyReplicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of ready replicas for this replication controller.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The number of ready replicas for this replication controller.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "replicas".to_owned(),
+                        "replicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "replicas".to_owned(),
+                    "replicas".into(),
                 ].into(),
                 ..Default::default()
             })),

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SuccessPolicy {
     /// rules represents the list of alternative rules for the declaring the Jobs as successful before `.status.succeeded \>= .spec.completions`. Once any of the rules are met, the "SucceededCriteriaMet" condition is added, and the lingering pods are removed. The terminal state for such a Job has the "Complete" condition. Additionally, these rules are evaluated in order; Once the Job meets one of the rules, other rules are ignored. At most 20 elements are allowed.
-    pub rules: Vec<crate::api::batch::v1::SuccessPolicyRule>,
+    pub rules: std::vec::Vec<crate::api::batch::v1::SuccessPolicyRule>,
 }
 
 impl crate::DeepMerge for SuccessPolicy {
@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for SuccessPolicy {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,12 +49,12 @@ impl<'de> crate::serde::Deserialize<'de> for SuccessPolicy {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SuccessPolicy;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("SuccessPolicy")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_rules: Option<Vec<crate::api::batch::v1::SuccessPolicyRule>> = None;
+                let mut value_rules: Option<std::vec::Vec<crate::api::batch::v1::SuccessPolicyRule>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -92,29 +92,29 @@ impl crate::serde::Serialize for SuccessPolicy {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for SuccessPolicy {
-    fn schema_name() -> String {
-        "io.k8s.api.batch.v1.SuccessPolicy".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.batch.v1.SuccessPolicy".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("SuccessPolicy describes when a Job can be declared as succeeded based on the success of some indexes.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("SuccessPolicy describes when a Job can be declared as succeeded based on the success of some indexes.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "rules".to_owned(),
+                        "rules".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("rules represents the list of alternative rules for the declaring the Jobs as successful before `.status.succeeded >= .spec.completions`. Once any of the rules are met, the \"SucceededCriteriaMet\" condition is added, and the lingering pods are removed. The terminal state for such a Job has the \"Complete\" condition. Additionally, these rules are evaluated in order; Once the Job meets one of the rules, other rules are ignored. At most 20 elements are allowed.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("rules represents the list of alternative rules for the declaring the Jobs as successful before `.status.succeeded >= .spec.completions`. Once any of the rules are met, the \"SucceededCriteriaMet\" condition is added, and the lingering pods are removed. The terminal state for such a Job has the \"Complete\" condition. Additionally, these rules are evaluated in order; Once the Job meets one of the rules, other rules are ignored. At most 20 elements are allowed.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::batch::v1::SuccessPolicyRule>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::batch::v1::SuccessPolicyRule>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
@@ -122,7 +122,7 @@ impl crate::schemars::JsonSchema for SuccessPolicy {
                     ),
                 ].into(),
                 required: [
-                    "rules".to_owned(),
+                    "rules".into(),
                 ].into(),
                 ..Default::default()
             })),

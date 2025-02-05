@@ -3,8 +3,8 @@ enum {type_name}<T> {{
     Deleted(T),
     Modified(T),
     Bookmark {{
-        annotations: std::collections::BTreeMap<String, String>,
-        resource_version: String,
+        annotations: std::collections::BTreeMap<std::string::String, std::string::String>,
+        resource_version: std::string::String,
     }},
     ErrorStatus({error_status_rust_type}),
     ErrorOther({error_other_rust_type}),
@@ -26,7 +26,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
                 impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                         f.write_str("field identifier")
                     }}
 
@@ -58,7 +58,7 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
                 impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = WatchEventType;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                         f.write_str("watch event type")
                     }}
 
@@ -81,12 +81,12 @@ impl<'de, T> {local}serde::Deserialize<'de> for {type_name}<T> where T: {local}s
             }}
         }}
 
-        struct Visitor<T>(std::marker::PhantomData<T>);
+        struct Visitor<T>(core::marker::PhantomData<T>);
 
         impl<'de, T> {local}serde::de::Visitor<'de> for Visitor<T> where T: {local}serde::Deserialize<'de> {{
             type Value = {type_name}<T>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 f.write_str({type_name:?})
             }}
 
@@ -194,7 +194,7 @@ struct BookmarkObject<'a> {{
 
 #[derive(Debug, PartialEq)]
 struct BookmarkObjectMeta<'a> {{
-    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<String, String>>,
+    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<std::string::String, std::string::String>>,
     resource_version: std::borrow::Cow<'a, str>,
 }}
 
@@ -213,7 +213,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObject<'static> {{
                 impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                         f.write_str("field identifier")
                     }}
 
@@ -234,7 +234,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObject<'static> {{
         impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
             type Value = BookmarkObject<'static>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 f.write_str("BookmarkObject")
             }}
 
@@ -281,7 +281,7 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
                 impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                         f.write_str("field identifier")
                     }}
 
@@ -303,13 +303,13 @@ impl<'de> {local}serde::Deserialize<'de> for BookmarkObjectMeta<'static> {{
         impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
             type Value = BookmarkObjectMeta<'static>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 f.write_str("ObjectMeta")
             }}
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: {local}serde::de::MapAccess<'de> {{
-                let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_resource_version: Option<String> = None;
+                let mut value_annotations: Option<std::collections::BTreeMap<std::string::String, std::string::String>> = None;
+                let mut value_resource_version: Option<std::string::String> = None;
 
                 while let Some(key) = {local}serde::de::MapAccess::next_key::<Field>(&mut map)? {{
                     match key {{

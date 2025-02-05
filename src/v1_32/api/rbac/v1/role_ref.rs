@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RoleRef {
     /// APIGroup is the group for the resource being referenced
-    pub api_group: String,
+    pub api_group: std::string::String,
 
     /// Kind is the type of resource being referenced
-    pub kind: String,
+    pub kind: std::string::String,
 
     /// Name is the name of resource being referenced
-    pub name: String,
+    pub name: std::string::String,
 }
 
 impl crate::DeepMerge for RoleRef {
@@ -38,7 +38,7 @@ impl<'de> crate::serde::Deserialize<'de> for RoleRef {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -61,14 +61,14 @@ impl<'de> crate::serde::Deserialize<'de> for RoleRef {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = RoleRef;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("RoleRef")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_api_group: Option<String> = None;
-                let mut value_kind: Option<String> = None;
-                let mut value_name: Option<String> = None;
+                let mut value_api_group: Option<std::string::String> = None;
+                let mut value_kind: Option<std::string::String> = None;
+                let mut value_name: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -114,57 +114,57 @@ impl crate::serde::Serialize for RoleRef {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for RoleRef {
-    fn schema_name() -> String {
-        "io.k8s.api.rbac.v1.RoleRef".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.rbac.v1.RoleRef".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("RoleRef contains information that points to the role being used".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("RoleRef contains information that points to the role being used".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "apiGroup".to_owned(),
+                        "apiGroup".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("APIGroup is the group for the resource being referenced".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("APIGroup is the group for the resource being referenced".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "kind".to_owned(),
+                        "kind".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Kind is the type of resource being referenced".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kind is the type of resource being referenced".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "name".to_owned(),
+                        "name".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name is the name of resource being referenced".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Name is the name of resource being referenced".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "apiGroup".to_owned(),
-                    "kind".to_owned(),
-                    "name".to_owned(),
+                    "apiGroup".into(),
+                    "kind".into(),
+                    "name".into(),
                 ].into(),
                 ..Default::default()
             })),

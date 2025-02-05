@@ -7,16 +7,16 @@ pub struct FlowSchemaCondition {
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// `message` is a human-readable message indicating details about last transition.
-    pub message: Option<String>,
+    pub message: Option<std::string::String>,
 
     /// `reason` is a unique, one-word, CamelCase reason for the condition's last transition.
-    pub reason: Option<String>,
+    pub reason: Option<std::string::String>,
 
     /// `status` is the status of the condition. Can be True, False, Unknown. Required.
-    pub status: Option<String>,
+    pub status: Option<std::string::String>,
 
     /// `type` is the type of the condition. Required.
-    pub type_: Option<String>,
+    pub type_: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for FlowSchemaCondition {
@@ -48,7 +48,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaCondition {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -73,16 +73,16 @@ impl<'de> crate::serde::Deserialize<'de> for FlowSchemaCondition {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = FlowSchemaCondition;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("FlowSchemaCondition")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_message: Option<String> = None;
-                let mut value_reason: Option<String> = None;
-                let mut value_status: Option<String> = None;
-                let mut value_type_: Option<String> = None;
+                let mut value_message: Option<std::string::String> = None;
+                let mut value_reason: Option<std::string::String> = None;
+                let mut value_status: Option<std::string::String> = None;
+                let mut value_type_: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -150,71 +150,71 @@ impl crate::serde::Serialize for FlowSchemaCondition {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for FlowSchemaCondition {
-    fn schema_name() -> String {
-        "io.k8s.api.flowcontrol.v1beta3.FlowSchemaCondition".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.flowcontrol.v1beta3.FlowSchemaCondition".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("FlowSchemaCondition describes conditions for a FlowSchema.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("FlowSchemaCondition describes conditions for a FlowSchema.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "lastTransitionTime".to_owned(),
+                        "lastTransitionTime".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`lastTransitionTime` is the last time the condition transitioned from one status to another.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("`lastTransitionTime` is the last time the condition transitioned from one status to another.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "message".to_owned(),
+                        "message".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`message` is a human-readable message indicating details about last transition.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("`message` is a human-readable message indicating details about last transition.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "reason".to_owned(),
+                        "reason".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`reason` is a unique, one-word, CamelCase reason for the condition's last transition.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("`reason` is a unique, one-word, CamelCase reason for the condition's last transition.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "status".to_owned(),
+                        "status".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`status` is the status of the condition. Can be True, False, Unknown. Required.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("`status` is the status of the condition. Can be True, False, Unknown. Required.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "type".to_owned(),
+                        "type".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`type` is the type of the condition. Required.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("`type` is the type of the condition. Required.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),

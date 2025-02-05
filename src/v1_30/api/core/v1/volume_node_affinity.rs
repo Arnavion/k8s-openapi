@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeNodeAffinity {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,7 +49,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeNodeAffinity {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VolumeNodeAffinity;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("VolumeNodeAffinity")
             }
 
@@ -94,25 +94,25 @@ impl crate::serde::Serialize for VolumeNodeAffinity {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for VolumeNodeAffinity {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.VolumeNodeAffinity".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.VolumeNodeAffinity".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "required".to_owned(),
+                        "required".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSelector>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("required specifies hard node constraints that must be met.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("required specifies hard node constraints that must be met.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)

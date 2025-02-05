@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSchedulingContextStatus {
     /// ResourceClaims describes resource availability for each pod.spec.resourceClaim entry where the corresponding ResourceClaim uses "WaitForFirstConsumer" allocation mode.
-    pub resource_claims: Option<Vec<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>>,
+    pub resource_claims: Option<std::vec::Vec<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>>,
 }
 
 impl crate::DeepMerge for PodSchedulingContextStatus {
@@ -35,7 +35,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodSchedulingContextStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -56,12 +56,12 @@ impl<'de> crate::serde::Deserialize<'de> for PodSchedulingContextStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodSchedulingContextStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PodSchedulingContextStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_resource_claims: Option<Vec<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>> = None;
+                let mut value_resource_claims: Option<std::vec::Vec<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -101,29 +101,29 @@ impl crate::serde::Serialize for PodSchedulingContextStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PodSchedulingContextStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1alpha2.PodSchedulingContextStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1alpha2.PodSchedulingContextStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("PodSchedulingContextStatus describes where resources for the Pod can be allocated.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("PodSchedulingContextStatus describes where resources for the Pod can be allocated.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "resourceClaims".to_owned(),
+                        "resourceClaims".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ResourceClaims describes resource availability for each pod.spec.resourceClaim entry where the corresponding ResourceClaim uses \"WaitForFirstConsumer\" allocation mode.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ResourceClaims describes resource availability for each pod.spec.resourceClaim entry where the corresponding ResourceClaim uses \"WaitForFirstConsumer\" allocation mode.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::ResourceClaimSchedulingStatus>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()

@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for PreferredSchedulingTerm {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,7 +55,7 @@ impl<'de> crate::serde::Deserialize<'de> for PreferredSchedulingTerm {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PreferredSchedulingTerm;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PreferredSchedulingTerm")
             }
 
@@ -103,46 +103,46 @@ impl crate::serde::Serialize for PreferredSchedulingTerm {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PreferredSchedulingTerm {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.PreferredSchedulingTerm".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PreferredSchedulingTerm".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "preference".to_owned(),
+                        "preference".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSelectorTerm>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("A node selector term, associated with the corresponding weight.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("A node selector term, associated with the corresponding weight.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "weight".to_owned(),
+                        "weight".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "preference".to_owned(),
-                    "weight".to_owned(),
+                    "preference".into(),
+                    "weight".into(),
                 ].into(),
                 ..Default::default()
             })),

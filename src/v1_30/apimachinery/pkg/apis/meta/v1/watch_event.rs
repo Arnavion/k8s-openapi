@@ -13,8 +13,8 @@ pub enum WatchEvent<T> {
     Deleted(T),
     Modified(T),
     Bookmark {
-        annotations: std::collections::BTreeMap<String, String>,
-        resource_version: String,
+        annotations: std::collections::BTreeMap<std::string::String, std::string::String>,
+        resource_version: std::string::String,
     },
     ErrorStatus(crate::apimachinery::pkg::apis::meta::v1::Status),
     ErrorOther(crate::apimachinery::pkg::runtime::RawExtension),
@@ -36,7 +36,7 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -68,7 +68,7 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = WatchEventType;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("watch event type")
                     }
 
@@ -91,12 +91,12 @@ impl<'de, T> crate::serde::Deserialize<'de> for WatchEvent<T> where T: crate::se
             }
         }
 
-        struct Visitor<T>(std::marker::PhantomData<T>);
+        struct Visitor<T>(core::marker::PhantomData<T>);
 
         impl<'de, T> crate::serde::de::Visitor<'de> for Visitor<T> where T: crate::serde::Deserialize<'de> {
             type Value = WatchEvent<T>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("WatchEvent")
             }
 
@@ -204,7 +204,7 @@ struct BookmarkObject<'a> {
 
 #[derive(Debug, PartialEq)]
 struct BookmarkObjectMeta<'a> {
-    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<String, String>>,
+    annotations: std::borrow::Cow<'a, std::collections::BTreeMap<std::string::String, std::string::String>>,
     resource_version: std::borrow::Cow<'a, str>,
 }
 
@@ -223,7 +223,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObject<'static> {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -244,7 +244,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObject<'static> {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = BookmarkObject<'static>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("BookmarkObject")
             }
 
@@ -291,7 +291,7 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -313,13 +313,13 @@ impl<'de> crate::serde::Deserialize<'de> for BookmarkObjectMeta<'static> {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = BookmarkObjectMeta<'static>;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ObjectMeta")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut value_resource_version: Option<String> = None;
+                let mut value_annotations: Option<std::collections::BTreeMap<std::string::String, std::string::String>> = None;
+                let mut value_resource_version: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -373,34 +373,34 @@ impl crate::serde::Serialize for BookmarkObjectMeta<'_> {
 
 #[cfg(feature = "schemars")]
 impl<T> crate::schemars::JsonSchema for WatchEvent<T> {
-    fn schema_name() -> String {
-        "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("Event represents a single event to a watched resource.\n\nObject is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.\n".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("Event represents a single event to a watched resource.\n\nObject is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.\n".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "object".to_owned(),
+                        "object".into(),
                         __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>(),
                     ),
                     (
-                        "type".to_owned(),
+                        "type".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "object".to_owned(),
-                    "type".to_owned(),
+                    "object".into(),
+                    "type".into(),
                 ].into(),
                 ..Default::default()
             })),

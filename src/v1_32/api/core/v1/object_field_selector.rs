@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectFieldSelector {
     /// Version of the schema the FieldPath is written in terms of, defaults to "v1".
-    pub api_version: Option<String>,
+    pub api_version: Option<std::string::String>,
 
     /// Path of the field to select in the specified API version.
-    pub field_path: String,
+    pub field_path: std::string::String,
 }
 
 impl crate::DeepMerge for ObjectFieldSelector {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for ObjectFieldSelector {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for ObjectFieldSelector {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ObjectFieldSelector;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ObjectFieldSelector")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
-                let mut value_field_path: Option<String> = None;
+                let mut value_api_version: Option<std::string::String> = None;
+                let mut value_field_path: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -106,44 +106,44 @@ impl crate::serde::Serialize for ObjectFieldSelector {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ObjectFieldSelector {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.ObjectFieldSelector".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.ObjectFieldSelector".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("ObjectFieldSelector selects an APIVersioned field of an object.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("ObjectFieldSelector selects an APIVersioned field of an object.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "apiVersion".to_owned(),
+                        "apiVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Version of the schema the FieldPath is written in terms of, defaults to \"v1\".".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Version of the schema the FieldPath is written in terms of, defaults to \"v1\".".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "fieldPath".to_owned(),
+                        "fieldPath".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Path of the field to select in the specified API version.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Path of the field to select in the specified API version.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "fieldPath".to_owned(),
+                    "fieldPath".into(),
                 ].into(),
                 ..Default::default()
             })),

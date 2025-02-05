@@ -12,7 +12,7 @@ impl{type_generics_impl} {local}serde::Deserialize<'de> for {type_name}{type_gen
                 impl {local}serde::de::Visitor<'_> for Visitor {{
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                         f.write_str("field identifier")
                     }}
 
@@ -31,7 +31,7 @@ impl{type_generics_impl} {local}serde::Deserialize<'de> for {type_name}{type_gen
         impl{type_generics_impl} {local}serde::de::Visitor<'de> for Visitor{type_generics_type}{type_generics_where} {{
             type Value = {type_name}{type_generics_type};
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 f.write_str({visitor_expecting_type_name})
             }}
 

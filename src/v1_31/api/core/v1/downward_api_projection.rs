@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
-    pub items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Option<std::vec::Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
 impl crate::DeepMerge for DownwardAPIProjection {
@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,12 +49,12 @@ impl<'de> crate::serde::Deserialize<'de> for DownwardAPIProjection {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DownwardAPIProjection;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DownwardAPIProjection")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<crate::api::core::v1::DownwardAPIVolumeFile>> = None;
+                let mut value_items: Option<std::vec::Vec<crate::api::core::v1::DownwardAPIVolumeFile>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -94,29 +94,29 @@ impl crate::serde::Serialize for DownwardAPIProjection {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DownwardAPIProjection {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.DownwardAPIProjection".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.DownwardAPIProjection".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "items".to_owned(),
+                        "items".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Items is a list of DownwardAPIVolume file".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Items is a list of DownwardAPIVolume file".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::DownwardAPIVolumeFile>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::DownwardAPIVolumeFile>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()

@@ -8,7 +8,7 @@ pub struct OpaqueDeviceConfiguration {
     /// An admission policy provided by the driver developer could use this to decide whether it needs to validate them.
     ///
     /// Must be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.
-    pub driver: String,
+    pub driver: std::string::String,
 
     /// Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version ("kind" + "apiVersion" for Kubernetes types), with conversion between different versions.
     pub parameters: crate::apimachinery::pkg::runtime::RawExtension,
@@ -37,7 +37,7 @@ impl<'de> crate::serde::Deserialize<'de> for OpaqueDeviceConfiguration {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -59,12 +59,12 @@ impl<'de> crate::serde::Deserialize<'de> for OpaqueDeviceConfiguration {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = OpaqueDeviceConfiguration;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("OpaqueDeviceConfiguration")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_driver: Option<String> = None;
+                let mut value_driver: Option<std::string::String> = None;
                 let mut value_parameters: Option<crate::apimachinery::pkg::runtime::RawExtension> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -107,36 +107,36 @@ impl crate::serde::Serialize for OpaqueDeviceConfiguration {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for OpaqueDeviceConfiguration {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1alpha3.OpaqueDeviceConfiguration".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1alpha3.OpaqueDeviceConfiguration".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("OpaqueDeviceConfiguration contains configuration parameters for a driver in a format defined by the driver vendor.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "driver".to_owned(),
+                        "driver".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.\n\nAn admission policy provided by the driver developer could use this to decide whether it needs to validate them.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Driver is used to determine which kubelet plugin needs to be passed these configuration parameters.\n\nAn admission policy provided by the driver developer could use this to decide whether it needs to validate them.\n\nMust be a DNS subdomain and should end with a DNS domain owned by the vendor of the driver.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "parameters".to_owned(),
+                        "parameters".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version (\"kind\" + \"apiVersion\" for Kubernetes types), with conversion between different versions.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Parameters can contain arbitrary data. It is the responsibility of the driver developer to handle validation and versioning. Typically this includes self-identification and a version (\"kind\" + \"apiVersion\" for Kubernetes types), with conversion between different versions.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -144,8 +144,8 @@ impl crate::schemars::JsonSchema for OpaqueDeviceConfiguration {
                     ),
                 ].into(),
                 required: [
-                    "driver".to_owned(),
-                    "parameters".to_owned(),
+                    "driver".into(),
+                    "parameters".into(),
                 ].into(),
                 ..Default::default()
             })),

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HorizontalPodAutoscalerStatus {
     /// conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
-    pub conditions: Option<Vec<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>>,
+    pub conditions: Option<std::vec::Vec<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>>,
 
     /// currentMetrics is the last read state of the metrics used by this autoscaler.
-    pub current_metrics: Option<Vec<crate::api::autoscaling::v2::MetricStatus>>,
+    pub current_metrics: Option<std::vec::Vec<crate::api::autoscaling::v2::MetricStatus>>,
 
     /// currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
     pub current_replicas: Option<i32>,
@@ -60,7 +60,7 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -86,13 +86,13 @@ impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HorizontalPodAutoscalerStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("HorizontalPodAutoscalerStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>> = None;
-                let mut value_current_metrics: Option<Vec<crate::api::autoscaling::v2::MetricStatus>> = None;
+                let mut value_conditions: Option<std::vec::Vec<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>> = None;
+                let mut value_current_metrics: Option<std::vec::Vec<crate::api::autoscaling::v2::MetricStatus>> = None;
                 let mut value_current_replicas: Option<i32> = None;
                 let mut value_desired_replicas: Option<i32> = None;
                 let mut value_last_scale_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
@@ -169,99 +169,99 @@ impl crate::serde::Serialize for HorizontalPodAutoscalerStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for HorizontalPodAutoscalerStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.autoscaling.v2.HorizontalPodAutoscalerStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.autoscaling.v2.HorizontalPodAutoscalerStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "conditions".to_owned(),
+                        "conditions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::autoscaling::v2::HorizontalPodAutoscalerCondition>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "currentMetrics".to_owned(),
+                        "currentMetrics".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("currentMetrics is the last read state of the metrics used by this autoscaler.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("currentMetrics is the last read state of the metrics used by this autoscaler.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::autoscaling::v2::MetricStatus>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::autoscaling::v2::MetricStatus>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "currentReplicas".to_owned(),
+                        "currentReplicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "desiredReplicas".to_owned(),
+                        "desiredReplicas".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "lastScaleTime".to_owned(),
+                        "lastScaleTime".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "observedGeneration".to_owned(),
+                        "observedGeneration".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("observedGeneration is the most recent generation observed by this autoscaler.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("observedGeneration is the most recent generation observed by this autoscaler.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "desiredReplicas".to_owned(),
+                    "desiredReplicas".into(),
                 ].into(),
                 ..Default::default()
             })),

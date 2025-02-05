@@ -7,7 +7,7 @@ pub struct DeploymentStrategy {
     pub rolling_update: Option<crate::api::apps::v1::RollingUpdateDeployment>,
 
     /// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
-    pub type_: Option<String>,
+    pub type_: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for DeploymentStrategy {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentStrategy {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for DeploymentStrategy {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeploymentStrategy;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DeploymentStrategy")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_rolling_update: Option<crate::api::apps::v1::RollingUpdateDeployment> = None;
-                let mut value_type_: Option<String> = None;
+                let mut value_type_: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -108,38 +108,38 @@ impl crate::serde::Serialize for DeploymentStrategy {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeploymentStrategy {
-    fn schema_name() -> String {
-        "io.k8s.api.apps.v1.DeploymentStrategy".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.apps.v1.DeploymentStrategy".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeploymentStrategy describes how to replace existing pods with new ones.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DeploymentStrategy describes how to replace existing pods with new ones.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "rollingUpdate".to_owned(),
+                        "rollingUpdate".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::apps::v1::RollingUpdateDeployment>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "type".to_owned(),
+                        "type".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),

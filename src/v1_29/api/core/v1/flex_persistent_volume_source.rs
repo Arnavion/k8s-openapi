@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FlexPersistentVolumeSource {
     /// driver is the name of the driver to use for this volume.
-    pub driver: String,
+    pub driver: std::string::String,
 
     /// fsType is the Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
-    pub fs_type: Option<String>,
+    pub fs_type: Option<std::string::String>,
 
     /// options is Optional: this field holds extra command options if any.
-    pub options: Option<std::collections::BTreeMap<String, String>>,
+    pub options: Option<std::collections::BTreeMap<std::string::String, std::string::String>>,
 
     /// readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,
@@ -50,7 +50,7 @@ impl<'de> crate::serde::Deserialize<'de> for FlexPersistentVolumeSource {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -75,14 +75,14 @@ impl<'de> crate::serde::Deserialize<'de> for FlexPersistentVolumeSource {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = FlexPersistentVolumeSource;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("FlexPersistentVolumeSource")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_driver: Option<String> = None;
-                let mut value_fs_type: Option<String> = None;
-                let mut value_options: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut value_driver: Option<std::string::String> = None;
+                let mut value_fs_type: Option<std::string::String> = None;
+                let mut value_options: Option<std::collections::BTreeMap<std::string::String, std::string::String>> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_secret_ref: Option<crate::api::core::v1::SecretReference> = None;
 
@@ -150,53 +150,53 @@ impl crate::serde::Serialize for FlexPersistentVolumeSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for FlexPersistentVolumeSource {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.FlexPersistentVolumeSource".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.FlexPersistentVolumeSource".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("FlexPersistentVolumeSource represents a generic persistent volume resource that is provisioned/attached using an exec based plugin.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("FlexPersistentVolumeSource represents a generic persistent volume resource that is provisioned/attached using an exec based plugin.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "driver".to_owned(),
+                        "driver".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("driver is the name of the driver to use for this volume.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("driver is the name of the driver to use for this volume.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "fsType".to_owned(),
+                        "fsType".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("fsType is the Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default filesystem depends on FlexVolume script.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("fsType is the Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default filesystem depends on FlexVolume script.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "options".to_owned(),
+                        "options".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("options is Optional: this field holds extra command options if any.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("options is Optional: this field holds extra command options if any.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 )),
@@ -206,22 +206,22 @@ impl crate::schemars::JsonSchema for FlexPersistentVolumeSource {
                         }),
                     ),
                     (
-                        "readOnly".to_owned(),
+                        "readOnly".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "secretRef".to_owned(),
+                        "secretRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::SecretReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("secretRef is Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("secretRef is Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -229,7 +229,7 @@ impl crate::schemars::JsonSchema for FlexPersistentVolumeSource {
                     ),
                 ].into(),
                 required: [
-                    "driver".to_owned(),
+                    "driver".into(),
                 ].into(),
                 ..Default::default()
             })),

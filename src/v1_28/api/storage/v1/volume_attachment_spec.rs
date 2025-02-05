@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachmentSpec {
     /// attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
-    pub attacher: String,
+    pub attacher: std::string::String,
 
     /// nodeName represents the node that the volume should be attached to.
-    pub node_name: String,
+    pub node_name: std::string::String,
 
     /// source represents the volume that should be attached.
     pub source: crate::api::storage::v1::VolumeAttachmentSource,
@@ -38,7 +38,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -61,13 +61,13 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VolumeAttachmentSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("VolumeAttachmentSpec")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_attacher: Option<String> = None;
-                let mut value_node_name: Option<String> = None;
+                let mut value_attacher: Option<std::string::String> = None;
+                let mut value_node_name: Option<std::string::String> = None;
                 let mut value_source: Option<crate::api::storage::v1::VolumeAttachmentSource> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -114,47 +114,47 @@ impl crate::serde::Serialize for VolumeAttachmentSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for VolumeAttachmentSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.storage.v1.VolumeAttachmentSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.storage.v1.VolumeAttachmentSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("VolumeAttachmentSpec is the specification of a VolumeAttachment request.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("VolumeAttachmentSpec is the specification of a VolumeAttachment request.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "attacher".to_owned(),
+                        "attacher".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "nodeName".to_owned(),
+                        "nodeName".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("nodeName represents the node that the volume should be attached to.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("nodeName represents the node that the volume should be attached to.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "source".to_owned(),
+                        "source".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::storage::v1::VolumeAttachmentSource>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("source represents the volume that should be attached.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("source represents the volume that should be attached.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -162,9 +162,9 @@ impl crate::schemars::JsonSchema for VolumeAttachmentSpec {
                     ),
                 ].into(),
                 required: [
-                    "attacher".to_owned(),
-                    "nodeName".to_owned(),
-                    "source".to_owned(),
+                    "attacher".into(),
+                    "nodeName".into(),
+                    "source".into(),
                 ].into(),
                 ..Default::default()
             })),

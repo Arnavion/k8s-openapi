@@ -16,13 +16,13 @@ pub struct PodFailurePolicyRule {
     /// - Count: indicates that the pod is handled in the default way - the
     ///   counter towards the .backoffLimit is incremented.
     /// Additional values are considered to be added in the future. Clients should react to an unknown action by skipping the rule.
-    pub action: String,
+    pub action: std::string::String,
 
     /// Represents the requirement on the container exit codes.
     pub on_exit_codes: Option<crate::api::batch::v1::PodFailurePolicyOnExitCodesRequirement>,
 
     /// Represents the requirement on the pod conditions. The requirement is represented as a list of pod condition patterns. The requirement is satisfied if at least one pattern matches an actual pod condition. At most 20 elements are allowed.
-    pub on_pod_conditions: Option<Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>>,
+    pub on_pod_conditions: Option<std::vec::Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>>,
 }
 
 impl crate::DeepMerge for PodFailurePolicyRule {
@@ -50,7 +50,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodFailurePolicyRule {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -73,14 +73,14 @@ impl<'de> crate::serde::Deserialize<'de> for PodFailurePolicyRule {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodFailurePolicyRule;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PodFailurePolicyRule")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_action: Option<String> = None;
+                let mut value_action: Option<std::string::String> = None;
                 let mut value_on_exit_codes: Option<crate::api::batch::v1::PodFailurePolicyOnExitCodesRequirement> = None;
-                let mut value_on_pod_conditions: Option<Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>> = None;
+                let mut value_on_pod_conditions: Option<std::vec::Vec<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -132,51 +132,51 @@ impl crate::serde::Serialize for PodFailurePolicyRule {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PodFailurePolicyRule {
-    fn schema_name() -> String {
-        "io.k8s.api.batch.v1.PodFailurePolicyRule".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.batch.v1.PodFailurePolicyRule".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("PodFailurePolicyRule describes how a pod failure is handled when the requirements are met. One of onExitCodes and onPodConditions, but not both, can be used in each rule.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("PodFailurePolicyRule describes how a pod failure is handled when the requirements are met. One of onExitCodes and onPodConditions, but not both, can be used in each rule.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "action".to_owned(),
+                        "action".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Specifies the action taken on a pod failure when the requirements are satisfied. Possible values are:\n\n- FailJob: indicates that the pod's job is marked as Failed and all\n  running pods are terminated.\n- FailIndex: indicates that the pod's index is marked as Failed and will\n  not be restarted.\n  This value is alpha-level. It can be used when the\n  `JobBackoffLimitPerIndex` feature gate is enabled (disabled by default).\n- Ignore: indicates that the counter towards the .backoffLimit is not\n  incremented and a replacement pod is created.\n- Count: indicates that the pod is handled in the default way - the\n  counter towards the .backoffLimit is incremented.\nAdditional values are considered to be added in the future. Clients should react to an unknown action by skipping the rule.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Specifies the action taken on a pod failure when the requirements are satisfied. Possible values are:\n\n- FailJob: indicates that the pod's job is marked as Failed and all\n  running pods are terminated.\n- FailIndex: indicates that the pod's index is marked as Failed and will\n  not be restarted.\n  This value is alpha-level. It can be used when the\n  `JobBackoffLimitPerIndex` feature gate is enabled (disabled by default).\n- Ignore: indicates that the counter towards the .backoffLimit is not\n  incremented and a replacement pod is created.\n- Count: indicates that the pod is handled in the default way - the\n  counter towards the .backoffLimit is incremented.\nAdditional values are considered to be added in the future. Clients should react to an unknown action by skipping the rule.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "onExitCodes".to_owned(),
+                        "onExitCodes".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::batch::v1::PodFailurePolicyOnExitCodesRequirement>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents the requirement on the container exit codes.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Represents the requirement on the container exit codes.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "onPodConditions".to_owned(),
+                        "onPodConditions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents the requirement on the pod conditions. The requirement is represented as a list of pod condition patterns. The requirement is satisfied if at least one pattern matches an actual pod condition. At most 20 elements are allowed.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Represents the requirement on the pod conditions. The requirement is represented as a list of pod condition patterns. The requirement is satisfied if at least one pattern matches an actual pod condition. At most 20 elements are allowed.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::batch::v1::PodFailurePolicyOnPodConditionsPattern>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
@@ -184,7 +184,7 @@ impl crate::schemars::JsonSchema for PodFailurePolicyRule {
                     ),
                 ].into(),
                 required: [
-                    "action".to_owned(),
+                    "action".into(),
                 ].into(),
                 ..Default::default()
             })),

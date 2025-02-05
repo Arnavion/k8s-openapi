@@ -6,10 +6,10 @@ pub struct DeviceAllocationResult {
     /// This field is a combination of all the claim and class configuration parameters. Drivers can distinguish between those based on a flag.
     ///
     /// This includes configuration parameters for drivers which have no allocated devices in the result because it is up to the drivers which configuration parameters they support. They can silently ignore unknown configuration parameters.
-    pub config: Option<Vec<crate::api::resource::v1beta1::DeviceAllocationConfiguration>>,
+    pub config: Option<std::vec::Vec<crate::api::resource::v1beta1::DeviceAllocationConfiguration>>,
 
     /// Results lists all allocated devices.
-    pub results: Option<Vec<crate::api::resource::v1beta1::DeviceRequestAllocationResult>>,
+    pub results: Option<std::vec::Vec<crate::api::resource::v1beta1::DeviceRequestAllocationResult>>,
 }
 
 impl crate::DeepMerge for DeviceAllocationResult {
@@ -35,7 +35,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeviceAllocationResult {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -57,13 +57,13 @@ impl<'de> crate::serde::Deserialize<'de> for DeviceAllocationResult {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeviceAllocationResult;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DeviceAllocationResult")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_config: Option<Vec<crate::api::resource::v1beta1::DeviceAllocationConfiguration>> = None;
-                let mut value_results: Option<Vec<crate::api::resource::v1beta1::DeviceRequestAllocationResult>> = None;
+                let mut value_config: Option<std::vec::Vec<crate::api::resource::v1beta1::DeviceAllocationConfiguration>> = None;
+                let mut value_results: Option<std::vec::Vec<crate::api::resource::v1beta1::DeviceRequestAllocationResult>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -110,44 +110,44 @@ impl crate::serde::Serialize for DeviceAllocationResult {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeviceAllocationResult {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1beta1.DeviceAllocationResult".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1beta1.DeviceAllocationResult".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeviceAllocationResult is the result of allocating devices.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DeviceAllocationResult is the result of allocating devices.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "config".to_owned(),
+                        "config".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("This field is a combination of all the claim and class configuration parameters. Drivers can distinguish between those based on a flag.\n\nThis includes configuration parameters for drivers which have no allocated devices in the result because it is up to the drivers which configuration parameters they support. They can silently ignore unknown configuration parameters.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("This field is a combination of all the claim and class configuration parameters. Drivers can distinguish between those based on a flag.\n\nThis includes configuration parameters for drivers which have no allocated devices in the result because it is up to the drivers which configuration parameters they support. They can silently ignore unknown configuration parameters.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceAllocationConfiguration>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceAllocationConfiguration>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "results".to_owned(),
+                        "results".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Results lists all allocated devices.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Results lists all allocated devices.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceRequestAllocationResult>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceRequestAllocationResult>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()

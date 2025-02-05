@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeviceCapacity {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,7 +49,7 @@ impl<'de> crate::serde::Deserialize<'de> for DeviceCapacity {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = DeviceCapacity;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("DeviceCapacity")
             }
 
@@ -92,25 +92,25 @@ impl crate::serde::Serialize for DeviceCapacity {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeviceCapacity {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1beta1.DeviceCapacity".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1beta1.DeviceCapacity".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeviceCapacity describes a quantity associated with a device.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DeviceCapacity describes a quantity associated with a device.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "value".to_owned(),
+                        "value".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Value defines how much of a certain device capacity is available.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Value defines how much of a certain device capacity is available.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -118,7 +118,7 @@ impl crate::schemars::JsonSchema for DeviceCapacity {
                     ),
                 ].into(),
                 required: [
-                    "value".to_owned(),
+                    "value".into(),
                 ].into(),
                 ..Default::default()
             })),

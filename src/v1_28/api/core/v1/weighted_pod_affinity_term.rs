@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for WeightedPodAffinityTerm {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,7 +55,7 @@ impl<'de> crate::serde::Deserialize<'de> for WeightedPodAffinityTerm {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = WeightedPodAffinityTerm;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("WeightedPodAffinityTerm")
             }
 
@@ -103,46 +103,46 @@ impl crate::serde::Serialize for WeightedPodAffinityTerm {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for WeightedPodAffinityTerm {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.WeightedPodAffinityTerm".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.WeightedPodAffinityTerm".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "podAffinityTerm".to_owned(),
+                        "podAffinityTerm".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PodAffinityTerm>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Required. A pod affinity term, associated with the corresponding weight.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Required. A pod affinity term, associated with the corresponding weight.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "weight".to_owned(),
+                        "weight".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("weight associated with matching the corresponding podAffinityTerm, in the range 1-100.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("weight associated with matching the corresponding podAffinityTerm, in the range 1-100.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "podAffinityTerm".to_owned(),
-                    "weight".to_owned(),
+                    "podAffinityTerm".into(),
+                    "weight".into(),
                 ].into(),
                 ..Default::default()
             })),

@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerStateTerminated {
     /// Container's ID in the format '\<type\>://\<container_id\>'
-    pub container_id: Option<String>,
+    pub container_id: Option<std::string::String>,
 
     /// Exit status from the last termination of the container
     pub exit_code: i32,
@@ -13,10 +13,10 @@ pub struct ContainerStateTerminated {
     pub finished_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Message regarding the last termination of the container
-    pub message: Option<String>,
+    pub message: Option<std::string::String>,
 
     /// (brief) reason from the last termination of the container
-    pub reason: Option<String>,
+    pub reason: Option<std::string::String>,
 
     /// Signal from the last termination of the container
     pub signal: Option<i32>,
@@ -58,7 +58,7 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -85,16 +85,16 @@ impl<'de> crate::serde::Deserialize<'de> for ContainerStateTerminated {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ContainerStateTerminated;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ContainerStateTerminated")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_container_id: Option<String> = None;
+                let mut value_container_id: Option<std::string::String> = None;
                 let mut value_exit_code: Option<i32> = None;
                 let mut value_finished_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_message: Option<String> = None;
-                let mut value_reason: Option<String> = None;
+                let mut value_message: Option<std::string::String> = None;
+                let mut value_reason: Option<std::string::String> = None;
                 let mut value_signal: Option<i32> = None;
                 let mut value_started_at: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
 
@@ -176,93 +176,93 @@ impl crate::serde::Serialize for ContainerStateTerminated {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ContainerStateTerminated {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.ContainerStateTerminated".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.ContainerStateTerminated".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("ContainerStateTerminated is a terminated state of a container.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("ContainerStateTerminated is a terminated state of a container.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "containerID".to_owned(),
+                        "containerID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Container's ID in the format '<type>://<container_id>'".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Container's ID in the format '<type>://<container_id>'".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "exitCode".to_owned(),
+                        "exitCode".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Exit status from the last termination of the container".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Exit status from the last termination of the container".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "finishedAt".to_owned(),
+                        "finishedAt".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Time at which the container last terminated".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Time at which the container last terminated".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "message".to_owned(),
+                        "message".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Message regarding the last termination of the container".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Message regarding the last termination of the container".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "reason".to_owned(),
+                        "reason".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("(brief) reason from the last termination of the container".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("(brief) reason from the last termination of the container".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "signal".to_owned(),
+                        "signal".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Signal from the last termination of the container".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Signal from the last termination of the container".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".to_owned()),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "startedAt".to_owned(),
+                        "startedAt".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Time at which previous execution of the container started".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Time at which previous execution of the container started".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -270,7 +270,7 @@ impl crate::schemars::JsonSchema for ContainerStateTerminated {
                     ),
                 ].into(),
                 required: [
-                    "exitCode".to_owned(),
+                    "exitCode".into(),
                 ].into(),
                 ..Default::default()
             })),

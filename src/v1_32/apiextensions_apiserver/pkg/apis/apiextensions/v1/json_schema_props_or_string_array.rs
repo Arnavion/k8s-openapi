@@ -3,8 +3,8 @@
 /// JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
 #[derive(Clone, Debug, PartialEq)]
 pub enum JSONSchemaPropsOrStringArray {
-    Schema(Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>),
-    Strings(Vec<String>),
+    Schema(std::boxed::Box<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>),
+    Strings(std::vec::Vec<std::string::String>),
 }
 
 impl crate::DeepMerge for JSONSchemaPropsOrStringArray {
@@ -20,7 +20,7 @@ impl<'de> crate::serde::Deserialize<'de> for JSONSchemaPropsOrStringArray {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = JSONSchemaPropsOrStringArray;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("JSONSchemaPropsOrStringArray")
             }
 
@@ -48,25 +48,25 @@ impl crate::serde::Serialize for JSONSchemaPropsOrStringArray {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for JSONSchemaPropsOrStringArray {
-    fn schema_name() -> String {
-        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.".into()),
                 ..Default::default()
             })),
-            subschemas: Some(Box::new(crate::schemars::schema::SubschemaValidation {
-                one_of: Some(vec![
+            subschemas: Some(std::boxed::Box::new(crate::schemars::schema::SubschemaValidation {
+                one_of: Some(std::vec![
                     __gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>(),
                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                        array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                            items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                        array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                            items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                 crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                     ..Default::default()
                                 }),
                             ))),

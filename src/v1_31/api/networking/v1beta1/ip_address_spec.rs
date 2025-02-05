@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for IPAddressSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,7 +49,7 @@ impl<'de> crate::serde::Deserialize<'de> for IPAddressSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = IPAddressSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("IPAddressSpec")
             }
 
@@ -92,25 +92,25 @@ impl crate::serde::Serialize for IPAddressSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for IPAddressSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.networking.v1beta1.IPAddressSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.networking.v1beta1.IPAddressSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("IPAddressSpec describe the attributes in an IP Address.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("IPAddressSpec describe the attributes in an IP Address.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "parentRef".to_owned(),
+                        "parentRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::networking::v1beta1::ParentReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -118,7 +118,7 @@ impl crate::schemars::JsonSchema for IPAddressSpec {
                     ),
                 ].into(),
                 required: [
-                    "parentRef".to_owned(),
+                    "parentRef".into(),
                 ].into(),
                 ..Default::default()
             })),

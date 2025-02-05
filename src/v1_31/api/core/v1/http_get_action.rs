@@ -4,19 +4,19 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPGetAction {
     /// Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
-    pub host: Option<String>,
+    pub host: Option<std::string::String>,
 
     /// Custom headers to set in the request. HTTP allows repeated headers.
-    pub http_headers: Option<Vec<crate::api::core::v1::HTTPHeader>>,
+    pub http_headers: Option<std::vec::Vec<crate::api::core::v1::HTTPHeader>>,
 
     /// Path to access on the HTTP server.
-    pub path: Option<String>,
+    pub path: Option<std::string::String>,
 
     /// Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
     pub port: crate::apimachinery::pkg::util::intstr::IntOrString,
 
     /// Scheme to use for connecting to the host. Defaults to HTTP.
-    pub scheme: Option<String>,
+    pub scheme: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for HTTPGetAction {
@@ -48,7 +48,7 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -73,16 +73,16 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPGetAction {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HTTPGetAction;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("HTTPGetAction")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_host: Option<String> = None;
-                let mut value_http_headers: Option<Vec<crate::api::core::v1::HTTPHeader>> = None;
-                let mut value_path: Option<String> = None;
+                let mut value_host: Option<std::string::String> = None;
+                let mut value_http_headers: Option<std::vec::Vec<crate::api::core::v1::HTTPHeader>> = None;
+                let mut value_path: Option<std::string::String> = None;
                 let mut value_port: Option<crate::apimachinery::pkg::util::intstr::IntOrString> = None;
-                let mut value_scheme: Option<String> = None;
+                let mut value_scheme: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -148,81 +148,81 @@ impl crate::serde::Serialize for HTTPGetAction {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for HTTPGetAction {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.HTTPGetAction".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.HTTPGetAction".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("HTTPGetAction describes an action based on HTTP Get requests.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("HTTPGetAction describes an action based on HTTP Get requests.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "host".to_owned(),
+                        "host".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "httpHeaders".to_owned(),
+                        "httpHeaders".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Custom headers to set in the request. HTTP allows repeated headers.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Custom headers to set in the request. HTTP allows repeated headers.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::core::v1::HTTPHeader>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::HTTPHeader>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "path".to_owned(),
+                        "path".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Path to access on the HTTP server.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Path to access on the HTTP server.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "port".to_owned(),
+                        "port".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::util::intstr::IntOrString>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "scheme".to_owned(),
+                        "scheme".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Scheme to use for connecting to the host. Defaults to HTTP.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Scheme to use for connecting to the host. Defaults to HTTP.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "port".to_owned(),
+                    "port".into(),
                 ].into(),
                 ..Default::default()
             })),

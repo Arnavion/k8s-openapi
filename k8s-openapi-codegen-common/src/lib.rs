@@ -234,7 +234,7 @@ pub fn run(
                                 "not",
                                 "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaProps",
                             ) => {
-                                field_type_name.push_str("Box<");
+                                field_type_name.push_str("std::boxed::Box<");
                                 field_type_name.push_str(&type_name);
                                 field_type_name.push('>');
                             },
@@ -599,7 +599,7 @@ pub fn run(
                     name: "items",
                     comment: Some("List of objects."),
                     field_name: "items".into(),
-                    field_type_name: "Vec<T>".to_owned(),
+                    field_type_name: "std::vec::Vec<T>".to_owned(),
                     required: templates::PropertyRequired::Required { is_default: true },
                     is_flattened: false,
                     merge_type: &items_merge_type,
@@ -1205,7 +1205,7 @@ fn get_rust_type(
         swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok(format!("{local}serde_json::Value").into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::Array { items }) =>
-            Ok(format!("Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
+            Ok(format!("std::vec::Vec<{}>", get_rust_type(&items.kind, map_namespace)?).into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
@@ -1215,13 +1215,13 @@ fn get_rust_type(
         swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::Object { additional_properties }) =>
-            Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
+            Ok(format!("std::collections::BTreeMap<std::string::String, {}>", get_rust_type(&additional_properties.kind, map_namespace)?).into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
             Ok(format!("{local}ByteString").into()),
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
             Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>").into()),
-        swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
+        swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("std::string::String".into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {
             let namespace_parts =

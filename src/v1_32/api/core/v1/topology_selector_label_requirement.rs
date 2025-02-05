@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TopologySelectorLabelRequirement {
     /// The label key that the selector applies to.
-    pub key: String,
+    pub key: std::string::String,
 
     /// An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
-    pub values: Vec<String>,
+    pub values: std::vec::Vec<std::string::String>,
 }
 
 impl crate::DeepMerge for TopologySelectorLabelRequirement {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for TopologySelectorLabelRequirement {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for TopologySelectorLabelRequirement {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TopologySelectorLabelRequirement;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("TopologySelectorLabelRequirement")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_key: Option<String> = None;
-                let mut value_values: Option<Vec<String>> = None;
+                let mut value_key: Option<std::string::String> = None;
+                let mut value_values: Option<std::vec::Vec<std::string::String>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -103,42 +103,42 @@ impl crate::serde::Serialize for TopologySelectorLabelRequirement {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for TopologySelectorLabelRequirement {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.TopologySelectorLabelRequirement".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.TopologySelectorLabelRequirement".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "key".to_owned(),
+                        "key".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The label key that the selector applies to.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The label key that the selector applies to.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "values".to_owned(),
+                        "values".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("An array of string values. One value must match the label to be selected. Each entry in Values is ORed.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("An array of string values. One value must match the label to be selected. Each entry in Values is ORed.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),
@@ -149,8 +149,8 @@ impl crate::schemars::JsonSchema for TopologySelectorLabelRequirement {
                     ),
                 ].into(),
                 required: [
-                    "key".to_owned(),
-                    "values".to_owned(),
+                    "key".into(),
+                    "values".into(),
                 ].into(),
                 ..Default::default()
             })),

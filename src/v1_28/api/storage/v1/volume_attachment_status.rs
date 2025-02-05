@@ -10,7 +10,7 @@ pub struct VolumeAttachmentStatus {
     pub attached: bool,
 
     /// attachmentMetadata is populated with any information returned by the attach operation, upon successful attach, that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    pub attachment_metadata: Option<std::collections::BTreeMap<String, String>>,
+    pub attachment_metadata: Option<std::collections::BTreeMap<std::string::String, std::string::String>>,
 
     /// detachError represents the last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
     pub detach_error: Option<crate::api::storage::v1::VolumeError>,
@@ -45,7 +45,7 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -69,14 +69,14 @@ impl<'de> crate::serde::Deserialize<'de> for VolumeAttachmentStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VolumeAttachmentStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("VolumeAttachmentStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_attach_error: Option<crate::api::storage::v1::VolumeError> = None;
                 let mut value_attached: Option<bool> = None;
-                let mut value_attachment_metadata: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut value_attachment_metadata: Option<std::collections::BTreeMap<std::string::String, std::string::String>> = None;
                 let mut value_detach_error: Option<crate::api::storage::v1::VolumeError> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -136,53 +136,53 @@ impl crate::serde::Serialize for VolumeAttachmentStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for VolumeAttachmentStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.storage.v1.VolumeAttachmentStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.storage.v1.VolumeAttachmentStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("VolumeAttachmentStatus is the status of a VolumeAttachment request.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("VolumeAttachmentStatus is the status of a VolumeAttachment request.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "attachError".to_owned(),
+                        "attachError".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::storage::v1::VolumeError>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("attachError represents the last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("attachError represents the last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "attached".to_owned(),
+                        "attached".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("attached indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("attached indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "attachmentMetadata".to_owned(),
+                        "attachmentMetadata".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("attachmentMetadata is populated with any information returned by the attach operation, upon successful attach, that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("attachmentMetadata is populated with any information returned by the attach operation, upon successful attach, that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 )),
@@ -192,11 +192,11 @@ impl crate::schemars::JsonSchema for VolumeAttachmentStatus {
                         }),
                     ),
                     (
-                        "detachError".to_owned(),
+                        "detachError".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::storage::v1::VolumeError>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("detachError represents the last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("detachError represents the last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -204,7 +204,7 @@ impl crate::schemars::JsonSchema for VolumeAttachmentStatus {
                     ),
                 ].into(),
                 required: [
-                    "attached".to_owned(),
+                    "attached".into(),
                 ].into(),
                 ..Default::default()
             })),

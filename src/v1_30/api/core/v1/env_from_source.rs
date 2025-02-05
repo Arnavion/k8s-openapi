@@ -7,7 +7,7 @@ pub struct EnvFromSource {
     pub config_map_ref: Option<crate::api::core::v1::ConfigMapEnvSource>,
 
     /// An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
-    pub prefix: Option<String>,
+    pub prefix: Option<std::string::String>,
 
     /// The Secret to select from
     pub secret_ref: Option<crate::api::core::v1::SecretEnvSource>,
@@ -38,7 +38,7 @@ impl<'de> crate::serde::Deserialize<'de> for EnvFromSource {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -61,13 +61,13 @@ impl<'de> crate::serde::Deserialize<'de> for EnvFromSource {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = EnvFromSource;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("EnvFromSource")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_config_map_ref: Option<crate::api::core::v1::ConfigMapEnvSource> = None;
-                let mut value_prefix: Option<String> = None;
+                let mut value_prefix: Option<std::string::String> = None;
                 let mut value_secret_ref: Option<crate::api::core::v1::SecretEnvSource> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -122,47 +122,47 @@ impl crate::serde::Serialize for EnvFromSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for EnvFromSource {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.EnvFromSource".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.EnvFromSource".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("EnvFromSource represents the source of a set of ConfigMaps".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("EnvFromSource represents the source of a set of ConfigMaps".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "configMapRef".to_owned(),
+                        "configMapRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ConfigMapEnvSource>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The ConfigMap to select from".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The ConfigMap to select from".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "prefix".to_owned(),
+                        "prefix".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "secretRef".to_owned(),
+                        "secretRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::SecretEnvSource>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The Secret to select from".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The Secret to select from".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)

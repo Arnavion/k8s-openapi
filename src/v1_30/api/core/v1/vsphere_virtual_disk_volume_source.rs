@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VsphereVirtualDiskVolumeSource {
     /// fsType is filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    pub fs_type: Option<String>,
+    pub fs_type: Option<std::string::String>,
 
     /// storagePolicyID is the storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
-    pub storage_policy_id: Option<String>,
+    pub storage_policy_id: Option<std::string::String>,
 
     /// storagePolicyName is the storage Policy Based Management (SPBM) profile name.
-    pub storage_policy_name: Option<String>,
+    pub storage_policy_name: Option<std::string::String>,
 
     /// volumePath is the path that identifies vSphere volume vmdk
-    pub volume_path: String,
+    pub volume_path: std::string::String,
 }
 
 impl crate::DeepMerge for VsphereVirtualDiskVolumeSource {
@@ -43,7 +43,7 @@ impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -67,15 +67,15 @@ impl<'de> crate::serde::Deserialize<'de> for VsphereVirtualDiskVolumeSource {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = VsphereVirtualDiskVolumeSource;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("VsphereVirtualDiskVolumeSource")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_fs_type: Option<String> = None;
-                let mut value_storage_policy_id: Option<String> = None;
-                let mut value_storage_policy_name: Option<String> = None;
-                let mut value_volume_path: Option<String> = None;
+                let mut value_fs_type: Option<std::string::String> = None;
+                let mut value_storage_policy_id: Option<std::string::String> = None;
+                let mut value_storage_policy_name: Option<std::string::String> = None;
+                let mut value_volume_path: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -134,66 +134,66 @@ impl crate::serde::Serialize for VsphereVirtualDiskVolumeSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for VsphereVirtualDiskVolumeSource {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.VsphereVirtualDiskVolumeSource".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.VsphereVirtualDiskVolumeSource".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("Represents a vSphere volume resource.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("Represents a vSphere volume resource.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "fsType".to_owned(),
+                        "fsType".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("fsType is filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("fsType is filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "storagePolicyID".to_owned(),
+                        "storagePolicyID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("storagePolicyID is the storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("storagePolicyID is the storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "storagePolicyName".to_owned(),
+                        "storagePolicyName".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("storagePolicyName is the storage Policy Based Management (SPBM) profile name.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("storagePolicyName is the storage Policy Based Management (SPBM) profile name.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "volumePath".to_owned(),
+                        "volumePath".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("volumePath is the path that identifies vSphere volume vmdk".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("volumePath is the path that identifies vSphere volume vmdk".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "volumePath".to_owned(),
+                    "volumePath".into(),
                 ].into(),
                 ..Default::default()
             })),
