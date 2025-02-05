@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServerAddressByClientCIDR {
     /// The CIDR with which clients can match their IP to figure out the server address that they should use.
-    pub client_cidr: String,
+    pub client_cidr: std::string::String,
 
     /// Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
-    pub server_address: String,
+    pub server_address: std::string::String,
 }
 
 impl crate::DeepMerge for ServerAddressByClientCIDR {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServerAddressByClientCIDR {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for ServerAddressByClientCIDR {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ServerAddressByClientCIDR;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ServerAddressByClientCIDR")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_client_cidr: Option<String> = None;
-                let mut value_server_address: Option<String> = None;
+                let mut value_client_cidr: Option<std::string::String> = None;
+                let mut value_server_address: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -103,45 +103,45 @@ impl crate::serde::Serialize for ServerAddressByClientCIDR {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ServerAddressByClientCIDR {
-    fn schema_name() -> String {
-        "io.k8s.apimachinery.pkg.apis.meta.v1.ServerAddressByClientCIDR".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.ServerAddressByClientCIDR".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "clientCIDR".to_owned(),
+                        "clientCIDR".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The CIDR with which clients can match their IP to figure out the server address that they should use.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The CIDR with which clients can match their IP to figure out the server address that they should use.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "serverAddress".to_owned(),
+                        "serverAddress".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "clientCIDR".to_owned(),
-                    "serverAddress".to_owned(),
+                    "clientCIDR".into(),
+                    "serverAddress".into(),
                 ].into(),
                 ..Default::default()
             })),

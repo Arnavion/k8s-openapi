@@ -22,7 +22,7 @@ pub(crate) fn generate(
             (String::new(), "")
         }
         else {
-            (format!("(std::marker::PhantomData{type_generics_type})"), "(Default::default())")
+            (format!("(core::marker::PhantomData{type_generics_type})"), "(Default::default())")
         };
 
     let mut fields_string = String::new();
@@ -42,7 +42,7 @@ pub(crate) fn generate(
         writeln!(str_to_field_match_arms, r#"                            "kind" => Field::Key_kind,"#)?;
 
         writeln!(field_value_match_arms, r#"                        Field::Key_api_version => {{"#)?;
-        writeln!(field_value_match_arms, r#"                            let value_api_version: String = {local}serde::de::MapAccess::next_value(&mut map)?;"#)?;
+        writeln!(field_value_match_arms, r#"                            let value_api_version: std::string::String = {local}serde::de::MapAccess::next_value(&mut map)?;"#)?;
         writeln!(field_value_match_arms, r#"                            if value_api_version != <Self::Value as {local}Resource>::API_VERSION {{"#)?;
         writeln!(field_value_match_arms,
             r#"                                return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Str(&value_api_version), &<Self::Value as {local}Resource>::API_VERSION));"#)?;
@@ -50,7 +50,7 @@ pub(crate) fn generate(
         writeln!(field_value_match_arms, r#"                        }},"#)?;
 
         writeln!(field_value_match_arms, r#"                        Field::Key_kind => {{"#)?;
-        writeln!(field_value_match_arms, r#"                            let value_kind: String = {local}serde::de::MapAccess::next_value(&mut map)?;"#)?;
+        writeln!(field_value_match_arms, r#"                            let value_kind: std::string::String = {local}serde::de::MapAccess::next_value(&mut map)?;"#)?;
         writeln!(field_value_match_arms, r#"                            if value_kind != <Self::Value as {local}Resource>::KIND {{"#)?;
         writeln!(field_value_match_arms,
             r#"                                return Err({local}serde::de::Error::invalid_value({local}serde::de::Unexpected::Str(&value_kind), &<Self::Value as {local}Resource>::KIND));"#)?;
@@ -69,7 +69,7 @@ pub(crate) fn generate(
             flattened_field = Some((field_name, field_type_name));
 
             writeln!(field_value_defs,
-                r#"                let mut value_{field_name}: {local}serde_json::Map<String, {local}serde_json::Value> = Default::default();"#)?;
+                r#"                let mut value_{field_name}: {local}serde_json::Map<std::string::String, {local}serde_json::Value> = Default::default();"#)?;
         }
         else {
             writeln!(fields_string, "            Key_{field_name},")?;
@@ -130,7 +130,7 @@ pub(crate) fn generate(
     if let Some((field_name, _)) = flattened_field {
         writeln!(fields_string, "            Other(String),")?;
 
-        writeln!(str_to_field_match_arms, "                            v => Field::Other(v.to_owned()),")?;
+        writeln!(str_to_field_match_arms, "                            v => Field::Other(v.into()),")?;
 
         writeln!(field_value_match_arms,
             "                        Field::Other(key) => {{ value_{field_name}.insert(key, {local}serde::de::MapAccess::next_value(&mut map)?); }},")?;

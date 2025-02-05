@@ -51,8 +51,8 @@ fn gen_schema(
     writeln!(out, "{indent}{local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
 
     if let Some(description) = &definition.description {
-        writeln!(out, "{indent}    metadata: Some(Box::new({local}schemars::schema::Metadata {{")?;
-        writeln!(out, "{indent}        description: Some({description:?}.to_owned()),")?;
+        writeln!(out, "{indent}    metadata: Some(std::boxed::Box::new({local}schemars::schema::Metadata {{")?;
+        writeln!(out, "{indent}        description: Some({description:?}.into()),")?;
         writeln!(out, "{indent}        ..Default::default()")?;
         writeln!(out, "{indent}    }})),")?;
     }
@@ -60,14 +60,14 @@ fn gen_schema(
     match &definition.kind {
         swagger20::SchemaKind::Properties(properties) => {
             writeln!(out,
-                "{indent}    instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?;
-            writeln!(out, "{indent}    object: Some(Box::new({local}schemars::schema::ObjectValidation {{")?;
+                "{indent}    instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}    object: Some(std::boxed::Box::new({local}schemars::schema::ObjectValidation {{")?;
 
             let mut required_props = String::new();
             let mut props = String::new();
             for (name, (schema, required)) in properties {
                 if *required {
-                    writeln!(required_props, "{indent}            {:?}.to_owned(),", &**name)?;
+                    writeln!(required_props, "{indent}            {:?}.into(),", &**name)?;
                 }
 
                 match &schema.kind {
@@ -75,7 +75,7 @@ fn gen_schema(
 
                     swagger20::SchemaKind::Ref(ref_path) => {
                         writeln!(props, "{indent}            (")?;
-                        writeln!(props, "{indent}                {:?}.to_owned(),", &**name)?;
+                        writeln!(props, "{indent}                {:?}.into(),", &**name)?;
 
                         let type_name = crate::get_fully_qualified_type_name(ref_path, map_namespace);
 
@@ -83,8 +83,8 @@ fn gen_schema(
                             // Override the subschema's description
                             writeln!(props, "{indent}                {{")?;
                             writeln!(props, "{indent}                    let mut schema_obj = __gen.subschema_for::<{type_name}>().into_object();")?;
-                            writeln!(props, "{indent}                    schema_obj.metadata = Some(Box::new({local}schemars::schema::Metadata {{")?;
-                            writeln!(props, "{indent}                        description: Some({description:?}.to_owned()),")?;
+                            writeln!(props, "{indent}                    schema_obj.metadata = Some(std::boxed::Box::new({local}schemars::schema::Metadata {{")?;
+                            writeln!(props, "{indent}                        description: Some({description:?}.into()),")?;
                             writeln!(props, "{indent}                        ..Default::default()")?;
                             writeln!(props, "{indent}                    }}));")?;
                             writeln!(props, "{indent}                    {local}schemars::schema::Schema::Object(schema_obj)")?;
@@ -99,7 +99,7 @@ fn gen_schema(
 
                     swagger20::SchemaKind::Ty(ty) => {
                         writeln!(props, "{indent}            (")?;
-                        writeln!(props, "{indent}                {:?}.to_owned(),", &**name)?;
+                        writeln!(props, "{indent}                {:?}.into(),", &**name)?;
                         gen_type_as_schema_object(&mut props, ty, schema.description.as_deref(), local, map_namespace, depth)?;
                         writeln!(props, "{indent}            ),")?;
                     },
@@ -156,8 +156,8 @@ fn gen_type_as_schema_object(
     else {
         writeln!(out, "{indent}                {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
         if let Some(description) = description_override {
-            writeln!(out, "{indent}                    metadata: Some(Box::new({local}schemars::schema::Metadata {{")?;
-            writeln!(out, "{indent}                        description: Some({description:?}.to_owned()),")?;
+            writeln!(out, "{indent}                    metadata: Some(std::boxed::Box::new({local}schemars::schema::Metadata {{")?;
+            writeln!(out, "{indent}                        description: Some({description:?}.into()),")?;
             writeln!(out, "{indent}                        ..Default::default()")?;
             writeln!(out, "{indent}                    }})),")?;
         }
@@ -185,7 +185,7 @@ fn gen_type(
     match ty {
         swagger20::Type::Any =>
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?,
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Object))),")?,
 
         swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Array) => {
             let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
@@ -193,17 +193,17 @@ fn gen_type(
                 can_be_default: None,
             }, map_namespace);
 
-            writeln!(out, "{indent}subschemas: Some(Box::new({local}schemars::schema::SubschemaValidation {{")?;
-            writeln!(out, "{indent}    one_of: Some(vec![")?;
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
 
             writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
 
             writeln!(out, "{indent}        {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
             writeln!(out,
-                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Array))),")?;
-            writeln!(out, "{indent}            array: Some(Box::new({local}schemars::schema::ArrayValidation {{")?;
+                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}            array: Some(std::boxed::Box::new({local}schemars::schema::ArrayValidation {{")?;
             writeln!(out,
-                "{indent}                items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<{json_schema_props_type_name}>()))),")?;
+                "{indent}                items: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<{json_schema_props_type_name}>()))),")?;
             writeln!(out, "{indent}                ..Default::default()")?;
             writeln!(out, "{indent}            }})),")?;
             writeln!(out, "{indent}            ..Default::default()")?;
@@ -220,14 +220,14 @@ fn gen_type(
                 can_be_default: None,
             }, map_namespace);
 
-            writeln!(out, "{indent}subschemas: Some(Box::new({local}schemars::schema::SubschemaValidation {{")?;
-            writeln!(out, "{indent}    one_of: Some(vec![")?;
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
 
             writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
 
             writeln!(out, "{indent}        {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
             writeln!(out,
-                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Boolean))),")?;
+                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Boolean))),")?;
             writeln!(out, "{indent}            ..Default::default()")?;
             writeln!(out, "{indent}        }}),")?;
 
@@ -242,21 +242,21 @@ fn gen_type(
                 can_be_default: None,
             }, map_namespace);
 
-            writeln!(out, "{indent}subschemas: Some(Box::new({local}schemars::schema::SubschemaValidation {{")?;
-            writeln!(out, "{indent}    one_of: Some(vec![")?;
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
 
             writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
 
 
             writeln!(out, "{indent}        {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
             writeln!(out,
-                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Array))),")?;
-            writeln!(out, "{indent}            array: Some(Box::new({local}schemars::schema::ArrayValidation {{")?;
+                "{indent}            instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}            array: Some(std::boxed::Box::new({local}schemars::schema::ArrayValidation {{")?;
 
-            writeln!(out, "{indent}                items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(")?;
+            writeln!(out, "{indent}                items: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new(")?;
             writeln!(out, "{indent}                    {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
             writeln!(out,
-                "{indent}                        instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::String))),")?;
+                "{indent}                        instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::String))),")?;
             writeln!(out, "{indent}                        ..Default::default()")?;
             writeln!(out, "{indent}                    }}),")?;
             writeln!(out, "{indent}                ))),")?;
@@ -274,15 +274,15 @@ fn gen_type(
 
         swagger20::Type::Array { items } => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Array))),")?;
-            writeln!(out, "{indent}array: Some(Box::new({local}schemars::schema::ArrayValidation {{")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}array: Some(std::boxed::Box::new({local}schemars::schema::ArrayValidation {{")?;
             if let swagger20::SchemaKind::Ref(ref_path) = &items.kind {
                 writeln!(out,
-                    "{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<{}>()))),",
+                    "{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<{}>()))),",
                     crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
             }
             else {
-                writeln!(out, "{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(Box::new(")?;
+                writeln!(out, "{indent}    items: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new(")?;
                 gen_schema(out, items, local, map_namespace, depth + 2)?;
                 writeln!(out, "{indent}    ))),")?;
             }
@@ -292,12 +292,12 @@ fn gen_type(
 
         swagger20::Type::Boolean => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Boolean))),")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Boolean))),")?;
         }
 
         swagger20::Type::Integer { format } => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Integer))),")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Integer))),")?;
             let format = match format {
                 swagger20::IntegerFormat::Int32 => {
                     "int32"
@@ -306,31 +306,31 @@ fn gen_type(
                     "int64"
                 }
             };
-            writeln!(out, "{indent}format: Some({format:?}.to_owned()),")?;
+            writeln!(out, "{indent}format: Some({format:?}.into()),")?;
         }
 
         swagger20::Type::Number { format } => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Number))),")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Number))),")?;
 
             match format {
                 swagger20::NumberFormat::Double => {
-                    writeln!(out, r#"{indent}format: Some("double".to_owned()),"#)?;
+                    writeln!(out, r#"{indent}format: Some("double".into()),"#)?;
                 }
             }
         }
 
         swagger20::Type::Object { additional_properties } => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?;
-            writeln!(out, "{indent}object: Some(Box::new({local}schemars::schema::ObjectValidation {{")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}object: Some(std::boxed::Box::new({local}schemars::schema::ObjectValidation {{")?;
             if let swagger20::SchemaKind::Ref(ref_path) = &additional_properties.kind {
                 writeln!(out,
-                    "{indent}    additional_properties: Some(Box::new(__gen.subschema_for::<{}>())),",
+                    "{indent}    additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<{}>())),",
                     crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
             }
             else {
-                writeln!(out, "{indent}    additional_properties: Some(Box::new(")?;
+                writeln!(out, "{indent}    additional_properties: Some(std::boxed::Box::new(")?;
                 gen_schema(out, additional_properties, local, map_namespace, depth + 2)?;
                 writeln!(out, "{indent}    )),")?;
             }
@@ -340,13 +340,13 @@ fn gen_type(
 
         swagger20::Type::String { format } => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::String))),")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::String))),")?;
             match format {
                 Some(swagger20::StringFormat::Byte) => {
-                    writeln!(out, r#"{indent}format: Some("byte".to_owned()),"#)?;
+                    writeln!(out, r#"{indent}format: Some("byte".into()),"#)?;
                 },
                 Some(swagger20::StringFormat::DateTime) => {
-                    writeln!(out, r#"{indent}format: Some("date-time".to_owned()),"#)?;
+                    writeln!(out, r#"{indent}format: Some("date-time".into()),"#)?;
                 },
                 None => (),
             }
@@ -354,38 +354,38 @@ fn gen_type(
 
         swagger20::Type::IntOrString => {
             writeln!(out, r#"{indent}extensions: ["#)?;
-            writeln!(out, r#"{indent}    ("x-kubernetes-int-or-string".to_owned(), crate::serde_json::Value::Bool(true)),"#)?;
+            writeln!(out, r#"{indent}    ("x-kubernetes-int-or-string".into(), crate::serde_json::Value::Bool(true)),"#)?;
             writeln!(out, r#"{indent}].into(),"#)?;
         }
 
         swagger20::Type::Patch => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Object))),")?;
         }
 
         swagger20::Type::WatchEvent(ref_path) => {
             writeln!(out,
-                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::Object))),")?;
-            writeln!(out, "{indent}object: Some(Box::new({local}schemars::schema::ObjectValidation {{")?;
+                "{indent}instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}object: Some(std::boxed::Box::new({local}schemars::schema::ObjectValidation {{")?;
             writeln!(out, "{indent}    properties: [")?;
             writeln!(out, "{indent}        (")?;
-            writeln!(out, r#"{indent}            "object".to_owned(),"#)?;
+            writeln!(out, r#"{indent}            "object".into(),"#)?;
             writeln!(out,  "{indent}            __gen.subschema_for::<{}>(),", crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
             writeln!(out, "{indent}        ),")?;
 
             writeln!(out, "{indent}        (")?;
-            writeln!(out, r#"{indent}            "type".to_owned(),"#)?;
+            writeln!(out, r#"{indent}            "type".into(),"#)?;
             writeln!(out, "{indent}            {local}schemars::schema::Schema::Object({local}schemars::schema::SchemaObject {{")?;
             writeln!(out,
-                "{indent}                instance_type: Some({local}schemars::schema::SingleOrVec::Single(Box::new({local}schemars::schema::InstanceType::String))),")?;
+                "{indent}                instance_type: Some({local}schemars::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars::schema::InstanceType::String))),")?;
             writeln!(out, "{indent}                ..Default::default()")?;
             writeln!(out, "{indent}            }}),")?;
             writeln!(out, "{indent}        ),")?;
             writeln!(out, "{indent}    ].into(),")?;
 
             writeln!(out, "{indent}    required: [")?;
-            writeln!(out, r#"{indent}        "object".to_owned(),"#)?;
-            writeln!(out, r#"{indent}        "type".to_owned(),"#)?;
+            writeln!(out, r#"{indent}        "object".into(),"#)?;
+            writeln!(out, r#"{indent}        "type".into(),"#)?;
             writeln!(out, "{indent}    ].into(),")?;
 
             writeln!(out, "{indent}    ..Default::default()")?;

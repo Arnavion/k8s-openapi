@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointAddress {
     /// The Hostname of this endpoint
-    pub hostname: Option<String>,
+    pub hostname: Option<std::string::String>,
 
     /// The IP of this endpoint. May not be loopback (127.0.0.0/8 or ::1), link-local (169.254.0.0/16 or fe80::/10), or link-local multicast (224.0.0.0/24 or ff02::/16).
-    pub ip: String,
+    pub ip: std::string::String,
 
     /// Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.
-    pub node_name: Option<String>,
+    pub node_name: Option<std::string::String>,
 
     /// Reference to object providing the endpoint.
     pub target_ref: Option<crate::api::core::v1::ObjectReference>,
@@ -43,7 +43,7 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -67,14 +67,14 @@ impl<'de> crate::serde::Deserialize<'de> for EndpointAddress {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = EndpointAddress;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("EndpointAddress")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_hostname: Option<String> = None;
-                let mut value_ip: Option<String> = None;
-                let mut value_node_name: Option<String> = None;
+                let mut value_hostname: Option<std::string::String> = None;
+                let mut value_ip: Option<std::string::String> = None;
+                let mut value_node_name: Option<std::string::String> = None;
                 let mut value_target_ref: Option<crate::api::core::v1::ObjectReference> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -134,58 +134,58 @@ impl crate::serde::Serialize for EndpointAddress {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for EndpointAddress {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.EndpointAddress".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.EndpointAddress".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("EndpointAddress is a tuple that describes single IP address.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("EndpointAddress is a tuple that describes single IP address.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "hostname".to_owned(),
+                        "hostname".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The Hostname of this endpoint".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The Hostname of this endpoint".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "ip".to_owned(),
+                        "ip".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The IP of this endpoint. May not be loopback (127.0.0.0/8 or ::1), link-local (169.254.0.0/16 or fe80::/10), or link-local multicast (224.0.0.0/24 or ff02::/16).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The IP of this endpoint. May not be loopback (127.0.0.0/8 or ::1), link-local (169.254.0.0/16 or fe80::/10), or link-local multicast (224.0.0.0/24 or ff02::/16).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "nodeName".to_owned(),
+                        "nodeName".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "targetRef".to_owned(),
+                        "targetRef".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ObjectReference>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Reference to object providing the endpoint.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Reference to object providing the endpoint.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
@@ -193,7 +193,7 @@ impl crate::schemars::JsonSchema for EndpointAddress {
                     ),
                 ].into(),
                 required: [
-                    "ip".to_owned(),
+                    "ip".into(),
                 ].into(),
                 ..Default::default()
             })),

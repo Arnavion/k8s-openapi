@@ -13,7 +13,7 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
         impl<'de> {local}serde::de::Visitor<'de> for Visitor {{
             type Value = {type_name};
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 f.write_str({type_name:?})
             }}
 

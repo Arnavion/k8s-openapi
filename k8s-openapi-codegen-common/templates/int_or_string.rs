@@ -1,6 +1,6 @@
 enum {type_name} {{
     Int(i32),
-    String(String),
+    String(std::string::String),
 }}
 
 impl Default for {type_name} {{
@@ -22,7 +22,7 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
         impl {local}serde::de::Visitor<'_> for Visitor {{
             type Value = {type_name};
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
                 formatter.write_str({type_name:?})
             }}
 
@@ -41,10 +41,10 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
             }}
 
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
-                self.visit_string(v.to_owned())
+                self.visit_string(v.into())
             }}
 
-            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
+            fn visit_string<E>(self, v: std::string::String) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
                 Ok({type_name}::String(v))
             }}
         }}

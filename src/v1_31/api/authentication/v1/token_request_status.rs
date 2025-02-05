@@ -7,7 +7,7 @@ pub struct TokenRequestStatus {
     pub expiration_timestamp: crate::apimachinery::pkg::apis::meta::v1::Time,
 
     /// Token is the opaque bearer token.
-    pub token: String,
+    pub token: std::string::String,
 }
 
 impl crate::DeepMerge for TokenRequestStatus {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for TokenRequestStatus {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = TokenRequestStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("TokenRequestStatus")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_expiration_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_token: Option<String> = None;
+                let mut value_token: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -103,45 +103,45 @@ impl crate::serde::Serialize for TokenRequestStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for TokenRequestStatus {
-    fn schema_name() -> String {
-        "io.k8s.api.authentication.v1.TokenRequestStatus".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.authentication.v1.TokenRequestStatus".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("TokenRequestStatus is the result of a token request.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("TokenRequestStatus is the result of a token request.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "expirationTimestamp".to_owned(),
+                        "expirationTimestamp".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ExpirationTimestamp is the time of expiration of the returned token.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ExpirationTimestamp is the time of expiration of the returned token.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "token".to_owned(),
+                        "token".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Token is the opaque bearer token.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Token is the opaque bearer token.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "expirationTimestamp".to_owned(),
-                    "token".to_owned(),
+                    "expirationTimestamp".into(),
+                    "token".into(),
                 ].into(),
                 ..Default::default()
             })),

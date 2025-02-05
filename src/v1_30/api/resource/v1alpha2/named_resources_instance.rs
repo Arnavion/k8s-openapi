@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NamedResourcesInstance {
     /// Attributes defines the attributes of this resource instance. The name of each attribute must be unique.
-    pub attributes: Option<Vec<crate::api::resource::v1alpha2::NamedResourcesAttribute>>,
+    pub attributes: Option<std::vec::Vec<crate::api::resource::v1alpha2::NamedResourcesAttribute>>,
 
     /// Name is unique identifier among all resource instances managed by the driver on the node. It must be a DNS subdomain.
-    pub name: String,
+    pub name: std::string::String,
 }
 
 impl crate::DeepMerge for NamedResourcesInstance {
@@ -33,7 +33,7 @@ impl<'de> crate::serde::Deserialize<'de> for NamedResourcesInstance {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -55,13 +55,13 @@ impl<'de> crate::serde::Deserialize<'de> for NamedResourcesInstance {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NamedResourcesInstance;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("NamedResourcesInstance")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_attributes: Option<Vec<crate::api::resource::v1alpha2::NamedResourcesAttribute>> = None;
-                let mut value_name: Option<String> = None;
+                let mut value_attributes: Option<std::vec::Vec<crate::api::resource::v1alpha2::NamedResourcesAttribute>> = None;
+                let mut value_name: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -106,48 +106,48 @@ impl crate::serde::Serialize for NamedResourcesInstance {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NamedResourcesInstance {
-    fn schema_name() -> String {
-        "io.k8s.api.resource.v1alpha2.NamedResourcesInstance".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1alpha2.NamedResourcesInstance".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("NamedResourcesInstance represents one individual hardware instance that can be selected based on its attributes.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("NamedResourcesInstance represents one individual hardware instance that can be selected based on its attributes.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "attributes".to_owned(),
+                        "attributes".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Attributes defines the attributes of this resource instance. The name of each attribute must be unique.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Attributes defines the attributes of this resource instance. The name of each attribute must be unique.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesAttribute>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesAttribute>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "name".to_owned(),
+                        "name".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name is unique identifier among all resource instances managed by the driver on the node. It must be a DNS subdomain.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Name is unique identifier among all resource instances managed by the driver on the node. It must be a DNS subdomain.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "name".to_owned(),
+                    "name".into(),
                 ].into(),
                 ..Default::default()
             })),

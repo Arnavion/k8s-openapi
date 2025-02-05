@@ -68,7 +68,7 @@ impl DeepMerge for bool { default_overwriting_impl! {} }
 impl DeepMerge for i32 { default_overwriting_impl! {} }
 impl DeepMerge for i64 { default_overwriting_impl! {} }
 impl DeepMerge for f64 { default_overwriting_impl! {} }
-impl DeepMerge for String { default_overwriting_impl! {} }
+impl DeepMerge for std::string::String { default_overwriting_impl! {} }
 impl DeepMerge for crate::ByteString { default_overwriting_impl! {} }
 impl<Tz> DeepMerge for chrono::DateTime<Tz> where Tz: chrono::TimeZone { default_overwriting_impl! {} }
 
@@ -93,7 +93,7 @@ impl DeepMerge for serde_json::Value {
     }
 }
 
-impl<T> DeepMerge for Box<T> where T: DeepMerge {
+impl<T> DeepMerge for std::boxed::Box<T> where T: DeepMerge {
     fn merge_from(&mut self, other: Self) {
         (**self).merge_from(*other);
     }
@@ -114,7 +114,7 @@ impl<T> DeepMerge for Option<T> where T: DeepMerge {
 
 /// Strategies for merging collections.
 pub mod strategies {
-    /// Strategies for merging [`Vec`]s.
+    /// Strategies for merging [`std::vec::Vec`]s.
     ///
     /// These correspond to [`JSONSchemaProps.x-kubernetes-list-type`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#jsonschemaprops-v1-apiextensions-k8s-io).
     pub mod list {
@@ -123,11 +123,11 @@ pub mod strategies {
                 type Item;
 
                 fn set_if_some(&mut self, new: Self);
-                fn as_mut_opt(&mut self) -> Option<&mut Vec<Self::Item>>;
-                fn into_opt(self) -> Option<Vec<Self::Item>>;
+                fn as_mut_opt(&mut self) -> Option<&mut std::vec::Vec<Self::Item>>;
+                fn into_opt(self) -> Option<std::vec::Vec<Self::Item>>;
             }
 
-            impl<T> AsOptVec for Vec<T> {
+            impl<T> AsOptVec for std::vec::Vec<T> {
                 type Item = T;
 
                 fn set_if_some(&mut self, new: Self) {
@@ -143,7 +143,7 @@ pub mod strategies {
                 }
             }
 
-            impl<T> AsOptVec for Option<Vec<T>> {
+            impl<T> AsOptVec for Option<std::vec::Vec<T>> {
                 type Item = T;
 
                 fn set_if_some(&mut self, new: Self) {
@@ -152,7 +152,7 @@ pub mod strategies {
                     }
                 }
 
-                fn as_mut_opt(&mut self) -> Option<&mut Vec<T>> {
+                fn as_mut_opt(&mut self) -> Option<&mut std::vec::Vec<T>> {
                     self.as_mut()
                 }
 

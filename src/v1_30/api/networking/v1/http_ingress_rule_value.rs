@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPIngressRuleValue {
     /// paths is a collection of paths that map requests to backends.
-    pub paths: Vec<crate::api::networking::v1::HTTPIngressPath>,
+    pub paths: std::vec::Vec<crate::api::networking::v1::HTTPIngressPath>,
 }
 
 impl crate::DeepMerge for HTTPIngressRuleValue {
@@ -28,7 +28,7 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPIngressRuleValue {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -49,12 +49,12 @@ impl<'de> crate::serde::Deserialize<'de> for HTTPIngressRuleValue {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = HTTPIngressRuleValue;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("HTTPIngressRuleValue")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_paths: Option<Vec<crate::api::networking::v1::HTTPIngressPath>> = None;
+                let mut value_paths: Option<std::vec::Vec<crate::api::networking::v1::HTTPIngressPath>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -92,29 +92,29 @@ impl crate::serde::Serialize for HTTPIngressRuleValue {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for HTTPIngressRuleValue {
-    fn schema_name() -> String {
-        "io.k8s.api.networking.v1.HTTPIngressRuleValue".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.networking.v1.HTTPIngressRuleValue".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example: http://<host>/<path>?<searchpart> -> backend where where parts of the url correspond to RFC 3986, this resource will be used to match against everything after the last '/' and before the first '?' or '#'.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example: http://<host>/<path>?<searchpart> -> backend where where parts of the url correspond to RFC 3986, this resource will be used to match against everything after the last '/' and before the first '?' or '#'.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "paths".to_owned(),
+                        "paths".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("paths is a collection of paths that map requests to backends.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("paths is a collection of paths that map requests to backends.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(__gen.subschema_for::<crate::api::networking::v1::HTTPIngressPath>()))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::networking::v1::HTTPIngressPath>()))),
                                 ..Default::default()
                             })),
                             ..Default::default()
@@ -122,7 +122,7 @@ impl crate::schemars::JsonSchema for HTTPIngressRuleValue {
                     ),
                 ].into(),
                 required: [
-                    "paths".to_owned(),
+                    "paths".into(),
                 ].into(),
                 ..Default::default()
             })),

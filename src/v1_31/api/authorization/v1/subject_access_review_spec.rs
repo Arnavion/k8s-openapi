@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct SubjectAccessReviewSpec {
     /// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
+    pub extra: Option<std::collections::BTreeMap<std::string::String, std::vec::Vec<std::string::String>>>,
 
     /// Groups is the groups you're testing for.
-    pub groups: Option<Vec<String>>,
+    pub groups: Option<std::vec::Vec<std::string::String>>,
 
     /// NonResourceAttributes describes information for a non-resource access request
     pub non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes>,
@@ -16,10 +16,10 @@ pub struct SubjectAccessReviewSpec {
     pub resource_attributes: Option<crate::api::authorization::v1::ResourceAttributes>,
 
     /// UID information about the requesting user.
-    pub uid: Option<String>,
+    pub uid: Option<std::string::String>,
 
     /// User is the user you're testing for. If you specify "User" but not "Groups", then is it interpreted as "What if User were not a member of any groups
-    pub user: Option<String>,
+    pub user: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for SubjectAccessReviewSpec {
@@ -55,7 +55,7 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewSpec {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -81,17 +81,17 @@ impl<'de> crate::serde::Deserialize<'de> for SubjectAccessReviewSpec {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = SubjectAccessReviewSpec;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("SubjectAccessReviewSpec")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_extra: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
-                let mut value_groups: Option<Vec<String>> = None;
+                let mut value_extra: Option<std::collections::BTreeMap<std::string::String, std::vec::Vec<std::string::String>>> = None;
+                let mut value_groups: Option<std::vec::Vec<std::string::String>> = None;
                 let mut value_non_resource_attributes: Option<crate::api::authorization::v1::NonResourceAttributes> = None;
                 let mut value_resource_attributes: Option<crate::api::authorization::v1::ResourceAttributes> = None;
-                let mut value_uid: Option<String> = None;
-                let mut value_user: Option<String> = None;
+                let mut value_uid: Option<std::string::String> = None;
+                let mut value_user: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -166,35 +166,35 @@ impl crate::serde::Serialize for SubjectAccessReviewSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for SubjectAccessReviewSpec {
-    fn schema_name() -> String {
-        "io.k8s.api.authorization.v1.SubjectAccessReviewSpec".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.authorization.v1.SubjectAccessReviewSpec".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "extra".to_owned(),
+                        "extra".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                                        array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                            items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                                        array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                            items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                                 crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                                     ..Default::default()
                                                 })
                                             ))),
@@ -209,17 +209,17 @@ impl crate::schemars::JsonSchema for SubjectAccessReviewSpec {
                         }),
                     ),
                     (
-                        "groups".to_owned(),
+                        "groups".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Groups is the groups you're testing for.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Groups is the groups you're testing for.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),
@@ -229,46 +229,46 @@ impl crate::schemars::JsonSchema for SubjectAccessReviewSpec {
                         }),
                     ),
                     (
-                        "nonResourceAttributes".to_owned(),
+                        "nonResourceAttributes".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::NonResourceAttributes>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NonResourceAttributes describes information for a non-resource access request".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("NonResourceAttributes describes information for a non-resource access request".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "resourceAttributes".to_owned(),
+                        "resourceAttributes".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::ResourceAttributes>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ResourceAuthorizationAttributes describes information for a resource access request".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ResourceAuthorizationAttributes describes information for a resource access request".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "uid".to_owned(),
+                        "uid".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("UID information about the requesting user.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("UID information about the requesting user.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "user".to_owned(),
+                        "user".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("User is the user you're testing for. If you specify \"User\" but not \"Groups\", then is it interpreted as \"What if User were not a member of any groups".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("User is the user you're testing for. If you specify \"User\" but not \"Groups\", then is it interpreted as \"What if User were not a member of any groups".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),

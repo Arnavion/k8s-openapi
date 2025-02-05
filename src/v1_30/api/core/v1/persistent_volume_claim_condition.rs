@@ -10,14 +10,14 @@ pub struct PersistentVolumeClaimCondition {
     pub last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// message is the human-readable message indicating details about last transition.
-    pub message: Option<String>,
+    pub message: Option<std::string::String>,
 
     /// reason is a unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports "Resizing" that means the underlying persistent volume is being resized.
-    pub reason: Option<String>,
+    pub reason: Option<std::string::String>,
 
-    pub status: String,
+    pub status: std::string::String,
 
-    pub type_: String,
+    pub type_: std::string::String,
 }
 
 impl crate::DeepMerge for PersistentVolumeClaimCondition {
@@ -51,7 +51,7 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimCondition {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -77,17 +77,17 @@ impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeClaimCondition {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PersistentVolumeClaimCondition;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PersistentVolumeClaimCondition")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
                 let mut value_last_probe_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_last_transition_time: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_message: Option<String> = None;
-                let mut value_reason: Option<String> = None;
-                let mut value_status: Option<String> = None;
-                let mut value_type_: Option<String> = None;
+                let mut value_message: Option<std::string::String> = None;
+                let mut value_reason: Option<std::string::String> = None;
+                let mut value_status: Option<std::string::String> = None;
+                let mut value_type_: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -157,81 +157,81 @@ impl crate::serde::Serialize for PersistentVolumeClaimCondition {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PersistentVolumeClaimCondition {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.PersistentVolumeClaimCondition".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PersistentVolumeClaimCondition".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("PersistentVolumeClaimCondition contains details about state of pvc".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("PersistentVolumeClaimCondition contains details about state of pvc".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "lastProbeTime".to_owned(),
+                        "lastProbeTime".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("lastProbeTime is the time we probed the condition.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("lastProbeTime is the time we probed the condition.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "lastTransitionTime".to_owned(),
+                        "lastTransitionTime".into(),
                         {
                             let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>().into_object();
-                            schema_obj.metadata = Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("lastTransitionTime is the time the condition transitioned from one status to another.".to_owned()),
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("lastTransitionTime is the time the condition transitioned from one status to another.".into()),
                                 ..Default::default()
                             }));
                             crate::schemars::schema::Schema::Object(schema_obj)
                         },
                     ),
                     (
-                        "message".to_owned(),
+                        "message".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("message is the human-readable message indicating details about last transition.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("message is the human-readable message indicating details about last transition.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "reason".to_owned(),
+                        "reason".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("reason is a unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports \"Resizing\" that means the underlying persistent volume is being resized.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("reason is a unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports \"Resizing\" that means the underlying persistent volume is being resized.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "status".to_owned(),
+                        "status".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "type".to_owned(),
+                        "type".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "status".to_owned(),
-                    "type".to_owned(),
+                    "status".into(),
+                    "type".into(),
                 ].into(),
                 ..Default::default()
             })),

@@ -14,9 +14,9 @@ pub(crate) fn generate(
     };
 
     let or_variant_type: std::borrow::Cow<'_, str> = match or {
-        Or::Array => format!("Vec<{json_schema_props_type_name}>").into(),
+        Or::Array => format!("std::vec::Vec<{json_schema_props_type_name}>").into(),
         Or::Bool => "bool".into(),
-        Or::StringArray => "Vec<String>".into(),
+        Or::StringArray => "std::vec::Vec<std::string::String>".into(),
     };
 
     let mut or_visit = String::new();

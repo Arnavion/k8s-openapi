@@ -4,34 +4,34 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSystemInfo {
     /// The Architecture reported by the node
-    pub architecture: String,
+    pub architecture: std::string::String,
 
     /// Boot ID reported by the node.
-    pub boot_id: String,
+    pub boot_id: std::string::String,
 
     /// ContainerRuntime Version reported by the node through runtime remote API (e.g. containerd://1.4.2).
-    pub container_runtime_version: String,
+    pub container_runtime_version: std::string::String,
 
     /// Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).
-    pub kernel_version: String,
+    pub kernel_version: std::string::String,
 
     /// KubeProxy Version reported by the node.
-    pub kube_proxy_version: String,
+    pub kube_proxy_version: std::string::String,
 
     /// Kubelet Version reported by the node.
-    pub kubelet_version: String,
+    pub kubelet_version: std::string::String,
 
     /// MachineID reported by the node. For unique machine identification in the cluster this field is preferred. Learn more from man(5) machine-id: http://man7.org/linux/man-pages/man5/machine-id.5.html
-    pub machine_id: String,
+    pub machine_id: std::string::String,
 
     /// The Operating System reported by the node
-    pub operating_system: String,
+    pub operating_system: std::string::String,
 
     /// OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).
-    pub os_image: String,
+    pub os_image: std::string::String,
 
     /// SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid
-    pub system_uuid: String,
+    pub system_uuid: std::string::String,
 }
 
 impl crate::DeepMerge for NodeSystemInfo {
@@ -73,7 +73,7 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -103,21 +103,21 @@ impl<'de> crate::serde::Deserialize<'de> for NodeSystemInfo {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = NodeSystemInfo;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("NodeSystemInfo")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_architecture: Option<String> = None;
-                let mut value_boot_id: Option<String> = None;
-                let mut value_container_runtime_version: Option<String> = None;
-                let mut value_kernel_version: Option<String> = None;
-                let mut value_kube_proxy_version: Option<String> = None;
-                let mut value_kubelet_version: Option<String> = None;
-                let mut value_machine_id: Option<String> = None;
-                let mut value_operating_system: Option<String> = None;
-                let mut value_os_image: Option<String> = None;
-                let mut value_system_uuid: Option<String> = None;
+                let mut value_architecture: Option<std::string::String> = None;
+                let mut value_boot_id: Option<std::string::String> = None;
+                let mut value_container_runtime_version: Option<std::string::String> = None;
+                let mut value_kernel_version: Option<std::string::String> = None;
+                let mut value_kube_proxy_version: Option<std::string::String> = None;
+                let mut value_kubelet_version: Option<std::string::String> = None;
+                let mut value_machine_id: Option<std::string::String> = None;
+                let mut value_operating_system: Option<std::string::String> = None;
+                let mut value_os_image: Option<std::string::String> = None;
+                let mut value_system_uuid: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -191,141 +191,141 @@ impl crate::serde::Serialize for NodeSystemInfo {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NodeSystemInfo {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.NodeSystemInfo".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.NodeSystemInfo".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("NodeSystemInfo is a set of ids/uuids to uniquely identify the node.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("NodeSystemInfo is a set of ids/uuids to uniquely identify the node.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "architecture".to_owned(),
+                        "architecture".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The Architecture reported by the node".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The Architecture reported by the node".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "bootID".to_owned(),
+                        "bootID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Boot ID reported by the node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Boot ID reported by the node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "containerRuntimeVersion".to_owned(),
+                        "containerRuntimeVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ContainerRuntime Version reported by the node through runtime remote API (e.g. containerd://1.4.2).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("ContainerRuntime Version reported by the node through runtime remote API (e.g. containerd://1.4.2).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "kernelVersion".to_owned(),
+                        "kernelVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "kubeProxyVersion".to_owned(),
+                        "kubeProxyVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("KubeProxy Version reported by the node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("KubeProxy Version reported by the node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "kubeletVersion".to_owned(),
+                        "kubeletVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Kubelet Version reported by the node.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kubelet Version reported by the node.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "machineID".to_owned(),
+                        "machineID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("MachineID reported by the node. For unique machine identification in the cluster this field is preferred. Learn more from man(5) machine-id: http://man7.org/linux/man-pages/man5/machine-id.5.html".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("MachineID reported by the node. For unique machine identification in the cluster this field is preferred. Learn more from man(5) machine-id: http://man7.org/linux/man-pages/man5/machine-id.5.html".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "operatingSystem".to_owned(),
+                        "operatingSystem".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The Operating System reported by the node".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The Operating System reported by the node".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "osImage".to_owned(),
+                        "osImage".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "systemUUID".to_owned(),
+                        "systemUUID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                 ].into(),
                 required: [
-                    "architecture".to_owned(),
-                    "bootID".to_owned(),
-                    "containerRuntimeVersion".to_owned(),
-                    "kernelVersion".to_owned(),
-                    "kubeProxyVersion".to_owned(),
-                    "kubeletVersion".to_owned(),
-                    "machineID".to_owned(),
-                    "operatingSystem".to_owned(),
-                    "osImage".to_owned(),
-                    "systemUUID".to_owned(),
+                    "architecture".into(),
+                    "bootID".into(),
+                    "containerRuntimeVersion".into(),
+                    "kernelVersion".into(),
+                    "kubeProxyVersion".into(),
+                    "kubeletVersion".into(),
+                    "machineID".into(),
+                    "operatingSystem".into(),
+                    "osImage".into(),
+                    "systemUUID".into(),
                 ].into(),
                 ..Default::default()
             })),

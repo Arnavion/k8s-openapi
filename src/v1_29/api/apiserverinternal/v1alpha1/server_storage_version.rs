@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServerStorageVersion {
     /// The ID of the reporting API server.
-    pub api_server_id: Option<String>,
+    pub api_server_id: Option<std::string::String>,
 
     /// The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
-    pub decodable_versions: Option<Vec<String>>,
+    pub decodable_versions: Option<std::vec::Vec<std::string::String>>,
 
     /// The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
-    pub encoding_version: Option<String>,
+    pub encoding_version: Option<std::string::String>,
 
     /// The API server can serve these versions. DecodableVersions must include all ServedVersions.
-    pub served_versions: Option<Vec<String>>,
+    pub served_versions: Option<std::vec::Vec<std::string::String>>,
 }
 
 impl crate::DeepMerge for ServerStorageVersion {
@@ -43,7 +43,7 @@ impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -67,15 +67,15 @@ impl<'de> crate::serde::Deserialize<'de> for ServerStorageVersion {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = ServerStorageVersion;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("ServerStorageVersion")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_api_server_id: Option<String> = None;
-                let mut value_decodable_versions: Option<Vec<String>> = None;
-                let mut value_encoding_version: Option<String> = None;
-                let mut value_served_versions: Option<Vec<String>> = None;
+                let mut value_api_server_id: Option<std::string::String> = None;
+                let mut value_decodable_versions: Option<std::vec::Vec<std::string::String>> = None;
+                let mut value_encoding_version: Option<std::string::String> = None;
+                let mut value_served_versions: Option<std::vec::Vec<std::string::String>> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -136,42 +136,42 @@ impl crate::serde::Serialize for ServerStorageVersion {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ServerStorageVersion {
-    fn schema_name() -> String {
-        "io.k8s.api.apiserverinternal.v1alpha1.ServerStorageVersion".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.apiserverinternal.v1alpha1.ServerStorageVersion".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "apiServerID".to_owned(),
+                        "apiServerID".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The ID of the reporting API server.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The ID of the reporting API server.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "decodableVersions".to_owned(),
+                        "decodableVersions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),
@@ -181,28 +181,28 @@ impl crate::schemars::JsonSchema for ServerStorageVersion {
                         }),
                     ),
                     (
-                        "encodingVersion".to_owned(),
+                        "encodingVersion".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The API server encodes the object to this version when persisting it in the backend (e.g., etcd).".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The API server encodes the object to this version when persisting it in the backend (e.g., etcd).".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "servedVersions".to_owned(),
+                        "servedVersions".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The API server can serve these versions. DecodableVersions must include all ServedVersions.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The API server can serve these versions. DecodableVersions must include all ServedVersions.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),

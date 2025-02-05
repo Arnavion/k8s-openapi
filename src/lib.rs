@@ -223,6 +223,13 @@
 //! The [`k8s-openapi-derive` crate](https://crates.io/crates/k8s-openapi-derive) provides a custom derive for generating types
 //! for custom resources. See that crate's docs for more information.
 
+#![no_std]
+
+#[cfg(not(feature = "std"))]
+extern crate alloc as std;
+#[cfg(feature = "std")]
+extern crate std;
+
 pub use chrono;
 #[cfg(feature = "schemars")]
 pub use schemars;

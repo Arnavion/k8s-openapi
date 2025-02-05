@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct UserInfo {
     /// Any additional information provided by the authenticator.
-    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
+    pub extra: Option<std::collections::BTreeMap<std::string::String, std::vec::Vec<std::string::String>>>,
 
     /// The names of groups this user is a part of.
-    pub groups: Option<Vec<String>>,
+    pub groups: Option<std::vec::Vec<std::string::String>>,
 
     /// A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.
-    pub uid: Option<String>,
+    pub uid: Option<std::string::String>,
 
     /// The name that uniquely identifies this user among all active users.
-    pub username: Option<String>,
+    pub username: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for UserInfo {
@@ -45,7 +45,7 @@ impl<'de> crate::serde::Deserialize<'de> for UserInfo {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -69,15 +69,15 @@ impl<'de> crate::serde::Deserialize<'de> for UserInfo {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = UserInfo;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("UserInfo")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_extra: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
-                let mut value_groups: Option<Vec<String>> = None;
-                let mut value_uid: Option<String> = None;
-                let mut value_username: Option<String> = None;
+                let mut value_extra: Option<std::collections::BTreeMap<std::string::String, std::vec::Vec<std::string::String>>> = None;
+                let mut value_groups: Option<std::vec::Vec<std::string::String>> = None;
+                let mut value_uid: Option<std::string::String> = None;
+                let mut value_username: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -138,35 +138,35 @@ impl crate::serde::Serialize for UserInfo {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for UserInfo {
-    fn schema_name() -> String {
-        "io.k8s.api.authentication.v1.UserInfo".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.authentication.v1.UserInfo".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("UserInfo holds the information about the user needed to implement the user.Info interface.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("UserInfo holds the information about the user needed to implement the user.Info interface.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "extra".to_owned(),
+                        "extra".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Any additional information provided by the authenticator.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Any additional information provided by the authenticator.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                                        array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                            items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                                        array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                            items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                                 crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                                    instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                                     ..Default::default()
                                                 })
                                             ))),
@@ -181,17 +181,17 @@ impl crate::schemars::JsonSchema for UserInfo {
                         }),
                     ),
                     (
-                        "groups".to_owned(),
+                        "groups".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The names of groups this user is a part of.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The names of groups this user is a part of.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
                                     crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                                         ..Default::default()
                                     })
                                 ))),
@@ -201,24 +201,24 @@ impl crate::schemars::JsonSchema for UserInfo {
                         }),
                     ),
                     (
-                        "uid".to_owned(),
+                        "uid".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "username".to_owned(),
+                        "username".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The name that uniquely identifies this user among all active users.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The name that uniquely identifies this user among all active users.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),

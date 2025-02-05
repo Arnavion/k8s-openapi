@@ -4,9 +4,9 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDNSConfigOption {
     /// Required.
-    pub name: Option<String>,
+    pub name: Option<std::string::String>,
 
-    pub value: Option<String>,
+    pub value: Option<std::string::String>,
 }
 
 impl crate::DeepMerge for PodDNSConfigOption {
@@ -32,7 +32,7 @@ impl<'de> crate::serde::Deserialize<'de> for PodDNSConfigOption {
                 impl crate::serde::de::Visitor<'_> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                         f.write_str("field identifier")
                     }
 
@@ -54,13 +54,13 @@ impl<'de> crate::serde::Deserialize<'de> for PodDNSConfigOption {
         impl<'de> crate::serde::de::Visitor<'de> for Visitor {
             type Value = PodDNSConfigOption;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 f.write_str("PodDNSConfigOption")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
-                let mut value_name: Option<String> = None;
-                let mut value_value: Option<String> = None;
+                let mut value_name: Option<std::string::String> = None;
+                let mut value_value: Option<std::string::String> = None;
 
                 while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
@@ -107,34 +107,34 @@ impl crate::serde::Serialize for PodDNSConfigOption {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PodDNSConfigOption {
-    fn schema_name() -> String {
-        "io.k8s.api.core.v1.PodDNSConfigOption".to_owned()
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PodDNSConfigOption".into()
     }
 
     fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                description: Some("PodDNSConfigOption defines DNS resolver options of a pod.".to_owned()),
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("PodDNSConfigOption defines DNS resolver options of a pod.".into()),
                 ..Default::default()
             })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(Box::new(crate::schemars::schema::ObjectValidation {
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
                 properties: [
                     (
-                        "name".to_owned(),
+                        "name".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Required.".to_owned()),
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Required.".into()),
                                 ..Default::default()
                             })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),
                     (
-                        "value".to_owned(),
+                        "value".into(),
                         crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(Box::new(crate::schemars::schema::InstanceType::String))),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
                             ..Default::default()
                         }),
                     ),

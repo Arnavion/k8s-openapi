@@ -2,10 +2,10 @@
 ///
 /// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.
 #[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
-pub struct ByteString(pub Vec<u8>);
+pub struct ByteString(pub std::vec::Vec<u8>);
 
 impl<'de> serde::Deserialize<'de> for ByteString {
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         struct Visitor;
 
         impl<'de> serde::de::Visitor<'de> for Visitor {
@@ -16,7 +16,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
             }
 
             fn visit_none<E>(self) -> Result<Self::Value, E> where E: serde::de::Error {
-                Ok(ByteString(vec![]))
+                Ok(ByteString(std::vec![]))
             }
 
             fn visit_some<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {
@@ -34,7 +34,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
 }
 
 impl serde::Serialize for ByteString {
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let s = base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &self.0);
         s.serialize(serializer)
     }

@@ -27,7 +27,7 @@ pub(crate) use watch::WatchOptional;
 pub(crate) struct ResponseBody<T> {
     pub(crate) status_code: reqwest::StatusCode,
     buf: bytes::BytesMut,
-    _response: std::marker::PhantomData<fn() -> T>,
+    _response: core::marker::PhantomData<fn() -> T>,
 }
 
 impl<T> ResponseBody<T> where T: Response {

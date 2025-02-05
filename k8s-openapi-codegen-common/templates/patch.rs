@@ -1,5 +1,5 @@
 enum {type_name} {{
-    Json(Vec<{local}serde_json::Value>),
+    Json(std::vec::Vec<{local}serde_json::Value>),
     Merge({local}serde_json::Value),
     StrategicMerge({local}serde_json::Value),
 }}
