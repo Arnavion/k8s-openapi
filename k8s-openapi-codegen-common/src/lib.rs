@@ -244,7 +244,7 @@ pub fn run(
                     }
                     else {
                         field_type_name.push_str(&type_name);
-                    };
+                    }
 
                     if let templates::PropertyRequired::Optional = required {
                         field_type_name.push('>');
