@@ -25,7 +25,7 @@ pub struct StatefulSetSpec {
     pub selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.
-    pub service_name: std::string::String,
+    pub service_name: Option<std::string::String>,
 
     /// template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet. Each pod will be named with the format \<statefulsetname\>-\<podindex\>. For example, a pod in a StatefulSet named "web" with index number "3" would be named "web-3". The only allowed template.spec.restartPolicy value is "Always".
     pub template: crate::api::core::v1::PodTemplateSpec,
@@ -151,7 +151,7 @@ impl<'de> crate::serde::Deserialize<'de> for StatefulSetSpec {
                     replicas: value_replicas,
                     revision_history_limit: value_revision_history_limit,
                     selector: value_selector.unwrap_or_default(),
-                    service_name: value_service_name.unwrap_or_default(),
+                    service_name: value_service_name,
                     template: value_template.unwrap_or_default(),
                     update_strategy: value_update_strategy,
                     volume_claim_templates: value_volume_claim_templates,
@@ -183,13 +183,14 @@ impl crate::serde::Serialize for StatefulSetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetSpec",
-            3 +
+            2 +
             self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
             self.ordinals.as_ref().map_or(0, |_| 1) +
             self.persistent_volume_claim_retention_policy.as_ref().map_or(0, |_| 1) +
             self.pod_management_policy.as_ref().map_or(0, |_| 1) +
             self.replicas.as_ref().map_or(0, |_| 1) +
             self.revision_history_limit.as_ref().map_or(0, |_| 1) +
+            self.service_name.as_ref().map_or(0, |_| 1) +
             self.update_strategy.as_ref().map_or(0, |_| 1) +
             self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;
@@ -212,7 +213,9 @@ impl crate::serde::Serialize for StatefulSetSpec {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
         }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
-        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
+        if let Some(value) = &self.service_name {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", value)?;
+        }
         crate::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         if let Some(value) = &self.update_strategy {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
@@ -370,7 +373,6 @@ impl crate::schemars::JsonSchema for StatefulSetSpec {
                 ].into(),
                 required: [
                     "selector".into(),
-                    "serviceName".into(),
                     "template".into(),
                 ].into(),
                 ..Default::default()

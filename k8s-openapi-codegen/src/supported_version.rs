@@ -56,6 +56,7 @@ impl SupportedVersion {
         let upstream_bugs_fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
             SupportedVersion::V1_28 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
@@ -75,6 +76,7 @@ impl SupportedVersion {
 
             SupportedVersion::V1_29 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
@@ -92,6 +94,7 @@ impl SupportedVersion {
 
             SupportedVersion::V1_30 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
@@ -106,6 +109,7 @@ impl SupportedVersion {
 
             SupportedVersion::V1_31 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
@@ -119,6 +123,7 @@ impl SupportedVersion {
 
             SupportedVersion::V1_32 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
