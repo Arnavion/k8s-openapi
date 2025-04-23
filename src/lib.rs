@@ -5,6 +5,7 @@
     clippy::derive_partial_eq_without_eq,
     clippy::doc_lazy_continuation,
     clippy::doc_markdown,
+    clippy::doc_overindented_list_items,
     clippy::large_enum_variant,
     clippy::match_single_binding,
     clippy::missing_errors_doc,

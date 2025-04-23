@@ -123,7 +123,7 @@ impl Client {
                     ClientKey::Inline(data) =>
                         base64::Engine::decode_vec(&base64::engine::general_purpose::STANDARD, data, &mut pem)
                         .expect("couldn't parse client key data"),
-                };
+                }
 
                 let tls_identity = reqwest::Identity::from_pem(&pem).expect("couldn't construct client identity");
                 tls_identity

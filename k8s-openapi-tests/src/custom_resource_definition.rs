@@ -392,7 +392,7 @@ async fn test() {
             match causes {
                 [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueRequired" && field == "spec.prop2" => (),
                 _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
-            };
+            }
         },
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
@@ -422,7 +422,7 @@ async fn test() {
             match causes {
                 [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueTypeInvalid" && field == "spec.prop2" => (),
                 _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
-            };
+            }
         },
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
@@ -452,7 +452,7 @@ async fn test() {
             match causes {
                 [meta::StatusCause { reason: Some(reason), field: Some(field), .. }] if reason == "FieldValueTypeInvalid" && field == "spec.prop4" => (),
                 _ => panic!("CR is invalid but for unexpected reason: {status:?}"),
-            };
+            }
         },
         (other, status_code) => panic!("{other:?} {status_code}"),
     }
