@@ -1,0 +1,312 @@
+// Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions
+
+/// DeleteOptions may be provided when deleting an API object.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct DeleteOptions {
+    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+    pub api_version: Option<std::string::String>,
+
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<std::vec::Vec<std::string::String>>,
+
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+
+    /// if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it
+    pub ignore_store_read_error_with_cluster_breaking_potential: Option<bool>,
+
+    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    pub kind: Option<std::string::String>,
+
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+
+    /// Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
+    pub preconditions: Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions>,
+
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    pub propagation_policy: Option<std::string::String>,
+}
+
+impl crate::DeepMerge for DeleteOptions {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.api_version, other.api_version);
+        crate::merge_strategies::list::atomic(&mut self.dry_run, other.dry_run);
+        crate::DeepMerge::merge_from(&mut self.grace_period_seconds, other.grace_period_seconds);
+        crate::DeepMerge::merge_from(&mut self.ignore_store_read_error_with_cluster_breaking_potential, other.ignore_store_read_error_with_cluster_breaking_potential);
+        crate::DeepMerge::merge_from(&mut self.kind, other.kind);
+        crate::DeepMerge::merge_from(&mut self.orphan_dependents, other.orphan_dependents);
+        crate::DeepMerge::merge_from(&mut self.preconditions, other.preconditions);
+        crate::DeepMerge::merge_from(&mut self.propagation_policy, other.propagation_policy);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for DeleteOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_api_version,
+            Key_dry_run,
+            Key_grace_period_seconds,
+            Key_ignore_store_read_error_with_cluster_breaking_potential,
+            Key_kind,
+            Key_orphan_dependents,
+            Key_preconditions,
+            Key_propagation_policy,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "apiVersion" => Field::Key_api_version,
+                            "dryRun" => Field::Key_dry_run,
+                            "gracePeriodSeconds" => Field::Key_grace_period_seconds,
+                            "ignoreStoreReadErrorWithClusterBreakingPotential" => Field::Key_ignore_store_read_error_with_cluster_breaking_potential,
+                            "kind" => Field::Key_kind,
+                            "orphanDependents" => Field::Key_orphan_dependents,
+                            "preconditions" => Field::Key_preconditions,
+                            "propagationPolicy" => Field::Key_propagation_policy,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = DeleteOptions;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("DeleteOptions")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_api_version: Option<std::string::String> = None;
+                let mut value_dry_run: Option<std::vec::Vec<std::string::String>> = None;
+                let mut value_grace_period_seconds: Option<i64> = None;
+                let mut value_ignore_store_read_error_with_cluster_breaking_potential: Option<bool> = None;
+                let mut value_kind: Option<std::string::String> = None;
+                let mut value_orphan_dependents: Option<bool> = None;
+                let mut value_preconditions: Option<crate::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
+                let mut value_propagation_policy: Option<std::string::String> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_api_version => value_api_version = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dry_run => value_dry_run = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_grace_period_seconds => value_grace_period_seconds = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ignore_store_read_error_with_cluster_breaking_potential => value_ignore_store_read_error_with_cluster_breaking_potential = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_orphan_dependents => value_orphan_dependents = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_preconditions => value_preconditions = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_propagation_policy => value_propagation_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(DeleteOptions {
+                    api_version: value_api_version,
+                    dry_run: value_dry_run,
+                    grace_period_seconds: value_grace_period_seconds,
+                    ignore_store_read_error_with_cluster_breaking_potential: value_ignore_store_read_error_with_cluster_breaking_potential,
+                    kind: value_kind,
+                    orphan_dependents: value_orphan_dependents,
+                    preconditions: value_preconditions,
+                    propagation_policy: value_propagation_policy,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "DeleteOptions",
+            &[
+                "apiVersion",
+                "dryRun",
+                "gracePeriodSeconds",
+                "ignoreStoreReadErrorWithClusterBreakingPotential",
+                "kind",
+                "orphanDependents",
+                "preconditions",
+                "propagationPolicy",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for DeleteOptions {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "DeleteOptions",
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.dry_run.as_ref().map_or(0, |_| 1) +
+            self.grace_period_seconds.as_ref().map_or(0, |_| 1) +
+            self.ignore_store_read_error_with_cluster_breaking_potential.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.orphan_dependents.as_ref().map_or(0, |_| 1) +
+            self.preconditions.as_ref().map_or(0, |_| 1) +
+            self.propagation_policy.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.api_version {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+        }
+        if let Some(value) = &self.dry_run {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "dryRun", value)?;
+        }
+        if let Some(value) = &self.grace_period_seconds {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+        }
+        if let Some(value) = &self.ignore_store_read_error_with_cluster_breaking_potential {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ignoreStoreReadErrorWithClusterBreakingPotential", value)?;
+        }
+        if let Some(value) = &self.kind {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+        }
+        if let Some(value) = &self.orphan_dependents {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+        }
+        if let Some(value) = &self.preconditions {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+        }
+        if let Some(value) = &self.propagation_policy {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for DeleteOptions {
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
+        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                description: Some("DeleteOptions may be provided when deleting an API object.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
+                properties: [
+                    (
+                        "apiVersion".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "dryRun".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
+                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "gracePeriodSeconds".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "ignoreStoreReadErrorWithClusterBreakingPotential".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "kind".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "orphanDependents".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \"orphan\" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "preconditions".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Preconditions>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "propagationPolicy".into(),
+                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
+                                description: Some("Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}
