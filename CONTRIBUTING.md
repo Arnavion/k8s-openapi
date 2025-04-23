@@ -122,7 +122,7 @@ K8S_RECORD=1 ./test.sh all run-tests
 
 Keep these in mind when dropping support for older versions:
 
-- [Aliyun ACK](https://www.alibabacloud.com/help/doc-detail/98310.htm)
+- [Aliyun ACK](https://www.alibabacloud.com/help/en/ack/ack-managed-and-ack-dedicated/user-guide/support-for-kubernetes-versions/)
 
 - [Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#available-versions)
 

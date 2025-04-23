@@ -24,8 +24,6 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.28", doc = "v1_28")]
-#![cfg_attr(k8s_openapi_enabled_version="1.29", doc = "v1_29")]
 #![cfg_attr(k8s_openapi_enabled_version="1.30", doc = "v1_30")]
 #![cfg_attr(k8s_openapi_enabled_version="1.31", doc = "v1_31")]
 #![cfg_attr(k8s_openapi_enabled_version="1.32", doc = "v1_32")]
@@ -256,12 +254,6 @@ pub use _resource::{
     Metadata,
     api_version, group, kind, version,
 };
-
-#[cfg(k8s_openapi_enabled_version="1.28")] mod v1_28;
-#[cfg(k8s_openapi_enabled_version="1.28")] pub use self::v1_28::*;
-
-#[cfg(k8s_openapi_enabled_version="1.29")] mod v1_29;
-#[cfg(k8s_openapi_enabled_version="1.29")] pub use self::v1_29::*;
 
 #[cfg(k8s_openapi_enabled_version="1.30")] mod v1_30;
 #[cfg(k8s_openapi_enabled_version="1.30")] pub use self::v1_30::*;

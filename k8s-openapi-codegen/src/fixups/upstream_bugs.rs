@@ -170,44 +170,6 @@ pub(crate) mod required_properties {
         Err("never applied ConfigMapVolumeSource required properties override".into())
     }
 
-    // `HostAlias::ip`
-    //
-    // Ref: https://github.com/kubernetes/kubernetes/pull/124694
-    pub(crate) fn host_alias(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.HostAlias".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("ip") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied HostAlias required properties override".into())
-    }
-
-    // `HostIP::ip`
-    //
-    // Ref: https://github.com/kubernetes/kubernetes/pull/126057
-    pub(crate) fn host_ip(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.HostIP".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("ip") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied HostIP required properties override".into())
-    }
-
     // `LocalObjectReference::name`
     //
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
@@ -225,25 +187,6 @@ pub(crate) mod required_properties {
         }
 
         Err("never applied LocalObjectReference required properties override".into())
-    }
-
-    // `PodIP::ip`
-    //
-    // Ref: https://github.com/kubernetes/kubernetes/pull/126057
-    pub(crate) fn pod_ip(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.PodIP".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("ip") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-
-        Err("never applied PodIP required properties override".into())
     }
 
     // `SecretEnvSource::name`
@@ -323,48 +266,4 @@ pub(crate) fn status_extra_gvk(spec: &mut crate::swagger20::Spec) -> Result<(), 
     }
 
     Err("never applied Status extra group-version-kinds override".into())
-}
-
-// `PodSchedulingContextSpec` has `set` merge strategy in versions before v1.29
-// but v1.29 decided it would like clients to treat it as `atomic`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/119962
-pub(crate) fn pod_scheduling_context_spec_potential_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha2.PodSchedulingContextSpec".to_owned());
-    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-            if let Some(property) = properties.get_mut("potentialNodes") {
-                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
-                    if *strategy == crate::swagger20::KubernetesListType::Set {
-                        *strategy = crate::swagger20::KubernetesListType::Atomic;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-    }
-
-    Err("never applied PodSchedulingContextSpec.potentialNodes merge strategy override".into())
-}
-
-// `ResourceClaimSchedulingStatus` has `set` merge strategy in versions before v1.29
-// but v1.29 decided it would like clients to treat it as `atomic`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/119962
-pub(crate) fn v1alpha2_resource_claim_scheduling_status_unsuitable_nodes_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-    let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.resource.v1alpha2.ResourceClaimSchedulingStatus".to_owned());
-    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-            if let Some(property) = properties.get_mut("unsuitableNodes") {
-                if let crate::swagger20::MergeType::List { strategy, .. } = &mut property.0.merge_type {
-                    if *strategy == crate::swagger20::KubernetesListType::Set {
-                        *strategy = crate::swagger20::KubernetesListType::Atomic;
-                        return Ok(());
-                    }
-                }
-            }
-        }
-    }
-
-    Err("never applied ResourceClaimSchedulingStatus.unsuitableNodes merge strategy override".into())
 }

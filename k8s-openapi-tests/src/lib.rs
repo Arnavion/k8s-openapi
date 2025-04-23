@@ -45,8 +45,6 @@ struct Replay {
 
 impl Client {
     fn new(test_name: &'static str) -> Self {
-        #[cfg(feature = "test_v1_28")] let replays_directory = "v1-28";
-        #[cfg(feature = "test_v1_29")] let replays_directory = "v1-29";
         #[cfg(feature = "test_v1_30")] let replays_directory = "v1-30";
         #[cfg(feature = "test_v1_31")] let replays_directory = "v1-31";
         #[cfg(feature = "test_v1_32")] let replays_directory = "v1-32";
