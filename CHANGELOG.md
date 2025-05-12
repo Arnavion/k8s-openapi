@@ -1,3 +1,30 @@
+# v0.25.0 (2025-05-11)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.33 under the `v1_33` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.28 and 1.29.
+
+- FEATURE: The crate now supports `no_std` by disabling its `std` feature.
+
+Corresponding Kubernetes API server versions:
+
+- v1.30.12
+- v1.31.8
+- v1.32.4
+- v1.33.0
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.24.0 (2024-12-21)
 
 ## k8s-openapi
