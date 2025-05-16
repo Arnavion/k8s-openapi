@@ -226,7 +226,7 @@ impl Client {
 
                 let response =
                     response.bytes_stream()
-                    .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))
+                    .map_err(std::io::Error::other)
                     .into_async_read();
 
                 ClientResponse {
