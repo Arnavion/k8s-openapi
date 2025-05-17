@@ -46,10 +46,10 @@ declare -A K8S_VERSIONS=(
 
 # https://github.com/kubernetes-sigs/kind/releases
 declare -A KIND_VERSIONS=(
-    ['1.30']='0.27.0'
-    ['1.31']='0.27.0'
-    ['1.32']='0.27.0'
-    ['1.33']='0.27.0'
+    ['1.30']='0.28.0'
+    ['1.31']='0.28.0'
+    ['1.32']='0.28.0'
+    ['1.33']='0.28.0'
 )
 
 case "$1" in
