@@ -129,7 +129,7 @@ pub(crate) fn generate(
             writeln!(out, "            }}")?;
             writeln!(out)?;
             writeln!(out, "            fn serialize_i16(self, _: i16) -> Result<Self::Ok, Self::Error> {{")?;
-            writeln!(out, r#"                Err({local}serde::ser::Error::custom(" is not supported"))"#)?;
+            writeln!(out, r#"                Err({local}serde::ser::Error::custom("i16 is not supported"))"#)?;
             writeln!(out, "            }}")?;
             writeln!(out)?;
             writeln!(out, "            fn serialize_i32(self, _: i32) -> Result<Self::Ok, Self::Error> {{")?;
