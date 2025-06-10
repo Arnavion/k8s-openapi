@@ -108,45 +108,24 @@ impl crate::serde::Serialize for FlockerVolumeSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for FlockerVolumeSource {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.FlockerVolumeSource".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "datasetName".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("datasetName is Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "datasetUUID".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("datasetUUID is the UUID of the dataset. This is unique identifier of a Flocker dataset".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.",
+            "type": "object",
+            "properties": {
+                "datasetName": {
+                    "description": "datasetName is Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated",
+                    "type": "string",
+                },
+                "datasetUUID": {
+                    "description": "datasetUUID is the UUID of the dataset. This is unique identifier of a Flocker dataset",
+                    "type": "string",
+                },
+            },
         })
     }
 }

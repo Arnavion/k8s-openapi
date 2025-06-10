@@ -136,68 +136,33 @@ impl crate::serde::Serialize for DeviceAttribute {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeviceAttribute {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1beta1.DeviceAttribute".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeviceAttribute must have exactly one field set.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "bool".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("BoolValue is a true/false value.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "int".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("IntValue is a number.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "string".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("StringValue is a string. Must not be longer than 64 characters.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "version".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("VersionValue is a semantic version according to semver.org spec 2.0.0. Must not be longer than 64 characters.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeviceAttribute must have exactly one field set.",
+            "type": "object",
+            "properties": {
+                "bool": {
+                    "description": "BoolValue is a true/false value.",
+                    "type": "boolean",
+                },
+                "int": {
+                    "description": "IntValue is a number.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "string": {
+                    "description": "StringValue is a string. Must not be longer than 64 characters.",
+                    "type": "string",
+                },
+                "version": {
+                    "description": "VersionValue is a semantic version according to semver.org spec 2.0.0. Must not be longer than 64 characters.",
+                    "type": "string",
+                },
+            },
         })
     }
 }

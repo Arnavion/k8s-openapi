@@ -112,48 +112,27 @@ impl crate::serde::Serialize for ResourceStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ResourceStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.ResourceStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "name".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name of the resource. Must be unique within the pod and match one of the resources from the pod spec.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "resources".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("List of unique Resources health. Each element in the list contains an unique resource ID and resource health. At a minimum, ResourceID must uniquely identify the Resource allocated to the Pod on the Node for the lifetime of a Pod. See ResourceID type for it's definition.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::ResourceHealth>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "name".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the resource. Must be unique within the pod and match one of the resources from the pod spec.",
+                    "type": "string",
+                },
+                "resources": {
+                    "description": "List of unique Resources health. Each element in the list contains an unique resource ID and resource health. At a minimum, ResourceID must uniquely identify the Resource allocated to the Pod on the Node for the lifetime of a Pod. See ResourceID type for it's definition.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::core::v1::ResourceHealth>()),
+                },
+            },
+            "required": [
+                "name",
+            ],
         })
     }
 }

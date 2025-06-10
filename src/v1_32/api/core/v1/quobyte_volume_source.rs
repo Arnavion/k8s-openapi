@@ -159,93 +159,44 @@ impl crate::serde::Serialize for QuobyteVolumeSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for QuobyteVolumeSource {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.QuobyteVolumeSource".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "group".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("group to map volume access to Default is no group".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "readOnly".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("readOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "registry".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "tenant".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned Quobyte volumes, value is set by the plugin".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "user".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("user to map volume access to Defaults to serivceaccount user".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "volume".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("volume is a string that references an already created Quobyte volume by name.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "registry".into(),
-                    "volume".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.",
+            "type": "object",
+            "properties": {
+                "group": {
+                    "description": "group to map volume access to Default is no group",
+                    "type": "string",
+                },
+                "readOnly": {
+                    "description": "readOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.",
+                    "type": "boolean",
+                },
+                "registry": {
+                    "description": "registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes",
+                    "type": "string",
+                },
+                "tenant": {
+                    "description": "tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned Quobyte volumes, value is set by the plugin",
+                    "type": "string",
+                },
+                "user": {
+                    "description": "user to map volume access to Defaults to serivceaccount user",
+                    "type": "string",
+                },
+                "volume": {
+                    "description": "volume is a string that references an already created Quobyte volume by name.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "registry",
+                "volume",
+            ],
         })
     }
 }

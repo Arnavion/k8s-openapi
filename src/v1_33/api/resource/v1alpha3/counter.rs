@@ -92,37 +92,24 @@ impl crate::serde::Serialize for Counter {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Counter {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha3.Counter".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Counter describes a quantity associated with a device.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "value".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Value defines how much of a certain device counter is available.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "value".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Counter describes a quantity associated with a device.",
+            "type": "object",
+            "properties": {
+                "value": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>();
+                    schema_obj.ensure_object().insert("description".into(), "Value defines how much of a certain device counter is available.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "value",
+            ],
         })
     }
 }

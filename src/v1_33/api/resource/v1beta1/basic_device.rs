@@ -202,116 +202,49 @@ impl crate::serde::Serialize for BasicDevice {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for BasicDevice {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1beta1.BasicDevice".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("BasicDevice defines one device instance.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "allNodes".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("AllNodes indicates that all nodes have access to the device.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "attributes".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceAttribute>())),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "capacity".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Capacity defines the set of capacities for this device. The name of each capacity must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-                            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                                additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceCapacity>())),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "consumesCounters".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.\n\nThere can only be a single entry per counterSet.\n\nThe total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceCounterConsumption>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "nodeName".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NodeName identifies the node where the device is available.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "nodeSelector".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSelector>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NodeSelector defines the nodes where the device is available.\n\nMust use exactly one term.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "taints".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("If specified, these are the driver-defined taints.\n\nThe maximum number of taints is 4.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1beta1::DeviceTaint>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "BasicDevice defines one device instance.",
+            "type": "object",
+            "properties": {
+                "allNodes": {
+                    "description": "AllNodes indicates that all nodes have access to the device.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.",
+                    "type": "boolean",
+                },
+                "attributes": {
+                    "description": "Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.",
+                    "type": "object",
+                    "additionalProperties": (__gen.subschema_for::<crate::api::resource::v1beta1::DeviceAttribute>()),
+                },
+                "capacity": {
+                    "description": "Capacity defines the set of capacities for this device. The name of each capacity must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.",
+                    "type": "object",
+                    "additionalProperties": (__gen.subschema_for::<crate::api::resource::v1beta1::DeviceCapacity>()),
+                },
+                "consumesCounters": {
+                    "description": "ConsumesCounters defines a list of references to sharedCounters and the set of counters that the device will consume from those counter sets.\n\nThere can only be a single entry per counterSet.\n\nThe total number of device counter consumption entries must be <= 32. In addition, the total number in the entire ResourceSlice must be <= 1024 (for example, 64 devices with 16 counters each).",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1beta1::DeviceCounterConsumption>()),
+                },
+                "nodeName": {
+                    "description": "NodeName identifies the node where the device is available.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.",
+                    "type": "string",
+                },
+                "nodeSelector": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSelector>();
+                    schema_obj.ensure_object().insert("description".into(), "NodeSelector defines the nodes where the device is available.\n\nMust use exactly one term.\n\nMust only be set if Spec.PerDeviceNodeSelection is set to true. At most one of NodeName, NodeSelector and AllNodes can be set.".into());
+                    schema_obj
+                }),
+                "taints": {
+                    "description": "If specified, these are the driver-defined taints.\n\nThe maximum number of taints is 4.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1beta1::DeviceTaint>()),
+                },
+            },
         })
     }
 }

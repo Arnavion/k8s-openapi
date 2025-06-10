@@ -92,41 +92,24 @@ impl crate::serde::Serialize for NamedResourcesResources {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NamedResourcesResources {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha2.NamedResourcesResources".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("NamedResourcesResources is used in ResourceModel.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "instances".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The list of all individual resources instances currently available.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesInstance>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "instances".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "NamedResourcesResources is used in ResourceModel.",
+            "type": "object",
+            "properties": {
+                "instances": {
+                    "description": "The list of all individual resources instances currently available.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesInstance>()),
+                },
+            },
+            "required": [
+                "instances",
+            ],
         })
     }
 }

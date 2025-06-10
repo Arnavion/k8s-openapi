@@ -108,46 +108,26 @@ impl crate::serde::Serialize for EventSeries {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for EventSeries {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.EventSeries".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "count".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Number of occurrences in this series up to the last heartbeat time".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "lastObservedTime".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::MicroTime>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Time of the last occurrence observed".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time.",
+            "type": "object",
+            "properties": {
+                "count": {
+                    "description": "Number of occurrences in this series up to the last heartbeat time",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "lastObservedTime": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::MicroTime>();
+                    schema_obj.ensure_object().insert("description".into(), "Time of the last occurrence observed".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

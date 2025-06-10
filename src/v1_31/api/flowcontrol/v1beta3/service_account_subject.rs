@@ -103,49 +103,28 @@ impl crate::serde::Serialize for ServiceAccountSubject {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ServiceAccountSubject {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.flowcontrol.v1beta3.ServiceAccountSubject".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ServiceAccountSubject holds detailed information for service-account-kind subject.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "name".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "namespace".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`namespace` is the namespace of matching ServiceAccount objects. Required.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "name".into(),
-                    "namespace".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ServiceAccountSubject holds detailed information for service-account-kind subject.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.",
+                    "type": "string",
+                },
+                "namespace": {
+                    "description": "`namespace` is the namespace of matching ServiceAccount objects. Required.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "name",
+                "namespace",
+            ],
         })
     }
 }

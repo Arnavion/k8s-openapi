@@ -108,45 +108,25 @@ impl crate::serde::Serialize for NodeRuntimeHandler {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NodeRuntimeHandler {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.NodeRuntimeHandler".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("NodeRuntimeHandler is a set of runtime handler information.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "features".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeRuntimeHandlerFeatures>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Supported features.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "name".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Runtime handler name. Empty for the default runtime handler.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "NodeRuntimeHandler is a set of runtime handler information.",
+            "type": "object",
+            "properties": {
+                "features": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeRuntimeHandlerFeatures>();
+                    schema_obj.ensure_object().insert("description".into(), "Supported features.".into());
+                    schema_obj
+                }),
+                "name": {
+                    "description": "Runtime handler name. Empty for the default runtime handler.",
+                    "type": "string",
+                },
+            },
         })
     }
 }

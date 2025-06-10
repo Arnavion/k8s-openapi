@@ -94,38 +94,21 @@ impl crate::serde::Serialize for TypeChecking {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for TypeChecking {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.admissionregistration.v1.TypeChecking".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("TypeChecking contains results of type checking the expressions in the ValidatingAdmissionPolicy".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "expressionWarnings".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The type checking warnings for each expression.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::admissionregistration::v1::ExpressionWarning>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "TypeChecking contains results of type checking the expressions in the ValidatingAdmissionPolicy",
+            "type": "object",
+            "properties": {
+                "expressionWarnings": {
+                    "description": "The type checking warnings for each expression.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::admissionregistration::v1::ExpressionWarning>()),
+                },
+            },
         })
     }
 }

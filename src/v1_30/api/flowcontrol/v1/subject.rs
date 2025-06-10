@@ -134,70 +134,38 @@ impl crate::serde::Serialize for Subject {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Subject {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.flowcontrol.v1.Subject".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "group".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::GroupSubject>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`group` matches based on user group name.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "kind".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`kind` indicates which one of the other fields is non-empty. Required".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "serviceAccount".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::ServiceAccountSubject>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`serviceAccount` matches ServiceAccounts.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "user".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::UserSubject>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`user` matches based on username.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "kind".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.",
+            "type": "object",
+            "properties": {
+                "group": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::GroupSubject>();
+                    schema_obj.ensure_object().insert("description".into(), "`group` matches based on user group name.".into());
+                    schema_obj
+                }),
+                "kind": {
+                    "description": "`kind` indicates which one of the other fields is non-empty. Required",
+                    "type": "string",
+                },
+                "serviceAccount": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::ServiceAccountSubject>();
+                    schema_obj.ensure_object().insert("description".into(), "`serviceAccount` matches ServiceAccounts.".into());
+                    schema_obj
+                }),
+                "user": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::UserSubject>();
+                    schema_obj.ensure_object().insert("description".into(), "`user` matches based on username.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "kind",
+            ],
         })
     }
 }

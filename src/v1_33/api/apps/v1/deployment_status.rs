@@ -215,134 +215,61 @@ impl crate::serde::Serialize for DeploymentStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeploymentStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.apps.v1.DeploymentStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeploymentStatus is the most recently observed status of the Deployment.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "availableReplicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of available non-terminating pods (ready for at least minReadySeconds) targeted by this deployment.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "collisionCount".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "conditions".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents the latest available observations of a deployment's current state.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::apps::v1::DeploymentCondition>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "observedGeneration".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The generation observed by the deployment controller.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "readyReplicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of non-terminating pods targeted by this Deployment with a Ready Condition.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "replicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of non-terminating pods targeted by this deployment (their labels match the selector).".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "terminatingReplicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of terminating pods targeted by this deployment. Terminating pods have a non-null .metadata.deletionTimestamp and have not yet reached the Failed or Succeeded .status.phase.\n\nThis is an alpha field. Enable DeploymentReplicaSetTerminatingReplicas to be able to use this field.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "unavailableReplicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of unavailable pods targeted by this deployment. This is the total number of pods that are still required for the deployment to have 100% available capacity. They may either be pods that are running but not yet available or pods that still have not been created.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "updatedReplicas".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Total number of non-terminating pods targeted by this deployment that have the desired template spec.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeploymentStatus is the most recently observed status of the Deployment.",
+            "type": "object",
+            "properties": {
+                "availableReplicas": {
+                    "description": "Total number of available non-terminating pods (ready for at least minReadySeconds) targeted by this deployment.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "collisionCount": {
+                    "description": "Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "conditions": {
+                    "description": "Represents the latest available observations of a deployment's current state.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::apps::v1::DeploymentCondition>()),
+                },
+                "observedGeneration": {
+                    "description": "The generation observed by the deployment controller.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "readyReplicas": {
+                    "description": "Total number of non-terminating pods targeted by this Deployment with a Ready Condition.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "replicas": {
+                    "description": "Total number of non-terminating pods targeted by this deployment (their labels match the selector).",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "terminatingReplicas": {
+                    "description": "Total number of terminating pods targeted by this deployment. Terminating pods have a non-null .metadata.deletionTimestamp and have not yet reached the Failed or Succeeded .status.phase.\n\nThis is an alpha field. Enable DeploymentReplicaSetTerminatingReplicas to be able to use this field.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "unavailableReplicas": {
+                    "description": "Total number of unavailable pods targeted by this deployment. This is the total number of pods that are still required for the deployment to have 100% available capacity. They may either be pods that are running but not yet available or pods that still have not been created.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "updatedReplicas": {
+                    "description": "Total number of non-terminating pods targeted by this deployment that have the desired template spec.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+            },
         })
     }
 }

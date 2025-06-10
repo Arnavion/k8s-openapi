@@ -94,34 +94,21 @@ impl crate::serde::Serialize for SelfSubjectReviewStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for SelfSubjectReviewStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.authentication.v1beta1.SelfSubjectReviewStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("SelfSubjectReviewStatus is filled by the kube-apiserver and sent back to a user.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "userInfo".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::authentication::v1::UserInfo>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("User attributes of the user making this request.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "SelfSubjectReviewStatus is filled by the kube-apiserver and sent back to a user.",
+            "type": "object",
+            "properties": {
+                "userInfo": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::authentication::v1::UserInfo>();
+                    schema_obj.ensure_object().insert("description".into(), "User attributes of the user making this request.".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

@@ -216,152 +216,72 @@ impl crate::serde::Serialize for DaemonSetStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DaemonSetStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.apps.v1.DaemonSetStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DaemonSetStatus represents the current status of a daemon set.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "collisionCount".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "conditions".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Represents the latest available observations of a DaemonSet's current state.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::apps::v1::DaemonSetCondition>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "currentNumberScheduled".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "desiredNumberScheduled".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "numberAvailable".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "numberMisscheduled".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "numberReady".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("numberReady is the number of nodes that should be running the daemon pod and have one or more of the daemon pod running with a Ready Condition.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "numberUnavailable".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "observedGeneration".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The most recent generation observed by the daemon set controller.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "updatedNumberScheduled".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The total number of nodes that are running updated daemon pod".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int32".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "currentNumberScheduled".into(),
-                    "desiredNumberScheduled".into(),
-                    "numberMisscheduled".into(),
-                    "numberReady".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DaemonSetStatus represents the current status of a daemon set.",
+            "type": "object",
+            "properties": {
+                "collisionCount": {
+                    "description": "Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "conditions": {
+                    "description": "Represents the latest available observations of a DaemonSet's current state.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::apps::v1::DaemonSetCondition>()),
+                },
+                "currentNumberScheduled": {
+                    "description": "The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "desiredNumberScheduled": {
+                    "description": "The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "numberAvailable": {
+                    "description": "The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "numberMisscheduled": {
+                    "description": "The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "numberReady": {
+                    "description": "numberReady is the number of nodes that should be running the daemon pod and have one or more of the daemon pod running with a Ready Condition.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "numberUnavailable": {
+                    "description": "The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "observedGeneration": {
+                    "description": "The most recent generation observed by the daemon set controller.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "updatedNumberScheduled": {
+                    "description": "The total number of nodes that are running updated daemon pod",
+                    "type": "integer",
+                    "format": "int32",
+                },
+            },
+            "required": [
+                "currentNumberScheduled",
+                "desiredNumberScheduled",
+                "numberMisscheduled",
+                "numberReady",
+            ],
         })
     }
 }

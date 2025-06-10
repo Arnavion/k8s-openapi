@@ -94,34 +94,21 @@ impl crate::serde::Serialize for ContainerUser {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ContainerUser {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.ContainerUser".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ContainerUser represents user identity information".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "linux".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::LinuxContainerUser>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Linux holds user identity information initially attached to the first process of the containers in Linux. Note that the actual running identity can be changed if the process has enough privilege to do so.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ContainerUser represents user identity information",
+            "type": "object",
+            "properties": {
+                "linux": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::LinuxContainerUser>();
+                    schema_obj.ensure_object().insert("description".into(), "Linux holds user identity information initially attached to the first process of the containers in Linux. Note that the actual running identity can be changed if the process has enough privilege to do so.".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

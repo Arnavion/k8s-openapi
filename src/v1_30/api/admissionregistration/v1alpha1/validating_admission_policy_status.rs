@@ -129,61 +129,31 @@ impl crate::serde::Serialize for ValidatingAdmissionPolicyStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ValidatingAdmissionPolicyStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ValidatingAdmissionPolicyStatus represents the status of a ValidatingAdmissionPolicy.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "conditions".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The conditions represent the latest available observations of a policy's current state.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Condition>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "observedGeneration".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The generation observed by the controller.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "typeChecking".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::TypeChecking>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The results of type checking for each expression. Presence of this field indicates the completion of the type checking.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ValidatingAdmissionPolicyStatus represents the status of a ValidatingAdmissionPolicy.",
+            "type": "object",
+            "properties": {
+                "conditions": {
+                    "description": "The conditions represent the latest available observations of a policy's current state.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Condition>()),
+                },
+                "observedGeneration": {
+                    "description": "The generation observed by the controller.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "typeChecking": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::TypeChecking>();
+                    schema_obj.ensure_object().insert("description".into(), "The results of type checking for each expression. Presence of this field indicates the completion of the type checking.".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

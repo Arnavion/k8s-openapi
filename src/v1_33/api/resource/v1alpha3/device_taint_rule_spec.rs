@@ -106,48 +106,29 @@ impl crate::serde::Serialize for DeviceTaintRuleSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeviceTaintRuleSpec {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha3.DeviceTaintRuleSpec".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeviceTaintRuleSpec specifies the selector and one taint.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "deviceSelector".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha3::DeviceTaintSelector>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("DeviceSelector defines which device(s) the taint is applied to. All selector criteria must be satified for a device to match. The empty selector matches all devices. Without a selector, no devices are matches.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "taint".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha3::DeviceTaint>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The taint that gets applied to matching devices.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "taint".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeviceTaintRuleSpec specifies the selector and one taint.",
+            "type": "object",
+            "properties": {
+                "deviceSelector": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha3::DeviceTaintSelector>();
+                    schema_obj.ensure_object().insert("description".into(), "DeviceSelector defines which device(s) the taint is applied to. All selector criteria must be satified for a device to match. The empty selector matches all devices. Without a selector, no devices are matches.".into());
+                    schema_obj
+                }),
+                "taint": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha3::DeviceTaint>();
+                    schema_obj.ensure_object().insert("description".into(), "The taint that gets applied to matching devices.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "taint",
+            ],
         })
     }
 }

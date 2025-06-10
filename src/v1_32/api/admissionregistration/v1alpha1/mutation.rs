@@ -120,59 +120,33 @@ impl crate::serde::Serialize for Mutation {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Mutation {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.admissionregistration.v1alpha1.Mutation".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Mutation specifies the CEL expression which is used to apply the Mutation.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "applyConfiguration".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::ApplyConfiguration>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("applyConfiguration defines the desired configuration values of an object. The configuration is applied to the admission object using [structured merge diff](https://github.com/kubernetes-sigs/structured-merge-diff). A CEL expression is used to create apply configuration.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "jsonPatch".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::JSONPatch>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("jsonPatch defines a [JSON patch](https://jsonpatch.com/) operation to perform a mutation to the object. A CEL expression is used to create the JSON patch.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "patchType".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("patchType indicates the patch strategy used. Allowed values are \"ApplyConfiguration\" and \"JSONPatch\". Required.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "patchType".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Mutation specifies the CEL expression which is used to apply the Mutation.",
+            "type": "object",
+            "properties": {
+                "applyConfiguration": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::ApplyConfiguration>();
+                    schema_obj.ensure_object().insert("description".into(), "applyConfiguration defines the desired configuration values of an object. The configuration is applied to the admission object using [structured merge diff](https://github.com/kubernetes-sigs/structured-merge-diff). A CEL expression is used to create apply configuration.".into());
+                    schema_obj
+                }),
+                "jsonPatch": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::admissionregistration::v1alpha1::JSONPatch>();
+                    schema_obj.ensure_object().insert("description".into(), "jsonPatch defines a [JSON patch](https://jsonpatch.com/) operation to perform a mutation to the object. A CEL expression is used to create the JSON patch.".into());
+                    schema_obj
+                }),
+                "patchType": {
+                    "description": "patchType indicates the patch strategy used. Allowed values are \"ApplyConfiguration\" and \"JSONPatch\". Required.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "patchType",
+            ],
         })
     }
 }

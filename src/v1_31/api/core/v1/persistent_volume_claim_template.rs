@@ -106,48 +106,29 @@ impl crate::serde::Serialize for PersistentVolumeClaimTemplate {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PersistentVolumeClaimTemplate {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.PersistentVolumeClaimTemplate".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "metadata".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "spec".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PersistentVolumeClaimSpec>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "spec".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.",
+            "type": "object",
+            "properties": {
+                "metadata": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>();
+                    schema_obj.ensure_object().insert("description".into(), "May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.".into());
+                    schema_obj
+                }),
+                "spec": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PersistentVolumeClaimSpec>();
+                    schema_obj.ensure_object().insert("description".into(), "The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "spec",
+            ],
         })
     }
 }

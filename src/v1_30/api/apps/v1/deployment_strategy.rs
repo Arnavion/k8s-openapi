@@ -108,45 +108,25 @@ impl crate::serde::Serialize for DeploymentStrategy {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeploymentStrategy {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.apps.v1.DeploymentStrategy".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeploymentStrategy describes how to replace existing pods with new ones.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "rollingUpdate".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::apps::v1::RollingUpdateDeployment>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "type".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeploymentStrategy describes how to replace existing pods with new ones.",
+            "type": "object",
+            "properties": {
+                "rollingUpdate": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::apps::v1::RollingUpdateDeployment>();
+                    schema_obj.ensure_object().insert("description".into(), "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.".into());
+                    schema_obj
+                }),
+                "type": {
+                    "description": "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.",
+                    "type": "string",
+                },
+            },
         })
     }
 }

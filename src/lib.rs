@@ -18,6 +18,9 @@
     rustdoc::bare_urls,
 )]
 
+// `schemars::json_schema!` expansion hits recursion limit.
+#![cfg_attr(feature = "schemars", recursion_limit = "256")]
+
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
 //!
 //! Each supported version of Kubernetes is represented by a feature name (like `v1_9`). Only one such feature can be enabled at a time.

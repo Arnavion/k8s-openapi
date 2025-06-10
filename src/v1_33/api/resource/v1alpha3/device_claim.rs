@@ -122,68 +122,31 @@ impl crate::serde::Serialize for DeviceClaim {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for DeviceClaim {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha3.DeviceClaim".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("DeviceClaim defines how to request devices with a ResourceClaim.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "config".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("This field holds configuration for multiple potential drivers which could satisfy requests in this claim. It is ignored while allocating the claim.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceClaimConfiguration>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "constraints".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("These constraints must be satisfied by the set of devices that get allocated for the claim.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceConstraint>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "requests".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Requests represent individual requests for distinct devices which must all be satisfied. If empty, nothing needs to be allocated.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceRequest>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeviceClaim defines how to request devices with a ResourceClaim.",
+            "type": "object",
+            "properties": {
+                "config": {
+                    "description": "This field holds configuration for multiple potential drivers which could satisfy requests in this claim. It is ignored while allocating the claim.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceClaimConfiguration>()),
+                },
+                "constraints": {
+                    "description": "These constraints must be satisfied by the set of devices that get allocated for the claim.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceConstraint>()),
+                },
+                "requests": {
+                    "description": "Requests represent individual requests for distinct devices which must all be satisfied. If empty, nothing needs to be allocated.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1alpha3::DeviceRequest>()),
+                },
+            },
         })
     }
 }

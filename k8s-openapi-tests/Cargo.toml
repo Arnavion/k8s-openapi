@@ -35,11 +35,14 @@ reqwest = { version = "0.12", default-features = false, features = [
     "rustls-tls-manual-roots", # for TLS support
     "stream", # for reqwest::Response::bytes_stream
 ] }
-schemars = { version = "0.8", default-features = false, features = [
+schemars = { version = "0.9", default-features = false, features = [
     "derive", # for #[derive(schemars::JsonSchema)]
 ] }
 serde = { version = "1", default-features = false, features = [
     "derive",
+] }
+serde_json = { version = "1", default-features = false, features = [
+    "std", # for serde_json::{from_reader, to_writer_pretty}
 ] }
 serde_yaml = { version = "0.9", default-features = false }
 tokio = { version = "1", default-features = false, features = [

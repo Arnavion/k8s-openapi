@@ -106,48 +106,28 @@ impl crate::serde::Serialize for LimitResponse {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for LimitResponse {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.flowcontrol.v1.LimitResponse".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("LimitResponse defines how to handle requests that can not be executed right now.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "queuing".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::QueuingConfiguration>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `\"Queue\"`.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "type".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("`type` is \"Queue\" or \"Reject\". \"Queue\" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. \"Reject\" means that requests that can not be executed upon arrival are rejected. Required.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "type".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "LimitResponse defines how to handle requests that can not be executed right now.",
+            "type": "object",
+            "properties": {
+                "queuing": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::flowcontrol::v1::QueuingConfiguration>();
+                    schema_obj.ensure_object().insert("description".into(), "`queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `\"Queue\"`.".into());
+                    schema_obj
+                }),
+                "type": {
+                    "description": "`type` is \"Queue\" or \"Reject\". \"Queue\" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. \"Reject\" means that requests that can not be executed upon arrival are rejected. Required.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "type",
+            ],
         })
     }
 }

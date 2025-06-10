@@ -190,115 +190,55 @@ impl crate::serde::Serialize for NamedResourcesAttribute {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NamedResourcesAttribute {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha2.NamedResourcesAttribute".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("NamedResourcesAttribute is a combination of an attribute name and its value.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "bool".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("BoolValue is a true/false value.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Boolean))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "int".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("IntValue is a 64-bit integer.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Integer))),
-                            format: Some("int64".into()),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "intSlice".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesIntSlice>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("IntSliceValue is an array of 64-bit integers.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "name".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name is unique identifier among all resource instances managed by the driver on the node. It must be a DNS subdomain.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "quantity".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("QuantityValue is a quantity.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "string".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("StringValue is a string.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "stringSlice".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesStringSlice>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("StringSliceValue is an array of strings.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "version".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("VersionValue is a semantic version according to semver.org spec 2.0.0.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "name".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "NamedResourcesAttribute is a combination of an attribute name and its value.",
+            "type": "object",
+            "properties": {
+                "bool": {
+                    "description": "BoolValue is a true/false value.",
+                    "type": "boolean",
+                },
+                "int": {
+                    "description": "IntValue is a 64-bit integer.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "intSlice": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesIntSlice>();
+                    schema_obj.ensure_object().insert("description".into(), "IntSliceValue is an array of 64-bit integers.".into());
+                    schema_obj
+                }),
+                "name": {
+                    "description": "Name is unique identifier among all resource instances managed by the driver on the node. It must be a DNS subdomain.",
+                    "type": "string",
+                },
+                "quantity": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>();
+                    schema_obj.ensure_object().insert("description".into(), "QuantityValue is a quantity.".into());
+                    schema_obj
+                }),
+                "string": {
+                    "description": "StringValue is a string.",
+                    "type": "string",
+                },
+                "stringSlice": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1alpha2::NamedResourcesStringSlice>();
+                    schema_obj.ensure_object().insert("description".into(), "StringSliceValue is an array of strings.".into());
+                    schema_obj
+                }),
+                "version": {
+                    "description": "VersionValue is a semantic version according to semver.org spec 2.0.0.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "name",
+            ],
         })
     }
 }

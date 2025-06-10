@@ -94,34 +94,21 @@ impl crate::serde::Serialize for NodeConfigSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for NodeConfigSource {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.NodeConfigSource".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "configMap".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ConfigMapNodeConfigSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ConfigMap is a reference to a Node's ConfigMap".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22",
+            "type": "object",
+            "properties": {
+                "configMap": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ConfigMapNodeConfigSource>();
+                    schema_obj.ensure_object().insert("description".into(), "ConfigMap is a reference to a Node's ConfigMap".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }
