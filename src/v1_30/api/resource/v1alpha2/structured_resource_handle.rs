@@ -134,74 +134,38 @@ impl crate::serde::Serialize for StructuredResourceHandle {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for StructuredResourceHandle {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.resource.v1alpha2.StructuredResourceHandle".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("StructuredResourceHandle is the in-tree representation of the allocation result.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "nodeName".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NodeName is the name of the node providing the necessary resources if the resources are local to a node.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "results".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Results lists all allocated driver resources.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Array))),
-                            array: Some(std::boxed::Box::new(crate::schemars::schema::ArrayValidation {
-                                items: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1alpha2::DriverAllocationResult>()))),
-                                ..Default::default()
-                            })),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "vendorClaimParameters".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("VendorClaimParameters are the per-claim configuration parameters from the resource claim parameters at the time that the claim was allocated.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "vendorClassParameters".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("VendorClassParameters are the per-claim configuration parameters from the resource class at the time that the claim was allocated.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "results".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "StructuredResourceHandle is the in-tree representation of the allocation result.",
+            "type": "object",
+            "properties": {
+                "nodeName": {
+                    "description": "NodeName is the name of the node providing the necessary resources if the resources are local to a node.",
+                    "type": "string",
+                },
+                "results": {
+                    "description": "Results lists all allocated driver resources.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1alpha2::DriverAllocationResult>()),
+                },
+                "vendorClaimParameters": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>();
+                    schema_obj.ensure_object().insert("description".into(), "VendorClaimParameters are the per-claim configuration parameters from the resource claim parameters at the time that the claim was allocated.".into());
+                    schema_obj
+                }),
+                "vendorClassParameters": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::runtime::RawExtension>();
+                    schema_obj.ensure_object().insert("description".into(), "VendorClassParameters are the per-claim configuration parameters from the resource class at the time that the claim was allocated.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "results",
+            ],
         })
     }
 }

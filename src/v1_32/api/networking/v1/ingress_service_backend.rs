@@ -106,48 +106,28 @@ impl crate::serde::Serialize for IngressServiceBackend {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for IngressServiceBackend {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.networking.v1.IngressServiceBackend".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("IngressServiceBackend references a Kubernetes Service as a Backend.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "name".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("name is the referenced service. The service must exist in the same namespace as the Ingress object.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "port".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::networking::v1::ServiceBackendPort>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("port of the referenced service. A port name or port number is required for a IngressServiceBackend.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "name".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "IngressServiceBackend references a Kubernetes Service as a Backend.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "name is the referenced service. The service must exist in the same namespace as the Ingress object.",
+                    "type": "string",
+                },
+                "port": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::networking::v1::ServiceBackendPort>();
+                    schema_obj.ensure_object().insert("description".into(), "port of the referenced service. A port name or port number is required for a IngressServiceBackend.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "name",
+            ],
         })
     }
 }

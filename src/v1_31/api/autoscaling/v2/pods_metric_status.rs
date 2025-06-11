@@ -103,49 +103,30 @@ impl crate::serde::Serialize for PodsMetricStatus {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for PodsMetricStatus {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.autoscaling.v2.PodsMetricStatus".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "current".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricValueStatus>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("current contains the current value for the given metric".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "metric".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("metric identifies the target metric by name and selector".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "current".into(),
-                    "metric".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).",
+            "type": "object",
+            "properties": {
+                "current": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricValueStatus>();
+                    schema_obj.ensure_object().insert("description".into(), "current contains the current value for the given metric".into());
+                    schema_obj
+                }),
+                "metric": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>();
+                    schema_obj.ensure_object().insert("description".into(), "metric identifies the target metric by name and selector".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "current",
+                "metric",
+            ],
         })
     }
 }

@@ -122,56 +122,31 @@ impl crate::serde::Serialize for ContainerState {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ContainerState {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.ContainerState".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "running".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateRunning>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Details about a running container".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "terminated".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateTerminated>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Details about a terminated container".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "waiting".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateWaiting>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Details about a waiting container".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.",
+            "type": "object",
+            "properties": {
+                "running": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateRunning>();
+                    schema_obj.ensure_object().insert("description".into(), "Details about a running container".into());
+                    schema_obj
+                }),
+                "terminated": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateTerminated>();
+                    schema_obj.ensure_object().insert("description".into(), "Details about a terminated container".into());
+                    schema_obj
+                }),
+                "waiting": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ContainerStateWaiting>();
+                    schema_obj.ensure_object().insert("description".into(), "Details about a waiting container".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

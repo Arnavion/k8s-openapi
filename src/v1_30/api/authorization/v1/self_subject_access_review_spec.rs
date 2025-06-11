@@ -108,45 +108,26 @@ impl crate::serde::Serialize for SelfSubjectAccessReviewSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for SelfSubjectAccessReviewSpec {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.authorization.v1.SelfSubjectAccessReviewSpec".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "nonResourceAttributes".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::NonResourceAttributes>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("NonResourceAttributes describes information for a non-resource access request".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "resourceAttributes".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::ResourceAttributes>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ResourceAuthorizationAttributes describes information for a resource access request".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set",
+            "type": "object",
+            "properties": {
+                "nonResourceAttributes": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::NonResourceAttributes>();
+                    schema_obj.ensure_object().insert("description".into(), "NonResourceAttributes describes information for a non-resource access request".into());
+                    schema_obj
+                }),
+                "resourceAttributes": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::authorization::v1::ResourceAttributes>();
+                    schema_obj.ensure_object().insert("description".into(), "ResourceAuthorizationAttributes describes information for a resource access request".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }

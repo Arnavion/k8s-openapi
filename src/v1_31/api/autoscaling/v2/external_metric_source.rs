@@ -103,49 +103,30 @@ impl crate::serde::Serialize for ExternalMetricSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ExternalMetricSource {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.autoscaling.v2.ExternalMetricSource".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "metric".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("metric identifies the target metric by name and selector".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "target".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricTarget>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("target specifies the target value for the given metric".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "metric".into(),
-                    "target".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).",
+            "type": "object",
+            "properties": {
+                "metric": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>();
+                    schema_obj.ensure_object().insert("description".into(), "metric identifies the target metric by name and selector".into());
+                    schema_obj
+                }),
+                "target": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricTarget>();
+                    schema_obj.ensure_object().insert("description".into(), "target specifies the target value for the given metric".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "metric",
+                "target",
+            ],
         })
     }
 }

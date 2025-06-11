@@ -162,92 +162,48 @@ impl crate::serde::Serialize for MetricSpec {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for MetricSpec {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.autoscaling.v2.MetricSpec".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "containerResource".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ContainerResourceMetricSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "external".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ExternalMetricSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "object".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ObjectMetricSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "pods".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::PodsMetricSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "resource".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ResourceMetricSource>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "type".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("type is the type of metric source.  It should be one of \"ContainerResource\", \"External\", \"Object\", \"Pods\" or \"Resource\", each mapping to a matching field in the object. Note: \"ContainerResource\" type is available on when the feature-gate HPAContainerMetrics is enabled".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "type".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).",
+            "type": "object",
+            "properties": {
+                "containerResource": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ContainerResourceMetricSource>();
+                    schema_obj.ensure_object().insert("description".into(), "containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.".into());
+                    schema_obj
+                }),
+                "external": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ExternalMetricSource>();
+                    schema_obj.ensure_object().insert("description".into(), "external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).".into());
+                    schema_obj
+                }),
+                "object": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ObjectMetricSource>();
+                    schema_obj.ensure_object().insert("description".into(), "object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).".into());
+                    schema_obj
+                }),
+                "pods": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::PodsMetricSource>();
+                    schema_obj.ensure_object().insert("description".into(), "pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.".into());
+                    schema_obj
+                }),
+                "resource": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::ResourceMetricSource>();
+                    schema_obj.ensure_object().insert("description".into(), "resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.".into());
+                    schema_obj
+                }),
+                "type": {
+                    "description": "type is the type of metric source.  It should be one of \"ContainerResource\", \"External\", \"Object\", \"Pods\" or \"Resource\", each mapping to a matching field in the object. Note: \"ContainerResource\" type is available on when the feature-gate HPAContainerMetrics is enabled",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "type",
+            ],
         })
     }
 }

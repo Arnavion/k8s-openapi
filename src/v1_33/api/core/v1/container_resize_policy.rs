@@ -103,49 +103,28 @@ impl crate::serde::Serialize for ContainerResizePolicy {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ContainerResizePolicy {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.ContainerResizePolicy".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ContainerResizePolicy represents resource resize policy for the container.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "resourceName".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Name of the resource to which this resource resize policy applies. Supported values: cpu, memory.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                    (
-                        "restartPolicy".into(),
-                        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-                            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("Restart policy to apply when specified resource is resized. If not specified, it defaults to NotRequired.".into()),
-                                ..Default::default()
-                            })),
-                            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::String))),
-                            ..Default::default()
-                        }),
-                    ),
-                ].into(),
-                required: [
-                    "resourceName".into(),
-                    "restartPolicy".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ContainerResizePolicy represents resource resize policy for the container.",
+            "type": "object",
+            "properties": {
+                "resourceName": {
+                    "description": "Name of the resource to which this resource resize policy applies. Supported values: cpu, memory.",
+                    "type": "string",
+                },
+                "restartPolicy": {
+                    "description": "Restart policy to apply when specified resource is resized. If not specified, it defaults to NotRequired.",
+                    "type": "string",
+                },
+            },
+            "required": [
+                "resourceName",
+                "restartPolicy",
+            ],
         })
     }
 }

@@ -114,61 +114,36 @@ impl crate::serde::Serialize for ObjectMetricSource {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for ObjectMetricSource {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.autoscaling.v2.ObjectMetricSource".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "describedObject".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::CrossVersionObjectReference>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("describedObject specifies the descriptions of a object,such as kind,name apiVersion".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "metric".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("metric identifies the target metric by name and selector".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "target".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricTarget>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("target specifies the target value for the given metric".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                required: [
-                    "describedObject".into(),
-                    "metric".into(),
-                    "target".into(),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).",
+            "type": "object",
+            "properties": {
+                "describedObject": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::CrossVersionObjectReference>();
+                    schema_obj.ensure_object().insert("description".into(), "describedObject specifies the descriptions of a object,such as kind,name apiVersion".into());
+                    schema_obj
+                }),
+                "metric": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricIdentifier>();
+                    schema_obj.ensure_object().insert("description".into(), "metric identifies the target metric by name and selector".into());
+                    schema_obj
+                }),
+                "target": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::autoscaling::v2::MetricTarget>();
+                    schema_obj.ensure_object().insert("description".into(), "target specifies the target value for the given metric".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "describedObject",
+                "metric",
+                "target",
+            ],
         })
     }
 }

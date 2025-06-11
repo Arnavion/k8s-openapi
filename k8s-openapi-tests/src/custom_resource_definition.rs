@@ -5,7 +5,7 @@ use futures_util::StreamExt;
 #[allow(unused_imports)]
 use k8s_openapi::schemars;
 
-use k8s_openapi::{serde_json};
+use k8s_openapi::serde_json;
 
 #[tokio::test]
 async fn test() {

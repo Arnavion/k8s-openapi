@@ -156,78 +156,41 @@ impl crate::serde::Serialize for VolumeProjection {
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for VolumeProjection {
-    fn schema_name() -> std::string::String {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
         "io.k8s.api.core.v1.VolumeProjection".into()
     }
 
-    fn json_schema(__gen: &mut crate::schemars::gen::SchemaGenerator) -> crate::schemars::schema::Schema {
-        crate::schemars::schema::Schema::Object(crate::schemars::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                description: Some("Projection that may be projected along with other supported volume types. Exactly one of these fields must be set.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars::schema::ObjectValidation {
-                properties: [
-                    (
-                        "clusterTrustBundle".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ClusterTrustBundleProjection>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("ClusterTrustBundle allows a pod to access the `.spec.trustBundle` field of ClusterTrustBundle objects in an auto-updating file.\n\nAlpha, gated by the ClusterTrustBundleProjection feature gate.\n\nClusterTrustBundle objects can either be selected by name, or by the combination of signer name and a label selector.\n\nKubelet performs aggressive normalization of the PEM contents written into the pod filesystem.  Esoteric PEM features such as inter-block comments and block headers are stripped.  Certificates are deduplicated. The ordering of certificates within the file is arbitrary, and Kubelet may change the order over time.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "configMap".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ConfigMapProjection>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("configMap information about the configMap data to project".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "downwardAPI".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::DownwardAPIProjection>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("downwardAPI information about the downwardAPI data to project".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "secret".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::SecretProjection>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("secret information about the secret data to project".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                    (
-                        "serviceAccountToken".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ServiceAccountTokenProjection>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars::schema::Metadata {
-                                description: Some("serviceAccountToken is information about the serviceAccountToken data to project".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Projection that may be projected along with other supported volume types. Exactly one of these fields must be set.",
+            "type": "object",
+            "properties": {
+                "clusterTrustBundle": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ClusterTrustBundleProjection>();
+                    schema_obj.ensure_object().insert("description".into(), "ClusterTrustBundle allows a pod to access the `.spec.trustBundle` field of ClusterTrustBundle objects in an auto-updating file.\n\nAlpha, gated by the ClusterTrustBundleProjection feature gate.\n\nClusterTrustBundle objects can either be selected by name, or by the combination of signer name and a label selector.\n\nKubelet performs aggressive normalization of the PEM contents written into the pod filesystem.  Esoteric PEM features such as inter-block comments and block headers are stripped.  Certificates are deduplicated. The ordering of certificates within the file is arbitrary, and Kubelet may change the order over time.".into());
+                    schema_obj
+                }),
+                "configMap": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ConfigMapProjection>();
+                    schema_obj.ensure_object().insert("description".into(), "configMap information about the configMap data to project".into());
+                    schema_obj
+                }),
+                "downwardAPI": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::DownwardAPIProjection>();
+                    schema_obj.ensure_object().insert("description".into(), "downwardAPI information about the downwardAPI data to project".into());
+                    schema_obj
+                }),
+                "secret": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::SecretProjection>();
+                    schema_obj.ensure_object().insert("description".into(), "secret information about the secret data to project".into());
+                    schema_obj
+                }),
+                "serviceAccountToken": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ServiceAccountTokenProjection>();
+                    schema_obj.ensure_object().insert("description".into(), "serviceAccountToken is information about the serviceAccountToken data to project".into());
+                    schema_obj
+                }),
+            },
         })
     }
 }
