@@ -39,9 +39,9 @@ set -euo pipefail
 
 declare -A K8S_VERSIONS=(
     ['1.30']='1.30.13'
-    ['1.31']='1.31.9'
-    ['1.32']='1.32.5'
-    ['1.33']='1.33.1'
+    ['1.31']='1.31.10'
+    ['1.32']='1.32.6'
+    ['1.33']='1.33.2'
 )
 
 # https://github.com/kubernetes-sigs/kind/releases
