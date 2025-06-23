@@ -35,7 +35,7 @@ chrono = { version = "0.4.1", default-features = false, features = [
     "alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
     "serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
 ] }
-schemars = { version = "0.9", optional = true, default-features = false }
+schemars = { version = "1", optional = true, default-features = false }
 serde = { version = "1", default-features = false }
 serde_json = { version = "1", default-features = false, features = [
     "alloc", # "serde_json requires that either `std` (default) or `alloc` feature is enabled"

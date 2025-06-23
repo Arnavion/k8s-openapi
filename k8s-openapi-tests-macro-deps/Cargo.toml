@@ -14,7 +14,7 @@ include = [
 [dependencies]
 k8s-openapi = { path = "..", default-features = false, features = ["schemars"] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
-schemars = { version = "0.9", default-features = false, features = [
+schemars = { version = "1", default-features = false, features = [
     "derive", # for #[derive(schemars::JsonSchema)]
 ] }
 
