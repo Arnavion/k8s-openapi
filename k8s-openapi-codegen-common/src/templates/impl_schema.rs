@@ -160,10 +160,10 @@ fn gen_type(
 
     let indent = "    ".repeat(depth);
 
+    #[allow(clippy::match_same_arms)]
     match ty {
         swagger20::Type::Any =>
-            writeln!(out,
-                r#"{indent}"type": "object","#)?,
+            writeln!(out, r#"{indent}"type": "object","#)?,
 
         swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Array) => {
             let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
@@ -273,11 +273,11 @@ fn gen_type(
             }
         }
 
-        swagger20::Type::IntOrString => {
-            writeln!(out, r#"{indent}"x-kubernetes-int-or-string": true,"#)?;
-        }
+        swagger20::Type::IntOrString =>
+            writeln!(out, r#"{indent}"x-kubernetes-int-or-string": true,"#)?,
 
-        swagger20::Type::Patch => writeln!(out, r#"{indent}"type": "object","#)?,
+        swagger20::Type::Patch =>
+            writeln!(out, r#"{indent}"type": "object","#)?,
 
         swagger20::Type::WatchEvent(ref_path) => {
             writeln!(out, r#"{indent}"type": "object","#)?;
