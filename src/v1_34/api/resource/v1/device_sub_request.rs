@@ -1,0 +1,256 @@
+// Generated from definition io.k8s.api.resource.v1.DeviceSubRequest
+
+/// DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests\[\].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.
+///
+/// DeviceSubRequest is similar to ExactDeviceRequest, but doesn't expose the AdminAccess field as that one is only supported when requesting a specific device.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct DeviceSubRequest {
+    /// AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:
+    ///
+    /// - ExactCount: This request is for a specific number of devices.
+    ///   This is the default. The exact number is provided in the
+    ///   count field.
+    ///
+    /// - All: This subrequest is for all of the matching devices in a pool.
+    ///   Allocation will fail if some devices are already allocated,
+    ///   unless adminAccess is requested.
+    ///
+    /// If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.
+    ///
+    /// More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+    pub allocation_mode: Option<std::string::String>,
+
+    /// Capacity define resource requirements against each capacity.
+    ///
+    /// If this field is unset and the device supports multiple allocations, the default value will be applied to each capacity according to requestPolicy. For the capacity that has no requestPolicy, default is the full capacity value.
+    ///
+    /// Applies to each device allocation. If Count \> 1, the request fails if there aren't enough devices that meet the requirements. If AllocationMode is set to All, the request fails if there are devices that otherwise match the request, and have this capacity, with a value \>= the requested amount, but which cannot be allocated to this request.
+    pub capacity: Option<crate::api::resource::v1::CapacityRequirements>,
+
+    /// Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+    pub count: Option<i64>,
+
+    /// DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.
+    ///
+    /// A class is required. Which classes are available depends on the cluster.
+    ///
+    /// Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+    pub device_class_name: std::string::String,
+
+    /// Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format \<main request\>/\<subrequest\>.
+    ///
+    /// Must be a DNS label.
+    pub name: std::string::String,
+
+    /// Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered.
+    pub selectors: Option<std::vec::Vec<crate::api::resource::v1::DeviceSelector>>,
+
+    /// If specified, the request's tolerations.
+    ///
+    /// Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+    ///
+    /// In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+    ///
+    /// The maximum number of tolerations is 16.
+    ///
+    /// This is an alpha field and requires enabling the DRADeviceTaints feature gate.
+    pub tolerations: Option<std::vec::Vec<crate::api::resource::v1::DeviceToleration>>,
+}
+
+impl crate::DeepMerge for DeviceSubRequest {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.allocation_mode, other.allocation_mode);
+        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
+        crate::DeepMerge::merge_from(&mut self.count, other.count);
+        crate::DeepMerge::merge_from(&mut self.device_class_name, other.device_class_name);
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::merge_strategies::list::atomic(&mut self.selectors, other.selectors);
+        crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for DeviceSubRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_allocation_mode,
+            Key_capacity,
+            Key_count,
+            Key_device_class_name,
+            Key_name,
+            Key_selectors,
+            Key_tolerations,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "allocationMode" => Field::Key_allocation_mode,
+                            "capacity" => Field::Key_capacity,
+                            "count" => Field::Key_count,
+                            "deviceClassName" => Field::Key_device_class_name,
+                            "name" => Field::Key_name,
+                            "selectors" => Field::Key_selectors,
+                            "tolerations" => Field::Key_tolerations,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = DeviceSubRequest;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("DeviceSubRequest")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_allocation_mode: Option<std::string::String> = None;
+                let mut value_capacity: Option<crate::api::resource::v1::CapacityRequirements> = None;
+                let mut value_count: Option<i64> = None;
+                let mut value_device_class_name: Option<std::string::String> = None;
+                let mut value_name: Option<std::string::String> = None;
+                let mut value_selectors: Option<std::vec::Vec<crate::api::resource::v1::DeviceSelector>> = None;
+                let mut value_tolerations: Option<std::vec::Vec<crate::api::resource::v1::DeviceToleration>> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_allocation_mode => value_allocation_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_capacity => value_capacity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_count => value_count = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_device_class_name => value_device_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selectors => value_selectors = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tolerations => value_tolerations = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(DeviceSubRequest {
+                    allocation_mode: value_allocation_mode,
+                    capacity: value_capacity,
+                    count: value_count,
+                    device_class_name: value_device_class_name.unwrap_or_default(),
+                    name: value_name.unwrap_or_default(),
+                    selectors: value_selectors,
+                    tolerations: value_tolerations,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "DeviceSubRequest",
+            &[
+                "allocationMode",
+                "capacity",
+                "count",
+                "deviceClassName",
+                "name",
+                "selectors",
+                "tolerations",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for DeviceSubRequest {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "DeviceSubRequest",
+            2 +
+            self.allocation_mode.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.count.as_ref().map_or(0, |_| 1) +
+            self.selectors.as_ref().map_or(0, |_| 1) +
+            self.tolerations.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.allocation_mode {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocationMode", value)?;
+        }
+        if let Some(value) = &self.capacity {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+        }
+        if let Some(value) = &self.count {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deviceClassName", &self.device_class_name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        if let Some(value) = &self.selectors {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selectors", value)?;
+        }
+        if let Some(value) = &self.tolerations {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for DeviceSubRequest {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.resource.v1.DeviceSubRequest".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DeviceSubRequest describes a request for device provided in the claim.spec.devices.requests[].firstAvailable array. Each is typically a request for a single resource like a device, but can also ask for several identical devices.\n\nDeviceSubRequest is similar to ExactDeviceRequest, but doesn't expose the AdminAccess field as that one is only supported when requesting a specific device.",
+            "type": "object",
+            "properties": {
+                "allocationMode": {
+                    "description": "AllocationMode and its related fields define how devices are allocated to satisfy this subrequest. Supported values are:\n\n- ExactCount: This request is for a specific number of devices.\n  This is the default. The exact number is provided in the\n  count field.\n\n- All: This subrequest is for all of the matching devices in a pool.\n  Allocation will fail if some devices are already allocated,\n  unless adminAccess is requested.\n\nIf AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other subrequests must specify this field.\n\nMore modes may get added in the future. Clients must refuse to handle requests with unknown modes.",
+                    "type": "string",
+                },
+                "capacity": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1::CapacityRequirements>();
+                    schema_obj.ensure_object().insert("description".into(), "Capacity define resource requirements against each capacity.\n\nIf this field is unset and the device supports multiple allocations, the default value will be applied to each capacity according to requestPolicy. For the capacity that has no requestPolicy, default is the full capacity value.\n\nApplies to each device allocation. If Count > 1, the request fails if there aren't enough devices that meet the requirements. If AllocationMode is set to All, the request fails if there are devices that otherwise match the request, and have this capacity, with a value >= the requested amount, but which cannot be allocated to this request.".into());
+                    schema_obj
+                }),
+                "count": {
+                    "description": "Count is used only when the count mode is \"ExactCount\". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "deviceClassName": {
+                    "description": "DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this subrequest.\n\nA class is required. Which classes are available depends on the cluster.\n\nAdministrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.",
+                    "type": "string",
+                },
+                "name": {
+                    "description": "Name can be used to reference this subrequest in the list of constraints or the list of configurations for the claim. References must use the format <main request>/<subrequest>.\n\nMust be a DNS label.",
+                    "type": "string",
+                },
+                "selectors": {
+                    "description": "Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this subrequest. All selectors must be satisfied for a device to be considered.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1::DeviceSelector>()),
+                },
+                "tolerations": {
+                    "description": "If specified, the request's tolerations.\n\nTolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.\n\nIn addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.\n\nThe maximum number of tolerations is 16.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1::DeviceToleration>()),
+                },
+            },
+            "required": [
+                "deviceClassName",
+                "name",
+            ],
+        })
+    }
+}

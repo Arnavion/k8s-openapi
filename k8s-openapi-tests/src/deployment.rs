@@ -37,16 +37,29 @@ async fn list() {
         .labels.expect("couldn't get dns deployment spec template metadata labels");
     assert_eq!(dns_deployment_spec_template_metadata_labels.remove("k8s-app"), Some("kube-dns".to_string()));
 
-    let dns_container_liveness_probe_http_get_action =
+    let dns_container =
         dns_deployment_spec_template
         .spec.expect("couldn't get dns deployment spec template spec")
         .containers
-        .into_iter().find(|container| container.name == "coredns").expect("couldn't get dns container spec")
+        .into_iter().find(|container| container.name == "coredns").expect("couldn't get dns container spec");
+
+    let dns_container_liveness_probe_http_get_action =
+        dns_container
         .liveness_probe.expect("couldn't get dns container spec liveness probe")
         .http_get.expect("couldn't get dns container spec liveness probe HTTP get action");
 
     assert_eq!(dns_container_liveness_probe_http_get_action.path, Some("/health".to_string()));
-    assert_eq!(dns_container_liveness_probe_http_get_action.port, util::intstr::IntOrString::Int(8080));
+    let port = match &dns_container_liveness_probe_http_get_action.port {
+        util::intstr::IntOrString::Int(port) => *port,
+        util::intstr::IntOrString::String(port_name) =>
+            dns_container.ports
+                .into_iter()
+                .flatten()
+                .find(|port| port.name.as_ref() == Some(port_name))
+                .expect("could not find named port")
+                .container_port,
+    };
+    assert_eq!(port, 8080);
 
     let dns_deployment_status = dns_deployment.status.expect("couldn't get dns deployment status");
     assert!(dns_deployment_status.replicas > Some(0));

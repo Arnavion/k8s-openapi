@@ -3,6 +3,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
     SupportedVersion::V1_31,
     SupportedVersion::V1_32,
     SupportedVersion::V1_33,
+    SupportedVersion::V1_34,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -11,6 +12,7 @@ pub(crate) enum SupportedVersion {
     V1_31,
     V1_32,
     V1_33,
+    V1_34,
 }
 
 impl SupportedVersion {
@@ -20,6 +22,7 @@ impl SupportedVersion {
             SupportedVersion::V1_31 => "1.31",
             SupportedVersion::V1_32 => "1.32",
             SupportedVersion::V1_33 => "1.33",
+            SupportedVersion::V1_34 => "1.34",
         }
     }
 
@@ -29,6 +32,7 @@ impl SupportedVersion {
             SupportedVersion::V1_31 => "v1_31",
             SupportedVersion::V1_32 => "v1_32",
             SupportedVersion::V1_33 => "v1_33",
+            SupportedVersion::V1_34 => "v1_34",
         }
     }
 
@@ -38,6 +42,7 @@ impl SupportedVersion {
             SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.12/api/openapi-spec/swagger.json",
             SupportedVersion::V1_32 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.32.8/api/openapi-spec/swagger.json",
             SupportedVersion::V1_33 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.33.4/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_34 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.0/api/openapi-spec/swagger.json",
         }
     }
 
@@ -48,6 +53,7 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::optional_properties::networkingv1_networkpolicyspec,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -63,6 +69,7 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::optional_properties::networkingv1_networkpolicyspec,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -77,6 +84,7 @@ impl SupportedVersion {
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::appsv1_statefulsetspec,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::optional_properties::networkingv1_networkpolicyspec,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,
                 crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
                 crate::fixups::upstream_bugs::required_properties::config_map_projection,
@@ -88,6 +96,20 @@ impl SupportedVersion {
             ],
 
             SupportedVersion::V1_33 => &[
+                crate::fixups::upstream_bugs::connect_options_gvk,
+                crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
+                crate::fixups::upstream_bugs::optional_properties::networkingv1_networkpolicyspec,
+                crate::fixups::upstream_bugs::required_properties::config_map_env_source,
+                crate::fixups::upstream_bugs::required_properties::config_map_key_selector,
+                crate::fixups::upstream_bugs::required_properties::config_map_projection,
+                crate::fixups::upstream_bugs::required_properties::config_map_volume_source,
+                crate::fixups::upstream_bugs::required_properties::local_object_reference,
+                crate::fixups::upstream_bugs::required_properties::secret_env_source,
+                crate::fixups::upstream_bugs::required_properties::secret_key_selector,
+                crate::fixups::upstream_bugs::required_properties::secret_projection,
+            ],
+
+            SupportedVersion::V1_34 => &[
                 crate::fixups::upstream_bugs::connect_options_gvk,
                 crate::fixups::upstream_bugs::optional_properties::eventsv1_event,
                 crate::fixups::upstream_bugs::required_properties::config_map_env_source,

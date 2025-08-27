@@ -10,7 +10,7 @@ pub struct NetworkPolicySpec {
     pub ingress: Option<std::vec::Vec<crate::api::networking::v1::NetworkPolicyIngressRule>>,
 
     /// podSelector selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.
-    pub pod_selector: crate::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub pod_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// policyTypes is a list of rule types that the NetworkPolicy relates to. Valid options are \["Ingress"\], \["Egress"\], or \["Ingress", "Egress"\]. If this field is not specified, it will default based on the existence of ingress or egress rules; policies that contain an egress section are assumed to affect egress, and all policies (whether or not they contain an ingress section) are assumed to affect ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes \[ "Egress" \]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an egress section and would otherwise default to just \[ "Ingress" \]). This field is beta-level in 1.8
     pub policy_types: Option<std::vec::Vec<std::string::String>>,
@@ -90,7 +90,7 @@ impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
                 Ok(NetworkPolicySpec {
                     egress: value_egress,
                     ingress: value_ingress,
-                    pod_selector: value_pod_selector.unwrap_or_default(),
+                    pod_selector: value_pod_selector,
                     policy_types: value_policy_types,
                 })
             }
@@ -113,9 +113,9 @@ impl crate::serde::Serialize for NetworkPolicySpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicySpec",
-            1 +
             self.egress.as_ref().map_or(0, |_| 1) +
             self.ingress.as_ref().map_or(0, |_| 1) +
+            self.pod_selector.as_ref().map_or(0, |_| 1) +
             self.policy_types.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.egress {
@@ -124,7 +124,9 @@ impl crate::serde::Serialize for NetworkPolicySpec {
         if let Some(value) = &self.ingress {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;
         }
-        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", &self.pod_selector)?;
+        if let Some(value) = &self.pod_selector {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "podSelector", value)?;
+        }
         if let Some(value) = &self.policy_types {
             crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policyTypes", value)?;
         }
@@ -166,9 +168,6 @@ impl crate::schemars::JsonSchema for NetworkPolicySpec {
                     },
                 },
             },
-            "required": [
-                "podSelector",
-            ],
         })
     }
 }

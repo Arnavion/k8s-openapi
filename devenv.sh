@@ -3,7 +3,7 @@
 set -euo pipefail
 
 session_name='k8s-openapi'
-max_version='1.33'
+max_version='1.34'
 
 if ! tmux has-session -t "=$session_name"; then
     cd "$(dirname "$0")"

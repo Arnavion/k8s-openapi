@@ -52,7 +52,8 @@ v1_30 = []
 v1_31 = []
 v1_32 = []
 v1_33 = []
-latest = ["v1_33"]
+v1_34 = []
+latest = ["v1_34"]
 # Enable `schemars::JsonSchema` implementations on resource types.
 schemars = ["dep:schemars"]
 

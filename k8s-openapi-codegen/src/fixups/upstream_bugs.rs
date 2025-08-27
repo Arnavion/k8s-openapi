@@ -70,6 +70,25 @@ pub(crate) mod optional_properties {
         Err("never applied events.k8s.io/v1.Event optional properties override".into())
     }
 
+    // `NetworkPolicySpec::podSelector`
+    //
+    // Ref: https://github.com/kubernetes/kubernetes/pull/131354
+    pub(crate) fn networkingv1_networkpolicyspec(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+        let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.networking.v1.NetworkPolicySpec".to_owned());
+        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+                if let Some(property) = properties.get_mut("podSelector") {
+                    if property.1 {
+                        property.1 = false;
+                        return Ok(());
+                    }
+                }
+            }
+        }
+
+        Err("never applied networking.k8s.io/v1.NetworkPolicySpec optional properties override".into())
+    }
+
     // `StatefulSetSpec::serviceName`
     //
     // Ref: https://github.com/kubernetes/kubernetes/pull/130233
