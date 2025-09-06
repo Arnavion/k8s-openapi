@@ -2,7 +2,7 @@
 
 ## k8s-openapi
 
-- BREAKING CHANGE: Added support for Kubernetes 1.36 under the `v1_36` feature.
+- BREAKING CHANGE: Added support for Kubernetes 1.34 under the `v1_34` feature.
 
 - BREAKING CHANGE: `schemars::JsonSchema` impls are now generated for schemars v1.
 
