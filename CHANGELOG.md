@@ -1,3 +1,29 @@
+# v0.26.0 (2025-09-06)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.36 under the `v1_36` feature.
+
+- BREAKING CHANGE: `schemars::JsonSchema` impls are now generated for schemars v1.
+
+Corresponding Kubernetes API server versions:
+
+- v1.30.14
+- v1.31.12
+- v1.32.8
+- v1.33.4
+- v1.34.0
+
+## k8s-openapi-codegen-common
+
+- BREAKING CHANGE: `schemars::JsonSchema` impls are now generated for schemars v1.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.25.0 (2025-05-11)
 
 ## k8s-openapi
