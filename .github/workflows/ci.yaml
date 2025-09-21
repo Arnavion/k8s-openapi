@@ -6,18 +6,18 @@ on:
 
 jobs:
   global:
-    runs-on: 'ubuntu-22.04'
+    runs-on: 'ubuntu-24.04'
 
     steps:
-    - uses: 'actions/checkout@v4'
+    - uses: 'actions/checkout@v5'
     - run: ./ci/global.sh
 
 
   list_versions:
-    runs-on: 'ubuntu-22.04'
+    runs-on: 'ubuntu-24.04'
 
     steps:
-    - uses: 'actions/checkout@v4'
+    - uses: 'actions/checkout@v5'
     - id: 'run'
       run: |
         (
@@ -30,7 +30,7 @@ jobs:
 
 
   per_version:
-    runs-on: 'ubuntu-22.04'
+    runs-on: 'ubuntu-24.04'
 
     needs: 'list_versions'
 
@@ -41,7 +41,7 @@ jobs:
         include: "${{ fromJSON(needs.list_versions.outputs.matrix) }}"
 
     steps:
-    - uses: 'actions/checkout@v4'
+    - uses: 'actions/checkout@v5'
     - run: ./ci/per_version.sh
       env:
         K8S_OPENAPI_ENABLED_VERSION: "${{ matrix.version }}"
