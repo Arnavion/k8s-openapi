@@ -309,3 +309,14 @@ pub(crate) fn resource_metadata_not_optional(spec: &mut crate::swagger20::Spec) 
         Err("never applied override to make resource metadata non-optional".into())
     }
 }
+
+// The quantity type can be either an integer or string, even though the spec says it should just be a string.
+pub(crate) fn quantity(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.api.resource.Quantity".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::IntOrString);
+        return Ok(());
+    }
+
+    Err("never applied Quantity override".into())
+}
