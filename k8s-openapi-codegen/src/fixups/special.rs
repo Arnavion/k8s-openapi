@@ -314,7 +314,7 @@ pub(crate) fn resource_metadata_not_optional(spec: &mut crate::swagger20::Spec) 
 pub(crate) fn quantity(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
     let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.api.resource.Quantity".to_owned());
     if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-        definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::IntOrString);
+        definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Quantity);
         return Ok(());
     }
 

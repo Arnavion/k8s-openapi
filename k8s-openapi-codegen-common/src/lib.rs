@@ -518,6 +518,16 @@ pub fn run(
             run_result.num_generated_structs += 1;
         },
 
+        swagger20::SchemaKind::Ty(swagger20::Type::Quantity) => {
+            templates::quantity::generate(
+                &mut out,
+                type_name,
+                map_namespace,
+            )?;
+
+            run_result.num_generated_structs += 1;
+        },
+
         swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(namespace, json_schema_props_or)) => {
             let json_schema_props_or = match json_schema_props_or {
                 swagger20::JsonSchemaPropsOr::Array => templates::json_schema_props_or::Or::Array,
@@ -1240,6 +1250,7 @@ fn get_rust_type(
         },
 
         swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
+        swagger20::SchemaKind::Ty(swagger20::Type::Quantity) => Err("nothing should be trying to refer to Quantity".into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(_, _)) => Err("JSON schema types not supported".into()),
         swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),

@@ -308,6 +308,7 @@ pub enum Type {
     // Special types that need alterative codegen
     IntOrString,
     JsonSchemaPropsOr(&'static str, JsonSchemaPropsOr),
+    Quantity,
 
     Patch,
     WatchEvent(RefPath),

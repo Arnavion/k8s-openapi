@@ -20,6 +20,8 @@ pub(crate) mod newtype;
 
 pub(crate) mod patch;
 
+pub(crate) mod quantity;
+
 pub(crate) mod r#struct;
 
 pub(crate) mod struct_deep_merge;
