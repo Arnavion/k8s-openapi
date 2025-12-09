@@ -773,6 +773,7 @@ pub fn run(
                 swagger20::Type::Boolean |
                 swagger20::Type::Integer { .. } |
                 swagger20::Type::IntOrString |
+                swagger20::Type::Quantity |
                 swagger20::Type::Number { .. } |
                 swagger20::Type::Object { .. } |
                 swagger20::Type::String { .. } |
