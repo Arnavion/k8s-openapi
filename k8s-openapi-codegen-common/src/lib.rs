@@ -544,6 +544,16 @@ pub fn run(
             run_result.num_generated_structs += 1;
         },
 
+        swagger20::SchemaKind::Ty(swagger20::Type::Quantity) => {
+            templates::quantity::generate(
+                &mut out,
+                type_name,
+                map_namespace,
+            )?;
+
+            run_result.num_generated_structs += 1;
+        },
+
         swagger20::SchemaKind::Ty(swagger20::Type::Patch) => {
             templates::patch::generate(
                 &mut out,
@@ -762,11 +772,12 @@ pub fn run(
                 swagger20::Type::Array { .. } |
                 swagger20::Type::Boolean |
                 swagger20::Type::Integer { .. } |
-                swagger20::Type::IntOrString |
                 swagger20::Type::Number { .. } |
                 swagger20::Type::Object { .. } |
                 swagger20::Type::String { .. } |
+                swagger20::Type::IntOrString |
                 swagger20::Type::JsonSchemaPropsOr(_, _) |
+                swagger20::Type::Quantity |
                 swagger20::Type::Patch
             ) => {
                 templates::impl_schema::generate(
@@ -1240,8 +1251,9 @@ fn get_rust_type(
         },
 
         swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
-
         swagger20::SchemaKind::Ty(swagger20::Type::JsonSchemaPropsOr(_, _)) => Err("JSON schema types not supported".into()),
+        swagger20::SchemaKind::Ty(swagger20::Type::Quantity) => Err("nothing should be trying to refer to Quantity".into()),
+
         swagger20::SchemaKind::Ty(swagger20::Type::Patch) => Err("Patch type not supported".into()),
         swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
 

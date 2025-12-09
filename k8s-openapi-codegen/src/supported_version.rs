@@ -127,6 +127,7 @@ impl SupportedVersion {
             crate::fixups::special::json_ty::json_schema_props_or_array,
             crate::fixups::special::json_ty::json_schema_props_or_bool,
             crate::fixups::special::json_ty::json_schema_props_or_string_array,
+            crate::fixups::special::quantity,
             crate::fixups::special::patch,
             crate::fixups::special::watch_event,
             crate::fixups::special::list,

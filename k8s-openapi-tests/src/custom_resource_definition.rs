@@ -12,6 +12,7 @@ async fn test() {
     use k8s_openapi::{
         apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensions,
         apimachinery::pkg::{
+            api::resource::Quantity,
             apis::meta::v1 as meta,
             util::intstr::IntOrString,
         },
@@ -38,6 +39,7 @@ async fn test() {
         #[serde(skip_serializing_if = "Option::is_none")]
         prop3: Option<i32>,
         prop4: IntOrString,
+        prop5: Quantity,
     }
 
     impl k8s_openapi::DeepMerge for FooBarSpec {
@@ -57,9 +59,9 @@ async fn test() {
 
     {
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6 } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6, "prop5": 7 } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6), prop5: Quantity("7".to_owned()) }),
             metadata: Default::default(),
             subresources: Default::default(),
         });
@@ -69,14 +71,14 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6}\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6,\"prop5\":\"7\"}\
             }\
         ");
 
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar" } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar", "prop5": "7G" } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()), prop5: Quantity("7G".to_owned()) }),
             metadata: Default::default(),
             subresources: Default::default(),
         });
@@ -86,14 +88,14 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\"}\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\",\"prop5\":\"7G\"}\
             }\
         ");
 
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6 }, "status": { "bar": "baz" } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": 6, "prop5": 7 }, "status": { "bar": "baz" } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::Int(6), prop5: Quantity("7".to_owned()) }),
             metadata: Default::default(),
             subresources: apiextensions::CustomResourceSubresources {
                 status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
@@ -106,15 +108,15 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6},\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":6,\"prop5\":\"7\"},\
                 \"status\":{\"bar\":\"baz\"}\
             }\
         ");
 
         let fb: FooBar =
-            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar" }, "status": { "bar": "baz" } }"#).unwrap();
+            serde_json::from_str(r#"{ "metadata": {}, "spec": { "prop1": "foo", "prop2": [true, false], "prop3": 5, "prop4": "bar", "prop5": "7G" }, "status": { "bar": "baz" } }"#).unwrap();
         assert_eq!(fb, FooBar {
-            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()) }),
+            spec: Some(FooBarSpec { prop1: "foo".to_owned(), prop2: vec![true, false], prop3: Some(5), prop4: IntOrString::String("bar".to_owned()), prop5: Quantity("7G".to_owned()) }),
             metadata: Default::default(),
             subresources: apiextensions::CustomResourceSubresources {
                 status: Some(apiextensions::CustomResourceSubresourceStatus(serde_json::json!({ "bar": "baz" }))),
@@ -127,7 +129,7 @@ async fn test() {
                 \"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\
                 \"kind\":\"FooBar\",\
                 \"metadata\":{},\
-                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\"},\
+                \"spec\":{\"prop1\":\"foo\",\"prop2\":[true,false],\"prop3\":5,\"prop4\":\"bar\",\"prop5\":\"7G\"},\
                 \"status\":{\"bar\":\"baz\"}\
             }\
         ");
@@ -164,11 +166,16 @@ async fn test() {
                             x_kubernetes_int_or_string: Some(true),
                             ..Default::default()
                         }),
+                        ("prop5".to_string(), apiextensions::JSONSchemaProps {
+                            x_kubernetes_int_or_string: Some(true),
+                            ..Default::default()
+                        }),
                     ].into()),
                     required: Some(vec![
                         "prop1".to_string(),
                         "prop2".to_string(),
                         "prop4".to_string(),
+                        "prop5".to_string(),
                     ]),
                     ..Default::default()
                 }),
@@ -255,6 +262,7 @@ async fn test() {
             prop2: vec![true, false, true],
             prop3: None,
             prop4: IntOrString::Int(6),
+            prop5: Quantity("7".to_owned()),
         }),
         subresources: Default::default(),
     };
@@ -274,6 +282,7 @@ async fn test() {
             prop2: vec![true, false, true],
             prop3: Some(5),
             prop4: IntOrString::String("value4".to_owned()),
+            prop5: Quantity("7G".to_owned()),
         }),
         subresources: Default::default(),
     };
@@ -377,6 +386,7 @@ async fn test() {
         ("spec".to_string(), serde_json::Value::Object([
             ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
             ("prop4".to_string(), serde_json::Value::String("value4".to_string())),
+            ("prop5".to_string(), serde_json::Value::String("7G".to_string())),
         ].into_iter().collect())),
     ].into_iter().collect());
     let request =
@@ -407,6 +417,7 @@ async fn test() {
             ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
             ("prop2".to_string(), serde_json::Value::Bool(true)),
             ("prop4".to_string(), serde_json::Value::String("value4".to_string())),
+            ("prop5".to_string(), serde_json::Value::String("7G".to_string())),
         ].into_iter().collect())),
     ].into_iter().collect());
     let request =
@@ -437,6 +448,7 @@ async fn test() {
             ("prop1".to_string(), serde_json::Value::String("value1".to_string())),
             ("prop2".to_string(), serde_json::Value::Array(vec![serde_json::Value::Bool(true)])),
             ("prop4".to_string(), serde_json::Value::Bool(true)),
+            ("prop5".to_string(), serde_json::Value::String("7G".to_string())),
         ].into_iter().collect())),
     ].into_iter().collect());
     let request =

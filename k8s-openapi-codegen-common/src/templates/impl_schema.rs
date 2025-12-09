@@ -273,7 +273,8 @@ fn gen_type(
             }
         }
 
-        swagger20::Type::IntOrString =>
+        swagger20::Type::IntOrString |
+        swagger20::Type::Quantity =>
             writeln!(out, r#"{indent}"x-kubernetes-int-or-string": true,"#)?,
 
         swagger20::Type::Patch =>

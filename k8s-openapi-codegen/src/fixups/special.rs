@@ -80,7 +80,22 @@ pub(crate) mod json_ty {
     }
 }
 
-// Annotate the `patch` type as `swagger20::Type::Patch` for special codegen.
+// The `Quantity` type can be deserialized from both an integer and a string, even though the spec says it should just be a string.
+//
+// Ref:
+// - https://github.com/kubernetes/kubernetes/blob/b4980b8d6e65602818ad27eab6c9c12398569420/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go#L733-L742
+// - https://github.com/kubernetes-sigs/controller-tools/issues/328
+pub(crate) fn quantity(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+    let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.api.resource.Quantity".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Quantity);
+        return Ok(());
+    }
+
+    Err("never applied Quantity override".into())
+}
+
+// Annotate the `Patch` type as `swagger20::Type::Patch` for special codegen.
 pub(crate) fn patch(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
     let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.Patch".to_owned());
     if let Some(definition) = spec.definitions.get_mut(&definition_path) {
