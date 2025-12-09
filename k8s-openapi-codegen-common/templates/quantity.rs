@@ -18,7 +18,7 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
             }}
 
             fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: {local}serde::Deserializer<'de> {{
-                deserializer.deserialize_str(Visitor)
+                deserializer.deserialize_string(Visitor)
             }}
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
