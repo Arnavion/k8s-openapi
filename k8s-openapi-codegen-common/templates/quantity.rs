@@ -2,7 +2,7 @@ struct {type_name}(pub std::string::String);
 
 impl {local}DeepMerge for {type_name} {{
     fn merge_from(&mut self, other: Self) {{
-        *self = other;
+        crate::DeepMerge::merge_from(&mut self.0, other.0);
     }}
 }}
 
@@ -13,8 +13,12 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
         impl {local}serde::de::Visitor<'_> for Visitor {{
             type Value = {type_name};
 
-            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
-                formatter.write_str("int or string")
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{
+                f.write_str("{type_name} (as an int or string)")
+            }}
+
+            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: {local}serde::Deserializer<'de> {{
+                deserializer.deserialize_str(Visitor)
             }}
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
@@ -38,12 +42,12 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
             }}
         }}
 
-        deserializer.deserialize_any(Visitor)
+        deserializer.deserialize_newtype_struct("Quantity", Visitor)
     }}
 }}
 
 impl {local}serde::Serialize for {type_name} {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: {local}serde::Serializer {{
-        self.0.serialize(serializer)
+        serializer.serialize_newtype_struct("Quantity", &self.0)
     }}
 }}

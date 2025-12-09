@@ -42,7 +42,7 @@ pub struct Quantity(pub std::string::String);
 
 impl crate::DeepMerge for Quantity {
     fn merge_from(&mut self, other: Self) {
-        *self = other;
+        crate::DeepMerge::merge_from(&mut self.0, other.0);
     }
 }
 
@@ -53,8 +53,12 @@ impl<'de> crate::serde::Deserialize<'de> for Quantity {
         impl crate::serde::de::Visitor<'_> for Visitor {
             type Value = Quantity;
 
-            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("int or string")
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("Quantity (as an int or string)")
+            }
+
+            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: crate::serde::Deserializer<'de> {
+                deserializer.deserialize_str(Visitor)
             }
 
             fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: crate::serde::de::Error {
@@ -78,15 +82,16 @@ impl<'de> crate::serde::Deserialize<'de> for Quantity {
             }
         }
 
-        deserializer.deserialize_any(Visitor)
+        deserializer.deserialize_newtype_struct("Quantity", Visitor)
     }
 }
 
 impl crate::serde::Serialize for Quantity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
-        self.0.serialize(serializer)
+        serializer.serialize_newtype_struct("Quantity", &self.0)
     }
 }
+
 
 #[cfg(feature = "schemars")]
 impl crate::schemars::JsonSchema for Quantity {
