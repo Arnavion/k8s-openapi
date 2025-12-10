@@ -1,3 +1,27 @@
+# v0.26.1 (2025-12-09)
+
+## k8s-openapi
+
+- BUGFIX: `apimachinery::pkg::api::resource::Quantity` now supports deserializing from a JSON integer, to match Kubernetes API server behavior.
+
+Corresponding Kubernetes API server versions:
+
+- v1.30.14
+- v1.31.14
+- v1.32.10
+- v1.33.7
+- v1.34.3
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.26.0 (2025-09-06)
 
 ## k8s-openapi
