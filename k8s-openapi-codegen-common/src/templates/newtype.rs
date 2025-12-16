@@ -10,7 +10,7 @@ pub(crate) fn generate(
 
     let jiff_fmt = |fmt: &str| {
         format!(
-            r#"&{local}jiff::fmt::strtime::format("{fmt}", self.0).map_err({local}serde::ser::Error::custom)?"#
+            r#"&{local}jiff::fmt::strtime::format({fmt:?}, self.0).map_err({local}serde::ser::Error::custom)?"#
         )
     };
     let inner_value = match datetime_serialization_format {
