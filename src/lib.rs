@@ -234,7 +234,7 @@ extern crate alloc as std;
 #[cfg(feature = "std")]
 extern crate std;
 
-pub use chrono;
+pub use jiff;
 #[cfg(feature = "schemars")]
 pub use schemars;
 pub use serde;

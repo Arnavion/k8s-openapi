@@ -726,7 +726,7 @@ pub fn run(
         swagger20::SchemaKind::Ty(_) => {
             let inner_type_name = get_rust_type(&definition.kind, map_namespace)?;
 
-            // Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `chrono::DateTime`
+            // Kubernetes requires MicroTime to be serialized with exactly six decimal digits, instead of the default serde serialization of `jiff::Timestamp`
             // that uses a variable number up to nine.
             //
             // Furthermore, while Kubernetes does deserialize a Time from a string with one or more decimal digits,
@@ -869,7 +869,7 @@ fn get_derives(
         // Handled by evaluate_trait_bound
         swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
 
-        // chrono::DateTime<chrono::Utc> is not Default
+        // jiff::Timestamp defaults to `UNIX_EPOCH`, so best to not use the default value.
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
         // Enums without a default value
@@ -945,7 +945,7 @@ fn is_default(
         // Handled by evaluate_trait_bound
         swagger20::SchemaKind::Ref(ref_path @ swagger20::RefPath { .. }) if !ref_path.references_scope(map_namespace) => unreachable!(),
 
-        // chrono::DateTime<chrono::Utc> is not Default
+        // jiff::Timestamp defaults to `UNIX_EPOCH`, so best to not use the default value.
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
         // Enums without a default value
@@ -1231,7 +1231,7 @@ fn get_rust_type(
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) =>
             Ok(format!("{local}ByteString").into()),
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) =>
-            Ok(format!("{local}chrono::DateTime<{local}chrono::Utc>").into()),
+            Ok(format!("{local}jiff::Timestamp").into()),
         swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("std::string::String".into()),
 
         swagger20::SchemaKind::Ty(swagger20::Type::CustomResourceSubresources(namespace)) => {

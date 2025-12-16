@@ -8,10 +8,15 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
     let local = crate::map_namespace_local_to_string(map_namespace)?;
 
+    let jiff_fmt = |fmt: &str| {
+        format!(
+            r#"&{local}jiff::fmt::strtime::format("{fmt}", self.0).map_err({local}serde::ser::Error::custom)?"#
+        )
+    };
     let inner_value = match datetime_serialization_format {
-        super::DateTimeSerializationFormat::Default => "&self.0",
-        super::DateTimeSerializationFormat::SixDecimalDigits => "&self.0.to_rfc3339_opts(chrono::SecondsFormat::Micros, true)",
-        super::DateTimeSerializationFormat::ZeroDecimalDigits => "&self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)",
+        super::DateTimeSerializationFormat::Default => "&self.0".to_string(),
+        super::DateTimeSerializationFormat::SixDecimalDigits => jiff_fmt("%Y-%m-%dT%H:%M:%S%.6fZ"),
+        super::DateTimeSerializationFormat::ZeroDecimalDigits => jiff_fmt("%Y-%m-%dT%H:%M:%SZ"),
     };
 
     writeln!(

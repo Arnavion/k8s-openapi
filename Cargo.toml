@@ -31,9 +31,9 @@ links = "k8s-openapi-0.26.1"
 base64 = { version = "0.22", default-features = false, features = [
     "alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
-chrono = { version = "0.4.1", default-features = false, features = [
-    "alloc", # for chrono::DateTime::<Utc>::to_rfc3339_opts
-    "serde", # for chrono::DateTime<Utc>: serde::Deserialize, serde::Serialize
+jiff = { version = "0.2.16", default-features = false, features = [
+    "alloc", # for jiff::Timestamp: jiff::fmt::strtime::format
+    "serde", # for jiff::Timestamp: serde::Deserialize, serde::Serialize
 ] }
 schemars = { version = "1", optional = true, default-features = false }
 serde = { version = "1", default-features = false }
