@@ -70,7 +70,7 @@ impl DeepMerge for i64 { default_overwriting_impl! {} }
 impl DeepMerge for f64 { default_overwriting_impl! {} }
 impl DeepMerge for std::string::String { default_overwriting_impl! {} }
 impl DeepMerge for crate::ByteString { default_overwriting_impl! {} }
-impl<Tz> DeepMerge for chrono::DateTime<Tz> where Tz: chrono::TimeZone { default_overwriting_impl! {} }
+impl DeepMerge for jiff::Timestamp { default_overwriting_impl! {} }
 
 impl DeepMerge for serde_json::Value {
     fn merge_from(&mut self, other: Self) {

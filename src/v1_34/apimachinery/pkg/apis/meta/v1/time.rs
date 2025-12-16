@@ -2,7 +2,7 @@
 
 /// Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Time(pub crate::chrono::DateTime<crate::chrono::Utc>);
+pub struct Time(pub crate::jiff::Timestamp);
 
 impl crate::DeepMerge for Time {
     fn merge_from(&mut self, other: Self) {
@@ -32,7 +32,7 @@ impl<'de> crate::serde::Deserialize<'de> for Time {
 
 impl crate::serde::Serialize for Time {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
-        serializer.serialize_newtype_struct("Time", &self.0.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))
+        serializer.serialize_newtype_struct("Time", &crate::jiff::fmt::strtime::format("%Y-%m-%dT%H:%M:%SZ", self.0).map_err(crate::serde::ser::Error::custom)?)
     }
 }
 
