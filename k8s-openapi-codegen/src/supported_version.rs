@@ -40,7 +40,7 @@ impl SupportedVersion {
         match self {
             SupportedVersion::V1_30 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.30.14/api/openapi-spec/swagger.json",
             SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.14/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_32 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.32.10/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_32 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.32.11/api/openapi-spec/swagger.json",
             SupportedVersion::V1_33 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.33.7/api/openapi-spec/swagger.json",
             SupportedVersion::V1_34 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.3/api/openapi-spec/swagger.json",
         }
