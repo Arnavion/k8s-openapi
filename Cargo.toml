@@ -47,13 +47,13 @@ default = ["std"]
 std = []
 
 # Each feature corresponds to a supported version of Kubernetes
-earliest = ["v1_30"]
-v1_30 = []
+earliest = ["v1_31"]
 v1_31 = []
 v1_32 = []
 v1_33 = []
 v1_34 = []
-latest = ["v1_34"]
+v1_35 = []
+latest = ["v1_35"]
 # Enable `schemars::JsonSchema` implementations on resource types.
 schemars = ["dep:schemars"]
 

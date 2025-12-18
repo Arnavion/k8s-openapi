@@ -3,8 +3,8 @@
 fn main() {
     // Assert that the DEP_K8S_OPENAPI_*_VERSION is set by the k8s-openapi crate's build script correctly.
 
-    const MIN: usize = 30;
-    const MAX: usize = 34;
+    const MIN: usize = 31;
+    const MAX: usize = 35;
 
     let enabled_version = {
         let mut enabled_versions = (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_TEST_V1_{v}")).is_ok());

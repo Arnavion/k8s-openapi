@@ -1,0 +1,154 @@
+// Generated from definition io.k8s.api.resource.v1.AllocationResult
+
+/// AllocationResult contains attributes of an allocated resource.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct AllocationResult {
+    /// AllocationTimestamp stores the time when the resources were allocated. This field is not guaranteed to be set, in which case that time is unknown.
+    ///
+    /// This is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gate.
+    pub allocation_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time>,
+
+    /// Devices is the result of allocating devices.
+    pub devices: Option<crate::api::resource::v1::DeviceAllocationResult>,
+
+    /// NodeSelector defines where the allocated resources are available. If unset, they are available everywhere.
+    pub node_selector: Option<crate::api::core::v1::NodeSelector>,
+}
+
+impl crate::DeepMerge for AllocationResult {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.allocation_timestamp, other.allocation_timestamp);
+        crate::DeepMerge::merge_from(&mut self.devices, other.devices);
+        crate::DeepMerge::merge_from(&mut self.node_selector, other.node_selector);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for AllocationResult {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_allocation_timestamp,
+            Key_devices,
+            Key_node_selector,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "allocationTimestamp" => Field::Key_allocation_timestamp,
+                            "devices" => Field::Key_devices,
+                            "nodeSelector" => Field::Key_node_selector,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = AllocationResult;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("AllocationResult")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_allocation_timestamp: Option<crate::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_devices: Option<crate::api::resource::v1::DeviceAllocationResult> = None;
+                let mut value_node_selector: Option<crate::api::core::v1::NodeSelector> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_allocation_timestamp => value_allocation_timestamp = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_devices => value_devices = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_selector => value_node_selector = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(AllocationResult {
+                    allocation_timestamp: value_allocation_timestamp,
+                    devices: value_devices,
+                    node_selector: value_node_selector,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "AllocationResult",
+            &[
+                "allocationTimestamp",
+                "devices",
+                "nodeSelector",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for AllocationResult {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "AllocationResult",
+            self.allocation_timestamp.as_ref().map_or(0, |_| 1) +
+            self.devices.as_ref().map_or(0, |_| 1) +
+            self.node_selector.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.allocation_timestamp {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocationTimestamp", value)?;
+        }
+        if let Some(value) = &self.devices {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "devices", value)?;
+        }
+        if let Some(value) = &self.node_selector {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for AllocationResult {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.resource.v1.AllocationResult".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "AllocationResult contains attributes of an allocated resource.",
+            "type": "object",
+            "properties": {
+                "allocationTimestamp": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::Time>();
+                    schema_obj.ensure_object().insert("description".into(), "AllocationTimestamp stores the time when the resources were allocated. This field is not guaranteed to be set, in which case that time is unknown.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gate.".into());
+                    schema_obj
+                }),
+                "devices": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1::DeviceAllocationResult>();
+                    schema_obj.ensure_object().insert("description".into(), "Devices is the result of allocating devices.".into());
+                    schema_obj
+                }),
+                "nodeSelector": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NodeSelector>();
+                    schema_obj.ensure_object().insert("description".into(), "NodeSelector defines where the allocated resources are available. If unset, they are available everywhere.".into());
+                    schema_obj
+                }),
+            },
+        })
+    }
+}

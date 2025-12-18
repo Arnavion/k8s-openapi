@@ -1,0 +1,131 @@
+// Generated from definition io.k8s.api.scheduling.v1alpha1.PodGroup
+
+/// PodGroup represents a set of pods with a common scheduling policy.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct PodGroup {
+    /// Name is a unique identifier for the PodGroup within the Workload. It must be a DNS label. This field is immutable.
+    pub name: std::string::String,
+
+    /// Policy defines the scheduling policy for this PodGroup.
+    pub policy: crate::api::scheduling::v1alpha1::PodGroupPolicy,
+}
+
+impl crate::DeepMerge for PodGroup {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.name, other.name);
+        crate::DeepMerge::merge_from(&mut self.policy, other.policy);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for PodGroup {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_name,
+            Key_policy,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "name" => Field::Key_name,
+                            "policy" => Field::Key_policy,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = PodGroup;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("PodGroup")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_name: Option<std::string::String> = None;
+                let mut value_policy: Option<crate::api::scheduling::v1alpha1::PodGroupPolicy> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_name => value_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_policy => value_policy = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(PodGroup {
+                    name: value_name.unwrap_or_default(),
+                    policy: value_policy.unwrap_or_default(),
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "PodGroup",
+            &[
+                "name",
+                "policy",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for PodGroup {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "PodGroup",
+            2,
+        )?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "policy", &self.policy)?;
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for PodGroup {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.scheduling.v1alpha1.PodGroup".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "PodGroup represents a set of pods with a common scheduling policy.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name is a unique identifier for the PodGroup within the Workload. It must be a DNS label. This field is immutable.",
+                    "type": "string",
+                },
+                "policy": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::scheduling::v1alpha1::PodGroupPolicy>();
+                    schema_obj.ensure_object().insert("description".into(), "Policy defines the scheduling policy for this PodGroup.".into());
+                    schema_obj
+                }),
+            },
+            "required": [
+                "name",
+                "policy",
+            ],
+        })
+    }
+}

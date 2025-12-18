@@ -53,8 +53,8 @@ tokio = { version = "1", default-features = false, features = [
 url = { version = "2", default-features = false }
 
 [features]
-test_v1_30 = ["k8s-openapi/v1_30"]
 test_v1_31 = ["k8s-openapi/v1_31"]
 test_v1_32 = ["k8s-openapi/v1_32"]
 test_v1_33 = ["k8s-openapi/v1_33"]
 test_v1_34 = ["k8s-openapi/v1_34"]
+test_v1_35 = ["k8s-openapi/v1_35"]

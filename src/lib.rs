@@ -27,11 +27,11 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.30", doc = "v1_30")]
 #![cfg_attr(k8s_openapi_enabled_version="1.31", doc = "v1_31")]
 #![cfg_attr(k8s_openapi_enabled_version="1.32", doc = "v1_32")]
 #![cfg_attr(k8s_openapi_enabled_version="1.33", doc = "v1_33")]
 #![cfg_attr(k8s_openapi_enabled_version="1.34", doc = "v1_34")]
+#![cfg_attr(k8s_openapi_enabled_version="1.35", doc = "v1_35")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -117,10 +117,10 @@
 //!
 //! For example:
 //!
-//! 1. Your crate creates a `PodSecurityContext` and wants to set the `supplemental_groups_policy` field. This field is only available in Kubernetes 1.31+,
+//! 1. Your crate creates a `PodSpec` and wants to set the `hostname_override` field. This field is only available in Kubernetes 1.34+,
 //!    so you want your crate to fail to compile if a lower feature was enabled.
 //!
-//! 1. Your crate creates a `PodSecurityContext` and wants to set the `supplemental_groups_policy` field, but it's okay to not set it when compiling for older versions.
+//! 1. Your crate creates a `PodSpec` and wants to set the `hostname_override` field, but it's okay to not set it when compiling for older versions.
 //!
 //! There are two ways for your crate to determine which feature of `k8s-openapi` is enabled:
 //!
@@ -129,26 +129,26 @@
 //!    With these macros, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.30 or lower is selected.
-//!      k8s_openapi::k8s_if_le_1_30! {
-//!          compile_error!("This crate requires the v1_31 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.33 or lower is selected.
+//!      k8s_openapi::k8s_if_le_1_33! {
+//!          compile_error!("This crate requires the v1_34 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!      }
 //!
 //!      ...
 //!
-//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
-//!          supplemental_groups_policy: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          hostname_override: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let mut pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
+//!      let mut pod_spec = k8s_openapi::api::core::v1::PodSpec {
 //!          ...
 //!      };
 //!
 //!      k8s_openapi::k8s_if_ge_1_31! {
-//!          pod_security_context.supplemental_groups_policy = ...;
+//!          pod_spec.hostname_override = ...;
 //!      }
 //!      ```
 //!
@@ -178,12 +178,12 @@
 //!        // - MM is the major version.
 //!        // - NN is the minor version.
 //!        //
-//!        // Thus, if the v1_31 feature was enabled, k8s_openapi_version would be 0x00_01_1F_00
+//!        // Thus, if the v1_34 feature was enabled, k8s_openapi_version would be 0x00_01_22_00
 //!
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
-//!        if k8s_openapi_version >= 0x00_01_1F_00 {
-//!            println!(r#"cargo::rustc-cfg=k8s_pod_security_context_supports_supplemental_groups_policy"#);
+//!        if k8s_openapi_version >= 0x00_01_22_00 {
+//!            println!(r#"cargo::rustc-cfg=k8s_pod_spec_supports_hostname_override"#);
 //!        }
 //!
 //!        // ... or emit new source code files under OUT_DIR, or anything else a build script can do.
@@ -193,22 +193,22 @@
 //!    With this cfg, the two cases above would be solved like this:
 //!
 //!    - ```rust,ignore
-//!      // The compile_error!() is only emitted if 1.30 or lower is selected.
-//!      #[cfg(not(k8s_pod_security_context_supports_supplemental_groups_policy))]
-//!      compile_error!("This crate requires the v1_31 (or higher) feature to be enabled on the k8s-openapi crate.");
+//!      // The compile_error!() is only emitted if 1.33 or lower is selected.
+//!      #[cfg(not(k8s_pod_spec_supports_hostname_override))]
+//!      compile_error!("This crate requires the v1_34 (or higher) feature to be enabled on the k8s-openapi crate.");
 //!
 //!      ...
 //!
-//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
-//!          supplemental_groups_policy: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          hostname_override: ...,
 //!          ...
 //!      };
 //!      ```
 //!
 //!    - ```rust,ignore
-//!      let pod_security_context = k8s_openapi::api::core::v1::PodSecurityContext {
-//!          #[cfg(not(k8s_pod_security_context_supports_supplemental_groups_policy))]
-//!          supplemental_groups_policy: ...,
+//!      let pod_spec = k8s_openapi::api::core::v1::PodSpec {
+//!          #[cfg(not(k8s_pod_spec_supports_hostname_override))]
+//!          hostname_override: ...,
 //!          ...
 //!      };
 //!      ```
@@ -259,9 +259,6 @@ pub use _resource::{
     api_version, group, kind, version,
 };
 
-#[cfg(k8s_openapi_enabled_version="1.30")] mod v1_30;
-#[cfg(k8s_openapi_enabled_version="1.30")] pub use self::v1_30::*;
-
 #[cfg(k8s_openapi_enabled_version="1.31")] mod v1_31;
 #[cfg(k8s_openapi_enabled_version="1.31")] pub use self::v1_31::*;
 
@@ -273,5 +270,8 @@ pub use _resource::{
 
 #[cfg(k8s_openapi_enabled_version="1.34")] mod v1_34;
 #[cfg(k8s_openapi_enabled_version="1.34")] pub use self::v1_34::*;
+
+#[cfg(k8s_openapi_enabled_version="1.35")] mod v1_35;
+#[cfg(k8s_openapi_enabled_version="1.35")] pub use self::v1_35::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
