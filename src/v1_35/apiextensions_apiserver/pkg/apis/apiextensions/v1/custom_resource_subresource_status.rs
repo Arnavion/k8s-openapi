@@ -30,6 +30,12 @@ impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresourceStatus {
     }
 }
 
+impl From<crate::serde_json::Value> for CustomResourceSubresourceStatus {
+    fn from(inner: crate::serde_json::Value) -> Self {
+        Self(inner)
+    }
+}
+
 impl crate::serde::Serialize for CustomResourceSubresourceStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         serializer.serialize_newtype_struct("CustomResourceSubresourceStatus", &self.0)

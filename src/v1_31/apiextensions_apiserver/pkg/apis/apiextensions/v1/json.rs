@@ -30,6 +30,12 @@ impl<'de> crate::serde::Deserialize<'de> for JSON {
     }
 }
 
+impl From<crate::serde_json::Value> for JSON {
+    fn from(inner: crate::serde_json::Value) -> Self {
+        Self(inner)
+    }
+}
+
 impl crate::serde::Serialize for JSON {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         serializer.serialize_newtype_struct("JSON", &self.0)

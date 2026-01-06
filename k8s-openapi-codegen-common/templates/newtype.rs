@@ -26,6 +26,12 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
     }}
 }}
 
+impl From<{inner_type_name}> for {type_name} {{
+    fn from(inner: {inner_type_name}) -> Self {{
+        Self(inner)
+    }}
+}}
+
 impl {local}serde::Serialize for {type_name} {{
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: {local}serde::Serializer {{
         serializer.serialize_newtype_struct({type_name:?}, {inner_value})

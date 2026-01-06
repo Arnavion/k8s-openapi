@@ -67,6 +67,12 @@ impl<'de> crate::serde::Deserialize<'de> for RawExtension {
     }
 }
 
+impl From<crate::serde_json::Value> for RawExtension {
+    fn from(inner: crate::serde_json::Value) -> Self {
+        Self(inner)
+    }
+}
+
 impl crate::serde::Serialize for RawExtension {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
         serializer.serialize_newtype_struct("RawExtension", &self.0)
