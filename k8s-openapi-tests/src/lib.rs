@@ -131,7 +131,7 @@ impl Client {
 
             let inner =
                 reqwest::Client::builder()
-                .use_rustls_tls()
+                .tls_backend_rustls()
                 .add_root_certificate(ca_certificate)
                 .identity(client_tls_identity)
                 .build().expect("couldn't create client");

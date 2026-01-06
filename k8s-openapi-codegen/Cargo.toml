@@ -19,8 +19,8 @@ k8s-openapi-codegen-common = { path = "../k8s-openapi-codegen-common", features 
     "serde", # to parse OpenAPI specs from JSON files
 ] }
 log = { version = "0.4", default-features = false }
-reqwest = { version = "0.12", default-features = false, features = [
-    "rustls-tls", # for TLS support
+reqwest = { version = "0.13", default-features = false, features = [
+    "rustls", # for TLS support
     "json", # for reqwest::Response::json
 ] }
 serde = { version = "1", default-features = false, features = [
