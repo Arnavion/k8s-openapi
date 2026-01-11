@@ -1,3 +1,33 @@
+# v0.27.0 (2026-01-11)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.35 under the `v1_35` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.30.
+
+- BREAKING CHANGE: `chrono::DateTime` has been replaced by `jiff::Timestamp` in the implementations of `apimachinery::pkg::apis::meta::v1::{MicroTime, Time}`.
+
+- FEATURE: All newtypes now implement `From` for their inner type, eg `Time` impls `From<jiff::Timestamp>`.
+
+Corresponding Kubernetes API server versions:
+
+- v1.31.14
+- v1.32.11
+- v1.33.7
+- v1.34.3
+- v1.35.0
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.26.1 (2025-12-09)
 
 ## k8s-openapi

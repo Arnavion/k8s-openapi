@@ -1,11 +1,11 @@
 [package]
 name = "k8s-openapi"
-version = "0.26.1"
+version = "0.27.0"
 license = "Apache-2.0"
 authors = ["Arnav Singh <me@arnavion.dev>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Bindings for the Kubernetes client API"
-documentation = "https://arnavion.github.io/k8s-openapi/v0.26.x/k8s_openapi/"
+documentation = "https://arnavion.github.io/k8s-openapi/v0.27.x/k8s_openapi/"
 edition = "2021"
 keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
@@ -25,7 +25,7 @@ include = [
 # to enumerate all env vars looking for one with `DEP_K8S_OPENAPI_` prefix and `_VERSION` suffix, instead of looking it up by its whole name.
 #
 # See https://github.com/rust-lang/cargo/issues/3544 for being able to pass metadata to downstream without setting this key.
-links = "k8s-openapi-0.26.1"
+links = "k8s-openapi-0.27.0"
 
 [dependencies]
 base64 = { version = "0.22", default-features = false, features = [
