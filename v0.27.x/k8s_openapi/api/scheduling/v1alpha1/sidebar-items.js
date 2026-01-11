@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["BasicSchedulingPolicy","GangSchedulingPolicy","PodGroup","PodGroupPolicy","TypedLocalObjectReference","Workload","WorkloadSpec"]};
