@@ -39,10 +39,10 @@ impl SupportedVersion {
     pub(crate) fn spec_url(self) -> &'static str {
         match self {
             SupportedVersion::V1_31 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.31.14/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_32 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.32.11/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_33 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.33.7/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_34 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.3/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_35 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.0/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_32 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.32.12/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_33 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.33.8/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_34 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.4/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_35 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.1/api/openapi-spec/swagger.json",
         }
     }
 
