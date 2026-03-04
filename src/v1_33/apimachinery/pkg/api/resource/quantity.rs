@@ -73,6 +73,14 @@ impl<'de> crate::serde::Deserialize<'de> for Quantity {
                 Ok(Quantity(std::string::ToString::to_string(&v)))
             }
 
+            fn visit_f32<E>(self, v: f32) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                Ok(Quantity(std::string::ToString::to_string(&v)))
+            }
+
+            fn visit_f64<E>(self, v: f64) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                Ok(Quantity(std::string::ToString::to_string(&v)))
+            }
+
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
                 self.visit_string(v.into())
             }

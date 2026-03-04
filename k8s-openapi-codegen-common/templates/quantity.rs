@@ -33,6 +33,14 @@ impl<'de> {local}serde::Deserialize<'de> for {type_name} {{
                 Ok({type_name}(std::string::ToString::to_string(&v)))
             }}
 
+            fn visit_f32<E>(self, v: f32) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
+                Ok({type_name}(std::string::ToString::to_string(&v)))
+            }}
+
+            fn visit_f64<E>(self, v: f64) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
+                Ok({type_name}(std::string::ToString::to_string(&v)))
+            }}
+
             fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: {local}serde::de::Error {{
                 self.visit_string(v.into())
             }}
