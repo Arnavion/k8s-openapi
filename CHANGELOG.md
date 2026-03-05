@@ -1,3 +1,27 @@
+# v0.27.1 (2026-03-05)
+
+## k8s-openapi
+
+- BUGFIX: `apimachinery::pkg::api::resource::Quantity` now supports deserializing from a JSON floating point literal as well.
+
+Corresponding Kubernetes API server versions:
+
+- v1.31.14
+- v1.32.13
+- v1.33.9
+- v1.34.5
+- v1.35.2
+
+## k8s-openapi-codegen-common
+
+- No changes.
+
+## k8s-openapi-derive
+
+- No changes except to bump the `k8s-openapi-codegen-common` dependency to the new version.
+
+---
+
 # v0.27.0 (2026-01-11)
 
 ## k8s-openapi
