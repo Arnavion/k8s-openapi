@@ -49,7 +49,14 @@ impl crate::DeepMerge for StatefulSetSpec {
         crate::DeepMerge::merge_from(&mut self.service_name, other.service_name);
         crate::DeepMerge::merge_from(&mut self.template, other.template);
         crate::DeepMerge::merge_from(&mut self.update_strategy, other.update_strategy);
-        crate::merge_strategies::list::atomic(&mut self.volume_claim_templates, other.volume_claim_templates);
+        crate::merge_strategies::list::map(
+            &mut self.volume_claim_templates,
+            other.volume_claim_templates,
+            &[|lhs, rhs| lhs.metadata.name == rhs.metadata.name],
+            |current_item, other_item| {
+                crate::DeepMerge::merge_from(current_item, other_item);
+            },
+        );
     }
 }
 

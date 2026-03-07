@@ -49,6 +49,50 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
     }
 }
 
+// `StatefulSetSpec::volumeClaimTemplates` should be a map list keyed by `metadata.name`.
+//
+// The upstream Go source annotates `StatefulSetSpec.volumeClaimTemplates` with `// +listType=atomic`,
+// which propagates to `x-kubernetes-list-type: atomic` in the OpenAPI spec. Semantically it should
+// be a map list keyed by `metadata.name`, because each PVC in a StatefulSet has a unique name and
+// merging by identity is the correct behavior.
+//
+// One possible reason this is not fixed upstream yet could be a limitation of the Kubernetes
+// annotation system: `// +listMapKey=<field>` only supports direct scalar fields on the item type,
+// but `PersistentVolumeClaim` carries its name via an embedded `ObjectMeta` (i.e. `metadata.name`
+// in JSON), not as a top-level field. There is no existing precedent or tooling support for a
+// nested `listMapKey` path in the Kubernetes codebase.
+//
+// We therefore fix it here by overriding the merge type after parsing the spec.
+//
+// Ref: https://github.com/kubernetes/kubernetes/issues/74819
+pub(crate) fn appsv1_statefulsetspec_volume_claim_templates_merge_strategy(
+    spec: &mut crate::swagger20::Spec,
+) -> Result<(), crate::Error> {
+    let definition_path =
+    crate::swagger20::DefinitionPath("io.k8s.api.apps.v1.StatefulSetSpec".to_owned());
+    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+            if let Some((property_schema, _required)) = properties.get_mut("volumeClaimTemplates") {
+                if let crate::swagger20::MergeType::List { strategy, keys, .. } =
+                    &mut property_schema.merge_type
+                    {
+                        if *strategy == crate::swagger20::KubernetesListType::Atomic && keys.is_empty()
+                        {
+                            *strategy = crate::swagger20::KubernetesListType::Map;
+                            *keys = vec!["metadata.name".to_string()];
+                            return Ok(());
+                        }
+                    }
+            }
+        }
+    }
+
+    Err(
+        "never applied apps.k8s.io/v1.StatefulSetSpec volumeClaimTemplates list merge override"
+        .into(),
+    )
+}
+
 // The spec says that this property is an array, but it can be null.
 //
 // Override it to be optional to achieve the same effect.

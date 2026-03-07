@@ -502,6 +502,8 @@ mod clientset;
 
 mod custom_resource_definition;
 
+mod deep_merge;
+
 mod deserialize_leniency;
 
 mod deployment;
