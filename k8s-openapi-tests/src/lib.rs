@@ -45,11 +45,11 @@ struct Replay {
 
 impl Client {
     fn new(test_name: &'static str) -> Self {
-        #[cfg(feature = "test_v1_31")] let replays_directory = "v1-31";
         #[cfg(feature = "test_v1_32")] let replays_directory = "v1-32";
         #[cfg(feature = "test_v1_33")] let replays_directory = "v1-33";
         #[cfg(feature = "test_v1_34")] let replays_directory = "v1-34";
         #[cfg(feature = "test_v1_35")] let replays_directory = "v1-35";
+        #[cfg(feature = "test_v1_36")] let replays_directory = "v1-36";
 
         let replays_directory =
             std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR")))

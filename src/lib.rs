@@ -27,11 +27,11 @@
 //!
 //! These docs have been generated with the `
 
-#![cfg_attr(k8s_openapi_enabled_version="1.31", doc = "v1_31")]
 #![cfg_attr(k8s_openapi_enabled_version="1.32", doc = "v1_32")]
 #![cfg_attr(k8s_openapi_enabled_version="1.33", doc = "v1_33")]
 #![cfg_attr(k8s_openapi_enabled_version="1.34", doc = "v1_34")]
 #![cfg_attr(k8s_openapi_enabled_version="1.35", doc = "v1_35")]
+#![cfg_attr(k8s_openapi_enabled_version="1.36", doc = "v1_36")]
 
 //! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`
 //!
@@ -147,7 +147,7 @@
 //!          ...
 //!      };
 //!
-//!      k8s_openapi::k8s_if_ge_1_31! {
+//!      k8s_openapi::k8s_if_ge_1_34! {
 //!          pod_spec.hostname_override = ...;
 //!      }
 //!      ```
@@ -259,9 +259,6 @@ pub use _resource::{
     api_version, group, kind, version,
 };
 
-#[cfg(k8s_openapi_enabled_version="1.31")] mod v1_31;
-#[cfg(k8s_openapi_enabled_version="1.31")] pub use self::v1_31::*;
-
 #[cfg(k8s_openapi_enabled_version="1.32")] mod v1_32;
 #[cfg(k8s_openapi_enabled_version="1.32")] pub use self::v1_32::*;
 
@@ -273,5 +270,8 @@ pub use _resource::{
 
 #[cfg(k8s_openapi_enabled_version="1.35")] mod v1_35;
 #[cfg(k8s_openapi_enabled_version="1.35")] pub use self::v1_35::*;
+
+#[cfg(k8s_openapi_enabled_version="1.36")] mod v1_36;
+#[cfg(k8s_openapi_enabled_version="1.36")] pub use self::v1_36::*;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
