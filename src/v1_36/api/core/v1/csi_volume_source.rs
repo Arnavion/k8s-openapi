@@ -190,3 +190,93 @@ impl crate::schemars::JsonSchema for CSIVolumeSource {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for CSIVolumeSource {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.CSIVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("Represents a source location of a volume to mount, managed by an external CSI driver".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "driver".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "fsType".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("fsType to mount. Ex. \"ext4\", \"xfs\", \"ntfs\". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "nodePublishSecretRef".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::LocalObjectReference>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "readOnly".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("readOnly specifies a read-only configuration for the volume. Defaults to false (read/write).".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "volumeAttributes".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                )),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                required: [
+                    "driver".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

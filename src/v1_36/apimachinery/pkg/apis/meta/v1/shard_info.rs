@@ -112,3 +112,40 @@ impl crate::schemars::JsonSchema for ShardInfo {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for ShardInfo {
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.apis.meta.v1.ShardInfo".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("ShardInfo describes the shard selector that was applied to produce a list response. Its presence on a list response indicates the list is a filtered subset.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "selector".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("selector is the shard selector string from the request, echoed back so clients can verify which shard they received and merge responses from multiple shards.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                required: [
+                    "selector".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

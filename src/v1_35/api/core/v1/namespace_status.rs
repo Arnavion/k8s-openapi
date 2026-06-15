@@ -137,3 +137,52 @@ impl crate::schemars::JsonSchema for NamespaceStatus {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for NamespaceStatus {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.NamespaceStatus".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("NamespaceStatus is information about the current status of a Namespace.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "conditions".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Represents the latest available observations of a namespace's current state.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::NamespaceCondition>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "phase".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

@@ -131,3 +131,51 @@ impl crate::schemars::JsonSchema for MetricIdentifier {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for MetricIdentifier {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.autoscaling.v2.MetricIdentifier".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("MetricIdentifier defines the name and optionally selector for a metric".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "name".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("name is the name of the given metric".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "selector".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                required: [
+                    "name".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

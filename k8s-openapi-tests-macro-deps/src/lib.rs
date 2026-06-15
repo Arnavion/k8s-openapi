@@ -16,6 +16,7 @@
     group = "k8s-openapi-tests-custom-resource-definition.com",
     version = "v1",
     plural = "foobars",
+    generate_schema,
     namespaced,
     impl_deep_merge,
 )]
@@ -39,6 +40,48 @@ impl k8s_openapi::serde::Serialize for FooBarSpec {
 }
 
 impl k8s_openapi::DeepMerge for FooBarSpec {
+    fn merge_from(&mut self, other: Self) where Self: Sized {
+        self.prop1.merge_from(other.prop1);
+        k8s_openapi::merge_strategies::list::atomic(&mut self.prop2, other.prop2);
+        self.prop3.merge_from(other.prop3);
+    }
+}
+
+#[allow(unused)]
+#[derive(
+    Clone, Debug, PartialEq,
+    k8s_openapi_derive::CustomResourceDefinition,
+    schemars08::JsonSchema,
+)]
+#[custom_resource_definition(
+    group = "k8s-openapi-tests-custom-resource-definition.com",
+    version = "v1",
+    plural = "foobar08s",
+    generate_schema08,
+    namespaced,
+    impl_deep_merge,
+)]
+#[custom_resource_definition(has_subresources = "v1")]
+#[schemars(crate = "schemars08")]
+struct FooBar08Spec {
+    prop1: String,
+    prop2: Vec<bool>,
+    prop3: Option<i32>,
+}
+
+impl<'de> k8s_openapi::serde::Deserialize<'de> for FooBar08Spec {
+    fn deserialize<D>(_deserializer: D) -> Result<Self, D::Error> where D: k8s_openapi::serde::Deserializer<'de> {
+        unimplemented!();
+    }
+}
+
+impl k8s_openapi::serde::Serialize for FooBar08Spec {
+    fn serialize<S>(&self, _serializer: S) -> Result<S::Ok, S::Error> where S: k8s_openapi::serde::Serializer {
+        unimplemented!();
+    }
+}
+
+impl k8s_openapi::DeepMerge for FooBar08Spec {
     fn merge_from(&mut self, other: Self) where Self: Sized {
         self.prop1.merge_from(other.prop1);
         k8s_openapi::merge_strategies::list::atomic(&mut self.prop2, other.prop2);

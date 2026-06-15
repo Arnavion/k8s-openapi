@@ -130,3 +130,51 @@ impl crate::schemars::JsonSchema for PersistentVolumeClaimVolumeSource {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for PersistentVolumeClaimVolumeSource {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PersistentVolumeClaimVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace. This volume finds the bound PV and mounts that volume for the pod. A PersistentVolumeClaimVolumeSource is, essentially, a wrapper around another type of volume that is owned by someone else (the system).".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "claimName".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("claimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "readOnly".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("readOnly Will force the ReadOnly setting in VolumeMounts. Default false.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                required: [
+                    "claimName".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

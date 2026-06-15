@@ -199,3 +199,129 @@ impl crate::schemars::JsonSchema for PolicyRule {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for PolicyRule {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.rbac.v1.PolicyRule".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "apiGroups".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed. \"\" represents the core API group and \"*\" represents all API groups.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "nonResourceURLs".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as \"pods\" or \"secrets\") or non-resource URL paths (such as \"/api\"),  but not both.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "resourceNames".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "resources".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Resources is a list of resources this rule applies to. '*' represents all resources.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "verbs".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Verbs is a list of Verbs that apply to ALL the ResourceKinds contained in this rule. '*' represents all verbs.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                required: [
+                    "verbs".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

@@ -203,3 +203,78 @@ impl crate::schemars::JsonSchema for CertificateSigningRequest {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for CertificateSigningRequest {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.certificates.v1.CertificateSigningRequest".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("CertificateSigningRequest objects provide a mechanism to obtain x509 certificates by submitting a certificate signing request, and having it asynchronously approved and issued.\n\nKubelets use this API to obtain:\n 1. client certificates to authenticate to kube-apiserver (with the \"kubernetes.io/kube-apiserver-client-kubelet\" signerName).\n 2. serving certificates for TLS endpoints kube-apiserver can connect to securely (with the \"kubernetes.io/kubelet-serving\" signerName).\n\nThis API can be used to request client certificates to authenticate to kube-apiserver (with the \"kubernetes.io/kube-apiserver-client\" signerName), or to obtain certificates from custom non-Kubernetes signers.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "apiVersion".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "kind".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "metadata".into(),
+                        __gen.subschema_for::<crate::apimachinery::pkg::apis::meta::v1::ObjectMeta>(),
+                    ),
+                    (
+                        "spec".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::certificates::v1::CertificateSigningRequestSpec>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("spec contains the certificate request, and is immutable after creation. Only the request, signerName, expirationSeconds, and usages fields can be set on creation. Other fields are derived by Kubernetes and cannot be modified by users.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "status".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::certificates::v1::CertificateSigningRequestStatus>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("status contains information about whether the request is approved or denied, and the certificate issued by the signer, or the failure condition indicating signer failure.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                required: [
+                    "metadata".into(),
+                    "spec".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

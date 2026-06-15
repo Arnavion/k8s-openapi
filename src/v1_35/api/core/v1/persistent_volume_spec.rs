@@ -684,3 +684,389 @@ impl crate::schemars::JsonSchema for PersistentVolumeSpec {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for PersistentVolumeSpec {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.PersistentVolumeSpec".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("PersistentVolumeSpec is the specification of a persistent volume.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "accessModes".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("accessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "awsElasticBlockStore".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::AWSElasticBlockStoreVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Deprecated: AWSElasticBlockStore is deprecated. All operations for the in-tree awsElasticBlockStore type are redirected to the ebs.csi.aws.com CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "azureDisk".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::AzureDiskVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod. Deprecated: AzureDisk is deprecated. All operations for the in-tree azureDisk type are redirected to the disk.csi.azure.com CSI driver.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "azureFile".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::AzureFilePersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("azureFile represents an Azure File Service mount on the host and bind mount to the pod. Deprecated: AzureFile is deprecated. All operations for the in-tree azureFile type are redirected to the file.csi.azure.com CSI driver.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "capacity".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("capacity is the description of the persistent volume's resources and capacity. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+                            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                                additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>())),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "cephfs".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::CephFSPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("cephFS represents a Ceph FS mount on the host that shares a pod's lifetime. Deprecated: CephFS is deprecated and the in-tree cephfs type is no longer supported.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "cinder".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::CinderPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("cinder represents a cinder volume attached and mounted on kubelets host machine. Deprecated: Cinder is deprecated. All operations for the in-tree cinder type are redirected to the cinder.csi.openstack.org CSI driver. More info: https://examples.k8s.io/mysql-cinder-pd/README.md".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "claimRef".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ObjectReference>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("claimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "csi".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::CSIPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("csi represents storage that is handled by an external CSI driver.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "fc".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::FCVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("fc represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "flexVolume".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::FlexPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin. Deprecated: FlexVolume is deprecated. Consider using a CSIDriver instead.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "flocker".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::FlockerVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running. Deprecated: Flocker is deprecated and the in-tree flocker type is no longer supported.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "gcePersistentDisk".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::GCEPersistentDiskVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. Deprecated: GCEPersistentDisk is deprecated. All operations for the in-tree gcePersistentDisk type are redirected to the pd.csi.storage.gke.io CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "glusterfs".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::GlusterfsPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. Deprecated: Glusterfs is deprecated and the in-tree glusterfs type is no longer supported. More info: https://examples.k8s.io/volumes/glusterfs/README.md".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "hostPath".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::HostPathVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("hostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "iscsi".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ISCSIPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("iscsi represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "local".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::LocalVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("local represents directly-attached storage with node affinity".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "mountOptions".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("mountOptions is the list of mount options, e.g. [\"ro\", \"soft\"]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                        ..Default::default()
+                                    })
+                                ))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "nfs".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::NFSVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("nfs represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "nodeAffinity".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::VolumeNodeAffinity>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("nodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume. This field is mutable if MutablePVNodeAffinity feature gate is enabled.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "persistentVolumeReclaimPolicy".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("persistentVolumeReclaimPolicy defines what happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "photonPersistentDisk".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PhotonPersistentDiskVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine. Deprecated: PhotonPersistentDisk is deprecated and the in-tree photonPersistentDisk type is no longer supported.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "portworxVolume".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::PortworxVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("portworxVolume represents a portworx volume attached and mounted on kubelets host machine. Deprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type are redirected to the pxd.portworx.com CSI driver when the CSIMigrationPortworx feature-gate is on.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "quobyte".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::QuobyteVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("quobyte represents a Quobyte mount on the host that shares a pod's lifetime. Deprecated: Quobyte is deprecated and the in-tree quobyte type is no longer supported.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "rbd".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::RBDPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. Deprecated: RBD is deprecated and the in-tree rbd type is no longer supported. More info: https://examples.k8s.io/volumes/rbd/README.md".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "scaleIO".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::ScaleIOPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes. Deprecated: ScaleIO is deprecated and the in-tree scaleIO type is no longer supported.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "storageClassName".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("storageClassName is the name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "storageos".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::StorageOSPersistentVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("storageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod. Deprecated: StorageOS is deprecated and the in-tree storageos type is no longer supported. More info: https://examples.k8s.io/volumes/storageos/README.md".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "volumeAttributesClassName".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Name of VolumeAttributesClass to which this persistent volume belongs. Empty value is not allowed. When this field is not set, it indicates that this volume does not belong to any VolumeAttributesClass. This field is mutable and can be changed by the CSI driver after a volume has been updated successfully to a new class. For an unbound PersistentVolume, the volumeAttributesClassName will be matched with unbound PersistentVolumeClaims during the binding process.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "volumeMode".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "vsphereVolume".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::core::v1::VsphereVirtualDiskVolumeSource>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine. Deprecated: VsphereVolume is deprecated. All operations for the in-tree vsphereVolume type are redirected to the csi.vsphere.vmware.com CSI driver.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

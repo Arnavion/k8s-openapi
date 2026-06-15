@@ -237,6 +237,8 @@ extern crate std;
 pub use jiff;
 #[cfg(feature = "schemars")]
 pub use schemars;
+#[cfg(feature = "schemars08")]
+pub use schemars08;
 pub use serde;
 pub use serde_json;
 

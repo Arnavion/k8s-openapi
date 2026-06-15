@@ -67,3 +67,39 @@ impl crate::schemars::JsonSchema for JSONSchemaPropsOrStringArray {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for JSONSchemaPropsOrStringArray {
+    fn schema_name() -> std::string::String {
+        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrStringArray".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.".into()),
+                ..Default::default()
+            })),
+            subschemas: Some(std::boxed::Box::new(crate::schemars08::schema::SubschemaValidation {
+                one_of: Some(std::vec![
+                    __gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>(),
+                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                        array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                            items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(
+                                crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                                    instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                                    ..Default::default()
+                                }),
+                            ))),
+                            ..Default::default()
+                        })),
+                        ..Default::default()
+                    }),
+                ]),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

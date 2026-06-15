@@ -50,6 +50,7 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 ///     version = "v1",
 ///     plural = "foobars",
 ///     generate_schema,
+///     generate_schema08,
 ///     namespaced,
 ///     has_subresources = "v1",
 ///     impl_deep_merge,
@@ -108,6 +109,11 @@ impl<T, E> ResultExt<T> for Result<T, E> where E: std::fmt::Display {
 /// The `generate_schema` meta item is optional. If set, the generated custom resource type will have an impl of `schemars::JsonSchema` from the `schemars` crate.
 /// The `schemars` feature of the `k8s-openapi` crate must be enabled so that the types in that crate also have their `schemars::JsonSchema` impls enabled.
 /// You will also need to impl `schemars::JsonSchema` on the `Spec` type itself, either manually or via `#[derive(schemars::JsonSchema)]`.
+///
+/// The `generate_schema08` meta item is optional. If set, the generated custom resource type will have an impl of `schemars08::JsonSchema` from the `schemars` v0.8 crate.
+/// The `schemars08` feature of the `k8s-openapi` crate must be enabled so that the types in that crate also have their `schemars08::JsonSchema` impls enabled.
+/// You will also need to have a dependency on schemars v0.8 named `schemars08` (via `schemars08 = { package = "schemars", version = "0.8" }` in `Cargo.toml`),
+/// and impl `schemars08::JsonSchema` on the `Spec` type itself, either manually or via `#[derive(schemars08::JsonSchema)] #[schemars(crate = "schemars08")]`.
 ///
 /// The `has_subresources` meta item is optional. If set, the generated custom resource type will have a `subresources` field. The value of the meta item
 /// specifies which namespace the type will be used from. For example, setting `has_subresources = "v1"` causes the field to be of the

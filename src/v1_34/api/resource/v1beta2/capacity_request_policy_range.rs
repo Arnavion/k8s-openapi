@@ -164,3 +164,62 @@ impl crate::schemars::JsonSchema for CapacityRequestPolicyRange {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for CapacityRequestPolicyRange {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1beta2.CapacityRequestPolicyRange".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("CapacityRequestPolicyRange defines a valid range for consumable capacity values.\n\n  - If the requested amount is less than Min, it is rounded up to the Min value.\n  - If Step is set and the requested amount is between Min and Max but not aligned with Step,\n    it will be rounded up to the next value equal to Min + (n * Step).\n  - If Step is not set, the requested amount is used as-is if it falls within the range Min to Max (if set).\n  - If the requested or rounded amount exceeds Max (if set), the request does not satisfy the policy,\n    and the device cannot be allocated.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "max".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Max defines the upper limit for capacity that can be requested.\n\nMax must be less than or equal to the capacity value. Min and requestPolicy.default must be less than or equal to the maximum.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "min".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Min specifies the minimum capacity allowed for a consumption request.\n\nMin must be greater than or equal to zero, and less than or equal to the capacity value. requestPolicy.default must be more than or equal to the minimum.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "step".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Step defines the step size between valid capacity amounts within the range.\n\nMax (if set) and requestPolicy.default must be a multiple of Step. Min + Step must be less than or equal to the capacity value.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                required: [
+                    "min".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

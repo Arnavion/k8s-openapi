@@ -12,9 +12,12 @@ include = [
 ]
 
 [dependencies]
-k8s-openapi = { path = "..", default-features = false, features = ["schemars"] }
+k8s-openapi = { path = "..", default-features = false, features = ["schemars", "schemars08"] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 schemars = { version = "1", default-features = false, features = [
+    "derive", # for #[derive(schemars::JsonSchema)]
+] }
+schemars08 = { package = "schemars", version = "0.8", default-features = false, features = [
     "derive", # for #[derive(schemars::JsonSchema)]
 ] }
 

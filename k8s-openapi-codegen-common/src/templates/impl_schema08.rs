@@ -1,0 +1,398 @@
+use crate::swagger20;
+
+pub(crate) fn generate(
+    mut writer: impl std::io::Write,
+    type_name: &str,
+    generics: super::Generics<'_>,
+    definition_path: &swagger20::DefinitionPath,
+    definition: &swagger20::Schema,
+    schemars_feature: Option<&str>,
+    map_namespace: &impl crate::MapNamespace,
+) -> Result<(), crate::Error> {
+    let local = crate::map_namespace_local_to_string(map_namespace)?;
+
+    let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+    let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
+    let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
+
+    let cfg = schemars_feature.map_or_else(String::new, |schemars_feature| format!("#[cfg(feature = {schemars_feature:?})]\n"));
+    let mut schema = String::new();
+    gen_schema(&mut schema, definition, &local, map_namespace, 2)?;
+
+    writeln!(
+        writer,
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/impl_schema08.rs")),
+        local = local,
+        cfg = cfg,
+        type_name = type_name,
+        type_generics_impl = type_generics_impl,
+        type_generics_type = type_generics_type,
+        type_generics_where = type_generics_where,
+        definition_path = &**definition_path,
+        schema = schema,
+    )?;
+
+    Ok(())
+}
+
+fn gen_schema(
+    out: &mut String,
+    definition: &swagger20::Schema,
+    local: &str,
+    map_namespace: &impl crate::MapNamespace,
+    depth: usize,
+) -> Result<(), crate::Error> {
+    use std::fmt::Write;
+
+    let indent = "    ".repeat(depth);
+
+    writeln!(out, "{indent}{local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+
+    if let Some(description) = &definition.description {
+        writeln!(out, "{indent}    metadata: Some(std::boxed::Box::new({local}schemars08::schema::Metadata {{")?;
+        writeln!(out, "{indent}        description: Some({description:?}.into()),")?;
+        writeln!(out, "{indent}        ..Default::default()")?;
+        writeln!(out, "{indent}    }})),")?;
+    }
+
+    match &definition.kind {
+        swagger20::SchemaKind::Properties(properties) => {
+            writeln!(out,
+                "{indent}    instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}    object: Some(std::boxed::Box::new({local}schemars08::schema::ObjectValidation {{")?;
+
+            let mut required_props = String::new();
+            let mut props = String::new();
+            for (name, (schema, required)) in properties {
+                if *required {
+                    writeln!(required_props, "{indent}            {:?}.into(),", &**name)?;
+                }
+
+                match &schema.kind {
+                    swagger20::SchemaKind::Properties(_) => unreachable!("unexpected nested properties"),
+
+                    swagger20::SchemaKind::Ref(ref_path) => {
+                        writeln!(props, "{indent}            (")?;
+                        writeln!(props, "{indent}                {:?}.into(),", &**name)?;
+
+                        let type_name = crate::get_fully_qualified_type_name(ref_path, map_namespace);
+
+                        if let Some(description) = &schema.description {
+                            // Override the subschema's description
+                            writeln!(props, "{indent}                {{")?;
+                            writeln!(props, "{indent}                    let mut schema_obj = __gen.subschema_for::<{type_name}>().into_object();")?;
+                            writeln!(props, "{indent}                    schema_obj.metadata = Some(std::boxed::Box::new({local}schemars08::schema::Metadata {{")?;
+                            writeln!(props, "{indent}                        description: Some({description:?}.into()),")?;
+                            writeln!(props, "{indent}                        ..Default::default()")?;
+                            writeln!(props, "{indent}                    }}));")?;
+                            writeln!(props, "{indent}                    {local}schemars08::schema::Schema::Object(schema_obj)")?;
+                            writeln!(props, "{indent}                }},")?;
+                        }
+                        else {
+                            writeln!(props, "{indent}                __gen.subschema_for::<{type_name}>(),")?;
+                        }
+
+                        writeln!(props, "{indent}            ),")?;
+                    },
+
+                    swagger20::SchemaKind::Ty(ty) => {
+                        writeln!(props, "{indent}            (")?;
+                        writeln!(props, "{indent}                {:?}.into(),", &**name)?;
+                        gen_type_as_schema_object(&mut props, ty, schema.description.as_deref(), local, map_namespace, depth)?;
+                        writeln!(props, "{indent}            ),")?;
+                    },
+                }
+            }
+
+            if !props.is_empty() {
+                writeln!(out, "{indent}        properties: [")?;
+                write!(out, "{props}")?;
+                writeln!(out, "{indent}        ].into(),")?;
+            }
+
+            if !required_props.is_empty() {
+                writeln!(out, "{indent}        required: [")?;
+                write!(out, "{required_props}")?;
+                writeln!(out, "{indent}        ].into(),")?;
+            }
+
+            writeln!(out, "{indent}        ..Default::default()")?;
+            writeln!(out, "{indent}    }})),")?;
+        },
+
+        swagger20::SchemaKind::Ty(ty) =>
+            gen_type(out, ty, local, map_namespace, depth + 1)?,
+
+        swagger20::SchemaKind::Ref(ref_path) => unreachable!("unexpected $ref {ref_path:?}"),
+    }
+
+    writeln!(out, "{indent}    ..Default::default()")?;
+    writeln!(out, "{indent}}})")?;
+
+    Ok(())
+}
+
+fn gen_type_as_schema_object(
+    out: &mut String,
+    ty: &swagger20::Type,
+    description_override: Option<&str>,
+    local: &str,
+    map_namespace: &impl crate::MapNamespace,
+    depth: usize,
+) -> Result<(), crate::Error> {
+    use std::fmt::Write;
+
+    let indent = "    ".repeat(depth);
+
+    if let swagger20::Type::CustomResourceSubresources(v) = ty {
+        let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
+            path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.CustomResourceSubresources"),
+            can_be_default: None,
+        }, map_namespace);
+        writeln!(out, "{indent}                __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
+    }
+    else {
+        writeln!(out, "{indent}                {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+        if let Some(description) = description_override {
+            writeln!(out, "{indent}                    metadata: Some(std::boxed::Box::new({local}schemars08::schema::Metadata {{")?;
+            writeln!(out, "{indent}                        description: Some({description:?}.into()),")?;
+            writeln!(out, "{indent}                        ..Default::default()")?;
+            writeln!(out, "{indent}                    }})),")?;
+        }
+
+        gen_type(out, ty, local, map_namespace, depth + 5)?;
+
+        writeln!(out, "{indent}                    ..Default::default()")?;
+        writeln!(out, "{indent}                }}),")?;
+    }
+
+    Ok(())
+}
+
+fn gen_type(
+    out: &mut String,
+    ty: &swagger20::Type,
+    local: &str,
+    map_namespace: &impl crate::MapNamespace,
+    depth: usize,
+) -> Result<(), crate::Error> {
+    use std::fmt::Write;
+
+    let indent = "    ".repeat(depth);
+
+    match ty {
+        swagger20::Type::Any =>
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Object))),")?,
+
+        swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Array) => {
+            let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
+                path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
+                can_be_default: None,
+            }, map_namespace);
+
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars08::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
+
+            writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
+
+            writeln!(out, "{indent}        {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+            writeln!(out,
+                "{indent}            instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}            array: Some(std::boxed::Box::new({local}schemars08::schema::ArrayValidation {{")?;
+            writeln!(out,
+                "{indent}                items: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<{json_schema_props_type_name}>()))),")?;
+            writeln!(out, "{indent}                ..Default::default()")?;
+            writeln!(out, "{indent}            }})),")?;
+            writeln!(out, "{indent}            ..Default::default()")?;
+            writeln!(out, "{indent}        }}),")?;
+
+            writeln!(out, "{indent}    ]),")?;
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::Bool) => {
+            let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
+                path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
+                can_be_default: None,
+            }, map_namespace);
+
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars08::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
+
+            writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
+
+            writeln!(out, "{indent}        {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+            writeln!(out,
+                "{indent}            instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Boolean))),")?;
+            writeln!(out, "{indent}            ..Default::default()")?;
+            writeln!(out, "{indent}        }}),")?;
+
+            writeln!(out, "{indent}    ]),")?;
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        swagger20::Type::JsonSchemaPropsOr(v, swagger20::JsonSchemaPropsOr::StringArray) => {
+            let json_schema_props_type_name = crate::get_fully_qualified_type_name(&swagger20::RefPath {
+                path: format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{v}.JSONSchemaProps"),
+                can_be_default: None,
+            }, map_namespace);
+
+            writeln!(out, "{indent}subschemas: Some(std::boxed::Box::new({local}schemars08::schema::SubschemaValidation {{")?;
+            writeln!(out, "{indent}    one_of: Some(std::vec![")?;
+
+            writeln!(out, "{indent}        __gen.subschema_for::<{json_schema_props_type_name}>(),")?;
+
+
+            writeln!(out, "{indent}        {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+            writeln!(out,
+                "{indent}            instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}            array: Some(std::boxed::Box::new({local}schemars08::schema::ArrayValidation {{")?;
+
+            writeln!(out, "{indent}                items: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(")?;
+            writeln!(out, "{indent}                    {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+            writeln!(out,
+                "{indent}                        instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::String))),")?;
+            writeln!(out, "{indent}                        ..Default::default()")?;
+            writeln!(out, "{indent}                    }}),")?;
+            writeln!(out, "{indent}                ))),")?;
+
+            writeln!(out, "{indent}                ..Default::default()")?;
+            writeln!(out, "{indent}            }})),")?;
+            writeln!(out, "{indent}            ..Default::default()")?;
+            writeln!(out, "{indent}        }}),")?;
+
+
+            writeln!(out, "{indent}    ]),")?;
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        swagger20::Type::Array { items } => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Array))),")?;
+            writeln!(out, "{indent}array: Some(std::boxed::Box::new({local}schemars08::schema::ArrayValidation {{")?;
+            if let swagger20::SchemaKind::Ref(ref_path) = &items.kind {
+                writeln!(out,
+                    "{indent}    items: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<{}>()))),",
+                    crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
+            }
+            else {
+                writeln!(out, "{indent}    items: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(")?;
+                gen_schema(out, items, local, map_namespace, depth + 2)?;
+                writeln!(out, "{indent}    ))),")?;
+            }
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        swagger20::Type::Boolean => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Boolean))),")?;
+        }
+
+        swagger20::Type::Integer { format } => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Integer))),")?;
+            let format = match format {
+                swagger20::IntegerFormat::Int32 => {
+                    "int32"
+                }
+                swagger20::IntegerFormat::Int64 => {
+                    "int64"
+                }
+            };
+            writeln!(out, "{indent}format: Some({format:?}.into()),")?;
+        }
+
+        swagger20::Type::Number { format } => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Number))),")?;
+
+            match format {
+                swagger20::NumberFormat::Double => {
+                    writeln!(out, r#"{indent}format: Some("double".into()),"#)?;
+                }
+            }
+        }
+
+        swagger20::Type::Object { additional_properties } => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}object: Some(std::boxed::Box::new({local}schemars08::schema::ObjectValidation {{")?;
+            if let swagger20::SchemaKind::Ref(ref_path) = &additional_properties.kind {
+                writeln!(out,
+                    "{indent}    additional_properties: Some(std::boxed::Box::new(__gen.subschema_for::<{}>())),",
+                    crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
+            }
+            else {
+                writeln!(out, "{indent}    additional_properties: Some(std::boxed::Box::new(")?;
+                gen_schema(out, additional_properties, local, map_namespace, depth + 2)?;
+                writeln!(out, "{indent}    )),")?;
+            }
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        swagger20::Type::String { format } => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::String))),")?;
+            match format {
+                Some(swagger20::StringFormat::Byte) => {
+                    writeln!(out, r#"{indent}format: Some("byte".into()),"#)?;
+                },
+                Some(swagger20::StringFormat::DateTime) => {
+                    writeln!(out, r#"{indent}format: Some("date-time".into()),"#)?;
+                },
+                None => (),
+            }
+        }
+
+        swagger20::Type::IntOrString |
+        swagger20::Type::Quantity => {
+            writeln!(out, r#"{indent}extensions: ["#)?;
+            writeln!(out, r#"{indent}    ("x-kubernetes-int-or-string".into(), crate::serde_json::Value::Bool(true)),"#)?;
+            writeln!(out, r#"{indent}].into(),"#)?;
+        }
+
+        swagger20::Type::Patch => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Object))),")?;
+        }
+
+        swagger20::Type::WatchEvent(ref_path) => {
+            writeln!(out,
+                "{indent}instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::Object))),")?;
+            writeln!(out, "{indent}object: Some(std::boxed::Box::new({local}schemars08::schema::ObjectValidation {{")?;
+            writeln!(out, "{indent}    properties: [")?;
+            writeln!(out, "{indent}        (")?;
+            writeln!(out, r#"{indent}            "object".into(),"#)?;
+            writeln!(out,  "{indent}            __gen.subschema_for::<{}>(),", crate::get_fully_qualified_type_name(ref_path, map_namespace))?;
+            writeln!(out, "{indent}        ),")?;
+
+            writeln!(out, "{indent}        (")?;
+            writeln!(out, r#"{indent}            "type".into(),"#)?;
+            writeln!(out, "{indent}            {local}schemars08::schema::Schema::Object({local}schemars08::schema::SchemaObject {{")?;
+            writeln!(out,
+                "{indent}                instance_type: Some({local}schemars08::schema::SingleOrVec::Single(std::boxed::Box::new({local}schemars08::schema::InstanceType::String))),")?;
+            writeln!(out, "{indent}                ..Default::default()")?;
+            writeln!(out, "{indent}            }}),")?;
+            writeln!(out, "{indent}        ),")?;
+            writeln!(out, "{indent}    ].into(),")?;
+
+            writeln!(out, "{indent}    required: [")?;
+            writeln!(out, r#"{indent}        "object".into(),"#)?;
+            writeln!(out, r#"{indent}        "type".into(),"#)?;
+            writeln!(out, "{indent}    ].into(),")?;
+
+            writeln!(out, "{indent}    ..Default::default()")?;
+            writeln!(out, "{indent}}})),")?;
+        }
+
+        _ => unreachable!("cannot generate schema for type {ty:?}"),
+    }
+
+    Ok(())
+}

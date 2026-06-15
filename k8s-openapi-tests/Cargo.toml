@@ -27,6 +27,7 @@ http = { version = "1", default-features = false, features = [
 ] }
 k8s-openapi = { path = "..", features = [
     "schemars", # for resource types: schemars::JsonSchema
+    "schemars08", # for resource types: schemars08::JsonSchema
 ] }
 k8s-openapi-derive = { path = "../k8s-openapi-derive" }
 percent-encoding = { version = "2", default-features = false }
@@ -36,6 +37,9 @@ reqwest = { version = "0.13", default-features = false, features = [
     "stream", # for reqwest::Response::bytes_stream
 ] }
 schemars = { version = "1", default-features = false, features = [
+    "derive", # for #[derive(schemars::JsonSchema)]
+] }
+schemars08 = { package = "schemars", version = "0.8", default-features = false, features = [
     "derive", # for #[derive(schemars::JsonSchema)]
 ] }
 serde = { version = "1", default-features = false, features = [

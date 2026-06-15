@@ -64,3 +64,30 @@ impl crate::schemars::JsonSchema for JSONSchemaPropsOrBool {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for JSONSchemaPropsOrBool {
+    fn schema_name() -> std::string::String {
+        "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.JSONSchemaPropsOrBool".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property.".into()),
+                ..Default::default()
+            })),
+            subschemas: Some(std::boxed::Box::new(crate::schemars08::schema::SubschemaValidation {
+                one_of: Some(std::vec![
+                    __gen.subschema_for::<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::JSONSchemaProps>(),
+                    crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                        instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Boolean))),
+                        ..Default::default()
+                    }),
+                ]),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

@@ -131,3 +131,48 @@ impl crate::schemars::JsonSchema for PodGroupSchedulingPolicy {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for PodGroupSchedulingPolicy {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingPolicy".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("PodGroupSchedulingPolicy defines the scheduling configuration for a PodGroup. Exactly one policy must be set.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "basic".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::scheduling::v1alpha2::BasicSchedulingPolicy>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Basic specifies that the pods in this group should be scheduled using standard Kubernetes scheduling behavior.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "gang".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::scheduling::v1alpha2::GangSchedulingPolicy>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Gang specifies that the pods in this group should be scheduled using all-or-nothing semantics.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

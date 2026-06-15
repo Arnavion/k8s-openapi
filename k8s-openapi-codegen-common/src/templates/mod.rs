@@ -10,6 +10,8 @@ pub(crate) mod impl_resource;
 
 pub(crate) mod impl_schema;
 
+pub(crate) mod impl_schema08;
+
 pub(crate) mod impl_serialize;
 
 pub(crate) mod int_or_string;

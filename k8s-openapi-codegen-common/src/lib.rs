@@ -142,6 +142,7 @@ pub fn run(
     map_namespace: &impl MapNamespace,
     vis: &str,
     generate_schema: GenerateSchema<'_>,
+    generate_schema08: GenerateSchema<'_>,
     mut state: impl RunState,
 ) -> Result<RunResult, Error> {
     let definition = definitions.get(definition_path).ok_or_else(|| format!("definition for {definition_path} does not exist in spec"))?;
@@ -764,7 +765,7 @@ pub fn run(
         },
     }
 
-    if let GenerateSchema::Yes { feature: schema_feature } = generate_schema {
+    if let GenerateSchema::Yes { feature: schemars_feature } = generate_schema {
         match &definition.kind {
             swagger20::SchemaKind::Properties(_) |
             swagger20::SchemaKind::Ty(
@@ -786,7 +787,7 @@ pub fn run(
                     Default::default(),
                     definition_path,
                     definition,
-                    schema_feature,
+                    schemars_feature,
                     map_namespace,
                 )?;
             }
@@ -801,7 +802,53 @@ pub fn run(
                     },
                     definition_path,
                     definition,
-                    schema_feature,
+                    schemars_feature,
+                    map_namespace,
+                )?;
+            }
+
+            _ => (),
+        }
+    }
+
+    if let GenerateSchema::Yes { feature: schemars_feature } = generate_schema08 {
+        match &definition.kind {
+            swagger20::SchemaKind::Properties(_) |
+            swagger20::SchemaKind::Ty(
+                swagger20::Type::Any |
+                swagger20::Type::Array { .. } |
+                swagger20::Type::Boolean |
+                swagger20::Type::Integer { .. } |
+                swagger20::Type::Number { .. } |
+                swagger20::Type::Object { .. } |
+                swagger20::Type::String { .. } |
+                swagger20::Type::IntOrString |
+                swagger20::Type::JsonSchemaPropsOr(_, _) |
+                swagger20::Type::Quantity |
+                swagger20::Type::Patch
+            ) => {
+                templates::impl_schema08::generate(
+                    &mut out,
+                    type_name,
+                    Default::default(),
+                    definition_path,
+                    definition,
+                    schemars_feature,
+                    map_namespace,
+                )?;
+            }
+
+            swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => {
+                templates::impl_schema08::generate(
+                    &mut out,
+                    type_name,
+                    templates::Generics {
+                        type_part: Some("T"),
+                        where_part: None,
+                    },
+                    definition_path,
+                    definition,
+                    schemars_feature,
                     map_namespace,
                 )?;
             }

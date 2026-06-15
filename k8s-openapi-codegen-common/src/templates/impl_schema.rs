@@ -6,7 +6,7 @@ pub(crate) fn generate(
     generics: super::Generics<'_>,
     definition_path: &swagger20::DefinitionPath,
     definition: &swagger20::Schema,
-    schema_feature: Option<&str>,
+    schemars_feature: Option<&str>,
     map_namespace: &impl crate::MapNamespace,
 ) -> Result<(), crate::Error> {
     let local = crate::map_namespace_local_to_string(map_namespace)?;
@@ -15,10 +15,8 @@ pub(crate) fn generate(
     let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
     let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
 
-    let cfg = schema_feature.map_or_else(String::new, |schema_feature| format!("#[cfg(feature = {schema_feature:?})]\n"));
-
+    let cfg = schemars_feature.map_or_else(String::new, |schemars_feature| format!("#[cfg(feature = {schemars_feature:?})]\n"));
     let mut schema = String::new();
-
     gen_schema(&mut schema, definition, &local, map_namespace, 2)?;
 
     writeln!(

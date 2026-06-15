@@ -79,3 +79,23 @@ impl crate::schemars::JsonSchema for IntOrString {
         })
     }
 }
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for IntOrString {
+    fn schema_name() -> std::string::String {
+        "io.k8s.apimachinery.pkg.util.intstr.IntOrString".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.".into()),
+                ..Default::default()
+            })),
+            extensions: [
+                ("x-kubernetes-int-or-string".into(), crate::serde_json::Value::Bool(true)),
+            ].into(),
+            ..Default::default()
+        })
+    }
+}
