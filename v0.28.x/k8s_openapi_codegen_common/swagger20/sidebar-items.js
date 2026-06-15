@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["IntegerFormat","JsonSchemaPropsOr","KubernetesAction","KubernetesListType","KubernetesMapType","MergeType","NumberFormat","SchemaKind","StringFormat","Type"],"struct":["DefinitionPath","Info","KubernetesGroupKindVersion","Operation","Path","PropertyName","RefPath","Schema","Spec"]};

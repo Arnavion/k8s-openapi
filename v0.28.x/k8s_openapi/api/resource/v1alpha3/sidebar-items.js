@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["DeviceTaint","DeviceTaintRule","DeviceTaintRuleSpec","DeviceTaintRuleStatus","DeviceTaintSelector","PoolStatus","ResourcePoolStatusRequest","ResourcePoolStatusRequestSpec","ResourcePoolStatusRequestStatus"]};

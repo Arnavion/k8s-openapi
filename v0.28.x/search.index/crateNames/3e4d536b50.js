@@ -1,0 +1,1 @@
+rd_("kk8s_openapiAjk8s_openapi_codegen_commonAbk8s_openapi_derive")
