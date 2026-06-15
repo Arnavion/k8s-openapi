@@ -1,3 +1,33 @@
+# v0.28.0 (2026-06-14)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.36 under the `v1_36` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.31.
+
+- FEATURE: schemars v0.8 support has been restored under the `schemars08` feature flag. This can be enabled independently of the existing `schemars` feature that enables schemars v1 support.
+
+- FEATURE: `StatefulSetSpec::volume_claim_templates` field now uses a map merge strategy using its `.metadata.name` as the key.
+
+Corresponding Kubernetes API server versions:
+
+- v1.32.13
+- v1.33.13
+- v1.34.9
+- v1.35.6
+- v1.36.2
+
+## k8s-openapi-codegen-common
+
+- FEATURE: schemars v0.8 support has been restored via a new parameter to `fn run()`.
+
+## k8s-openapi-derive
+
+- FEATURE: schemars v0.8 support has been restored via a new `#[custom_resource_definition(generate_schema08)]` attr.
+
+---
+
 # v0.27.1 (2026-03-05)
 
 ## k8s-openapi
