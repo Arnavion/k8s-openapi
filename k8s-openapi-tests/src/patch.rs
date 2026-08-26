@@ -37,12 +37,13 @@ async fn deployment() {
         },
         ..Default::default()
     };
+    #[cfg_attr(k8s_apps_spec_required, expect(clippy::useless_conversion))]
     let deployment = apps::Deployment {
         metadata: meta::ObjectMeta {
             name: Some("k8s-openapi-tests-patch-deployment".to_owned()),
             ..Default::default()
         },
-        spec: Some(deployment_spec),
+        spec: deployment_spec.into(),
         ..Default::default()
     };
     let (request, response_body) = crate::clientset::create_namespaced::<apps::Deployment>("default", &deployment);
@@ -69,8 +70,9 @@ async fn deployment() {
 
 
     // Use merge patch to patch deployment with alpine:3.8 container
+    #[cfg_attr(k8s_apps_spec_required, expect(clippy::useless_conversion))]
     let patch = apps::Deployment {
-        spec: Some(apps::DeploymentSpec {
+        spec: (apps::DeploymentSpec {
             template: api::PodTemplateSpec {
                 spec: Some(api::PodSpec {
                     containers: vec![
@@ -85,7 +87,7 @@ async fn deployment() {
                 ..Default::default()
             },
             ..Default::default()
-        }),
+        }).into(),
         ..Default::default()
     };
     let patch = meta::Patch::Merge(serde_json::to_value(&patch).expect("couldn't create patch"));
@@ -93,8 +95,9 @@ async fn deployment() {
 
 
     // Use strategic merge patch to patch deployment with alpine:3.9 container
+    #[cfg_attr(k8s_apps_spec_required, expect(clippy::useless_conversion))]
     let patch = apps::Deployment {
-        spec: Some(apps::DeploymentSpec {
+        spec: (apps::DeploymentSpec {
             template: api::PodTemplateSpec {
                 spec: Some(api::PodSpec {
                     containers: vec![
@@ -109,7 +112,7 @@ async fn deployment() {
                 ..Default::default()
             },
             ..Default::default()
-        }),
+        }).into(),
         ..Default::default()
     };
     let patch = meta::Patch::StrategicMerge(serde_json::to_value(&patch).expect("couldn't create patch"));
@@ -142,9 +145,12 @@ async fn patch_and_assert_container_has_image(client: &mut crate::Client, patch:
         (other, status_code) => panic!("{other:?} {status_code}"),
     };
 
+    let deployment_spec = deployment.spec;
+    #[cfg(not(k8s_apps_spec_required))]
+    let deployment_spec = deployment_spec.expect("couldn't get deployment spec");
+
     let image =
-        deployment
-        .spec.expect("couldn't get deployment spec")
+        deployment_spec
         .template
         .spec.expect("couldn't get pod spec")
         .containers

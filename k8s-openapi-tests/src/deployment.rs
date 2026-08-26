@@ -19,9 +19,9 @@ async fn list() {
         .find(|deployment| deployment.metadata.name.as_deref() == Some("coredns"))
         .expect("couldn't find dns deployment");
 
-    let dns_deployment_spec =
-        dns_deployment
-        .spec.expect("couldn't get dns deployment spec");
+    let dns_deployment_spec = dns_deployment.spec;
+    #[cfg(not(k8s_apps_spec_required))]
+    let dns_deployment_spec = dns_deployment_spec.expect("couldn't get dns deployment spec");
 
     let mut dns_deployment_spec_selector_match_labels =
         dns_deployment_spec

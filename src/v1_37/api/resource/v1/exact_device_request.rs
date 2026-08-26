@@ -1,0 +1,411 @@
+// Generated from definition io.k8s.api.resource.v1.ExactDeviceRequest
+
+/// ExactDeviceRequest is a request for one or more identical devices.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct ExactDeviceRequest {
+    /// AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.
+    ///
+    /// Admin access is disabled if this field is unset or set to false, otherwise it is enabled.
+    pub admin_access: Option<bool>,
+
+    /// AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:
+    ///
+    /// - ExactCount: This request is for a specific number of devices.
+    ///   This is the default. The exact number is provided in the
+    ///   count field.
+    ///
+    /// - All: This request is for all of the matching devices in a pool.
+    ///   At least one device must exist on the node for the allocation to succeed.
+    ///   Allocation will fail if some devices are already allocated,
+    ///   unless adminAccess is requested.
+    ///
+    /// If AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.
+    ///
+    /// More modes may get added in the future. Clients must refuse to handle requests with unknown modes.
+    pub allocation_mode: Option<std::string::String>,
+
+    /// Capacity define resource requirements against each capacity.
+    ///
+    /// If this field is unset and the device supports multiple allocations, the default value will be applied to each capacity according to requestPolicy. For the capacity that has no requestPolicy, default is the full capacity value.
+    ///
+    /// Applies to each device allocation. If Count \> 1, the request fails if there aren't enough devices that meet the requirements. If AllocationMode is set to All, the request fails if there are devices that otherwise match the request, and have this capacity, with a value \>= the requested amount, but which cannot be allocated to this request.
+    pub capacity: Option<crate::api::resource::v1::CapacityRequirements>,
+
+    /// Count is used only when the count mode is "ExactCount". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.
+    pub count: Option<i64>,
+
+    /// DerivedAttributes defines a set of virtual attributes computed via CEL expressions for each candidate device. These virtual attributes can be referenced in `.devices.constraints` to align and match different devices (e.g., co-allocating a GPU and a NIC on the same NUMA node) even if their drivers publish different attributes. Derived attributes are not available via `device.attributes` in the CEL environment when evaluating selector expressions.
+    ///
+    /// Derived attributes allow you to extract, transform, or normalize topology information (such as extracting a NUMA index from a complex topology string or renaming a vendor-specific attribute) into a common virtual attribute name at scheduling time. The scheduler then evaluates these virtual attributes exactly like static attributes when matching constraints.
+    ///
+    /// Every derived attribute defined in this list must be referenced by at least one MatchAttribute or DistinctAttribute constraint in the `.devices.constraints` list.
+    ///
+    /// The maximum number of derived attributes is 32.
+    ///
+    /// This is an alpha field and requires enabling the DRADerivedAttributes feature gate.
+    pub derived_attributes: Option<std::vec::Vec<crate::api::resource::v1::DeviceDerivedAttribute>>,
+
+    /// DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.
+    ///
+    /// A DeviceClassName is required.
+    ///
+    /// Administrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.
+    pub device_class_name: std::string::String,
+
+    /// Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.
+    pub selectors: Option<std::vec::Vec<crate::api::resource::v1::DeviceSelector>>,
+
+    /// If specified, the request's tolerations.
+    ///
+    /// Tolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.
+    ///
+    /// In addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.
+    ///
+    /// The maximum number of tolerations is 16.
+    ///
+    /// This is a beta field and requires enabling the DRADeviceTaints feature gate.
+    pub tolerations: Option<std::vec::Vec<crate::api::resource::v1::DeviceToleration>>,
+}
+
+impl crate::DeepMerge for ExactDeviceRequest {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.admin_access, other.admin_access);
+        crate::DeepMerge::merge_from(&mut self.allocation_mode, other.allocation_mode);
+        crate::DeepMerge::merge_from(&mut self.capacity, other.capacity);
+        crate::DeepMerge::merge_from(&mut self.count, other.count);
+        crate::merge_strategies::list::atomic(&mut self.derived_attributes, other.derived_attributes);
+        crate::DeepMerge::merge_from(&mut self.device_class_name, other.device_class_name);
+        crate::merge_strategies::list::atomic(&mut self.selectors, other.selectors);
+        crate::merge_strategies::list::atomic(&mut self.tolerations, other.tolerations);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for ExactDeviceRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_admin_access,
+            Key_allocation_mode,
+            Key_capacity,
+            Key_count,
+            Key_derived_attributes,
+            Key_device_class_name,
+            Key_selectors,
+            Key_tolerations,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "adminAccess" => Field::Key_admin_access,
+                            "allocationMode" => Field::Key_allocation_mode,
+                            "capacity" => Field::Key_capacity,
+                            "count" => Field::Key_count,
+                            "derivedAttributes" => Field::Key_derived_attributes,
+                            "deviceClassName" => Field::Key_device_class_name,
+                            "selectors" => Field::Key_selectors,
+                            "tolerations" => Field::Key_tolerations,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = ExactDeviceRequest;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("ExactDeviceRequest")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_admin_access: Option<bool> = None;
+                let mut value_allocation_mode: Option<std::string::String> = None;
+                let mut value_capacity: Option<crate::api::resource::v1::CapacityRequirements> = None;
+                let mut value_count: Option<i64> = None;
+                let mut value_derived_attributes: Option<std::vec::Vec<crate::api::resource::v1::DeviceDerivedAttribute>> = None;
+                let mut value_device_class_name: Option<std::string::String> = None;
+                let mut value_selectors: Option<std::vec::Vec<crate::api::resource::v1::DeviceSelector>> = None;
+                let mut value_tolerations: Option<std::vec::Vec<crate::api::resource::v1::DeviceToleration>> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_admin_access => value_admin_access = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allocation_mode => value_allocation_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_capacity => value_capacity = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_count => value_count = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_derived_attributes => value_derived_attributes = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_device_class_name => value_device_class_name = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selectors => value_selectors = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tolerations => value_tolerations = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(ExactDeviceRequest {
+                    admin_access: value_admin_access,
+                    allocation_mode: value_allocation_mode,
+                    capacity: value_capacity,
+                    count: value_count,
+                    derived_attributes: value_derived_attributes,
+                    device_class_name: value_device_class_name.unwrap_or_default(),
+                    selectors: value_selectors,
+                    tolerations: value_tolerations,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "ExactDeviceRequest",
+            &[
+                "adminAccess",
+                "allocationMode",
+                "capacity",
+                "count",
+                "derivedAttributes",
+                "deviceClassName",
+                "selectors",
+                "tolerations",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for ExactDeviceRequest {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "ExactDeviceRequest",
+            1 +
+            self.admin_access.as_ref().map_or(0, |_| 1) +
+            self.allocation_mode.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.count.as_ref().map_or(0, |_| 1) +
+            self.derived_attributes.as_ref().map_or(0, |_| 1) +
+            self.selectors.as_ref().map_or(0, |_| 1) +
+            self.tolerations.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.admin_access {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "adminAccess", value)?;
+        }
+        if let Some(value) = &self.allocation_mode {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "allocationMode", value)?;
+        }
+        if let Some(value) = &self.capacity {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "capacity", value)?;
+        }
+        if let Some(value) = &self.count {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+        }
+        if let Some(value) = &self.derived_attributes {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "derivedAttributes", value)?;
+        }
+        crate::serde::ser::SerializeStruct::serialize_field(&mut state, "deviceClassName", &self.device_class_name)?;
+        if let Some(value) = &self.selectors {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "selectors", value)?;
+        }
+        if let Some(value) = &self.tolerations {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for ExactDeviceRequest {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.resource.v1.ExactDeviceRequest".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "ExactDeviceRequest is a request for one or more identical devices.",
+            "type": "object",
+            "properties": {
+                "adminAccess": {
+                    "description": "AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.\n\nAdmin access is disabled if this field is unset or set to false, otherwise it is enabled.",
+                    "type": "boolean",
+                },
+                "allocationMode": {
+                    "description": "AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:\n\n- ExactCount: This request is for a specific number of devices.\n  This is the default. The exact number is provided in the\n  count field.\n\n- All: This request is for all of the matching devices in a pool.\n  At least one device must exist on the node for the allocation to succeed.\n  Allocation will fail if some devices are already allocated,\n  unless adminAccess is requested.\n\nIf AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.\n\nMore modes may get added in the future. Clients must refuse to handle requests with unknown modes.",
+                    "type": "string",
+                },
+                "capacity": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1::CapacityRequirements>();
+                    schema_obj.ensure_object().insert("description".into(), "Capacity define resource requirements against each capacity.\n\nIf this field is unset and the device supports multiple allocations, the default value will be applied to each capacity according to requestPolicy. For the capacity that has no requestPolicy, default is the full capacity value.\n\nApplies to each device allocation. If Count > 1, the request fails if there aren't enough devices that meet the requirements. If AllocationMode is set to All, the request fails if there are devices that otherwise match the request, and have this capacity, with a value >= the requested amount, but which cannot be allocated to this request.".into());
+                    schema_obj
+                }),
+                "count": {
+                    "description": "Count is used only when the count mode is \"ExactCount\". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "derivedAttributes": {
+                    "description": "DerivedAttributes defines a set of virtual attributes computed via CEL expressions for each candidate device. These virtual attributes can be referenced in `.devices.constraints` to align and match different devices (e.g., co-allocating a GPU and a NIC on the same NUMA node) even if their drivers publish different attributes. Derived attributes are not available via `device.attributes` in the CEL environment when evaluating selector expressions.\n\nDerived attributes allow you to extract, transform, or normalize topology information (such as extracting a NUMA index from a complex topology string or renaming a vendor-specific attribute) into a common virtual attribute name at scheduling time. The scheduler then evaluates these virtual attributes exactly like static attributes when matching constraints.\n\nEvery derived attribute defined in this list must be referenced by at least one MatchAttribute or DistinctAttribute constraint in the `.devices.constraints` list.\n\nThe maximum number of derived attributes is 32.\n\nThis is an alpha field and requires enabling the DRADerivedAttributes feature gate.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1::DeviceDerivedAttribute>()),
+                },
+                "deviceClassName": {
+                    "description": "DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.\n\nA DeviceClassName is required.\n\nAdministrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.",
+                    "type": "string",
+                },
+                "selectors": {
+                    "description": "Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1::DeviceSelector>()),
+                },
+                "tolerations": {
+                    "description": "If specified, the request's tolerations.\n\nTolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.\n\nIn addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.\n\nThe maximum number of tolerations is 16.\n\nThis is a beta field and requires enabling the DRADeviceTaints feature gate.",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::resource::v1::DeviceToleration>()),
+                },
+            },
+            "required": [
+                "deviceClassName",
+            ],
+        })
+    }
+}
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for ExactDeviceRequest {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.resource.v1.ExactDeviceRequest".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("ExactDeviceRequest is a request for one or more identical devices.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "adminAccess".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("AdminAccess indicates that this is a claim for administrative access to the device(s). Claims with AdminAccess are expected to be used for monitoring or other management services for a device.  They ignore all ordinary claims to the device with respect to access modes and any resource allocations.\n\nAdmin access is disabled if this field is unset or set to false, otherwise it is enabled.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Boolean))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "allocationMode".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("AllocationMode and its related fields define how devices are allocated to satisfy this request. Supported values are:\n\n- ExactCount: This request is for a specific number of devices.\n  This is the default. The exact number is provided in the\n  count field.\n\n- All: This request is for all of the matching devices in a pool.\n  At least one device must exist on the node for the allocation to succeed.\n  Allocation will fail if some devices are already allocated,\n  unless adminAccess is requested.\n\nIf AllocationMode is not specified, the default mode is ExactCount. If the mode is ExactCount and count is not specified, the default count is one. Any other requests must specify this field.\n\nMore modes may get added in the future. Clients must refuse to handle requests with unknown modes.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "capacity".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::api::resource::v1::CapacityRequirements>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Capacity define resource requirements against each capacity.\n\nIf this field is unset and the device supports multiple allocations, the default value will be applied to each capacity according to requestPolicy. For the capacity that has no requestPolicy, default is the full capacity value.\n\nApplies to each device allocation. If Count > 1, the request fails if there aren't enough devices that meet the requirements. If AllocationMode is set to All, the request fails if there are devices that otherwise match the request, and have this capacity, with a value >= the requested amount, but which cannot be allocated to this request.".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                    (
+                        "count".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Count is used only when the count mode is \"ExactCount\". Must be greater than zero. If AllocationMode is ExactCount and this field is not specified, the default is one.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "derivedAttributes".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("DerivedAttributes defines a set of virtual attributes computed via CEL expressions for each candidate device. These virtual attributes can be referenced in `.devices.constraints` to align and match different devices (e.g., co-allocating a GPU and a NIC on the same NUMA node) even if their drivers publish different attributes. Derived attributes are not available via `device.attributes` in the CEL environment when evaluating selector expressions.\n\nDerived attributes allow you to extract, transform, or normalize topology information (such as extracting a NUMA index from a complex topology string or renaming a vendor-specific attribute) into a common virtual attribute name at scheduling time. The scheduler then evaluates these virtual attributes exactly like static attributes when matching constraints.\n\nEvery derived attribute defined in this list must be referenced by at least one MatchAttribute or DistinctAttribute constraint in the `.devices.constraints` list.\n\nThe maximum number of derived attributes is 32.\n\nThis is an alpha field and requires enabling the DRADerivedAttributes feature gate.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1::DeviceDerivedAttribute>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "deviceClassName".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("DeviceClassName references a specific DeviceClass, which can define additional configuration and selectors to be inherited by this request.\n\nA DeviceClassName is required.\n\nAdministrators may use this to restrict which devices may get requested by only installing classes with selectors for permitted devices. If users are free to request anything without restrictions, then administrators can create an empty DeviceClass for users to reference.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "selectors".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Selectors define criteria which must be satisfied by a specific device in order for that device to be considered for this request. All selectors must be satisfied for a device to be considered.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1::DeviceSelector>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "tolerations".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("If specified, the request's tolerations.\n\nTolerations for NoSchedule are required to allocate a device which has a taint with that effect. The same applies to NoExecute.\n\nIn addition, should any of the allocated devices get tainted with NoExecute after allocation and that effect is not tolerated, then all pods consuming the ResourceClaim get deleted to evict them. The scheduler will not let new pods reserve the claim while it has these tainted devices. Once all pods are evicted, the claim will get deallocated.\n\nThe maximum number of tolerations is 16.\n\nThis is a beta field and requires enabling the DRADeviceTaints feature gate.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::resource::v1::DeviceToleration>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                required: [
+                    "deviceClassName".into(),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

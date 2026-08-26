@@ -19,9 +19,11 @@ fn daemon_set() {
         r#"{"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{},"spec":{"selector":{},"template":{"spec":{}}}}"#,
     ] {
         let daemon_set: k8s_openapi::api::apps::v1::DaemonSet = serde_json::from_str(input).expect("couldn't deserialize DaemonSet");
+        let daemon_set_spec = daemon_set.spec;
+        #[cfg(not(k8s_apps_spec_required))]
+        let daemon_set_spec = daemon_set_spec.expect("couldn't get DaemonSetSpec");
         let containers =
-            daemon_set
-            .spec.expect("couldn't get DaemonSetSpec")
+            daemon_set_spec
             .template
             .spec.expect("couldn't get PodTemplateSpec")
             .containers;

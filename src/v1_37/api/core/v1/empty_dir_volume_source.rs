@@ -1,0 +1,208 @@
+// Generated from definition io.k8s.api.core.v1.EmptyDirVolumeSource
+
+/// Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct EmptyDirVolumeSource {
+    /// medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+    pub medium: Option<std::string::String>,
+
+    /// mode specifies the permission bits for the emptyDir directory, in numeric notation (e.g., 0755, 01777). Must be a value between 0000 and 01777. If not specified, defaults to 0777. This might be in conflict with other options that affect the file mode, like fsGroup. If fsGroup is specified, the fsGroup permissions will override the mode specified here. This field has no effect on Windows. This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.
+    pub mode: Option<i32>,
+
+    /// sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+    pub size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity>,
+}
+
+impl crate::DeepMerge for EmptyDirVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.medium, other.medium);
+        crate::DeepMerge::merge_from(&mut self.mode, other.mode);
+        crate::DeepMerge::merge_from(&mut self.size_limit, other.size_limit);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for EmptyDirVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_medium,
+            Key_mode,
+            Key_size_limit,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "medium" => Field::Key_medium,
+                            "mode" => Field::Key_mode,
+                            "sizeLimit" => Field::Key_size_limit,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = EmptyDirVolumeSource;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("EmptyDirVolumeSource")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_medium: Option<std::string::String> = None;
+                let mut value_mode: Option<i32> = None;
+                let mut value_size_limit: Option<crate::apimachinery::pkg::api::resource::Quantity> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_medium => value_medium = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_mode => value_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_size_limit => value_size_limit = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(EmptyDirVolumeSource {
+                    medium: value_medium,
+                    mode: value_mode,
+                    size_limit: value_size_limit,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "EmptyDirVolumeSource",
+            &[
+                "medium",
+                "mode",
+                "sizeLimit",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for EmptyDirVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "EmptyDirVolumeSource",
+            self.medium.as_ref().map_or(0, |_| 1) +
+            self.mode.as_ref().map_or(0, |_| 1) +
+            self.size_limit.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.medium {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
+        }
+        if let Some(value) = &self.mode {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "mode", value)?;
+        }
+        if let Some(value) = &self.size_limit {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for EmptyDirVolumeSource {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.core.v1.EmptyDirVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.",
+            "type": "object",
+            "properties": {
+                "medium": {
+                    "description": "medium represents what type of storage medium should back this directory. The default is \"\" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir",
+                    "type": "string",
+                },
+                "mode": {
+                    "description": "mode specifies the permission bits for the emptyDir directory, in numeric notation (e.g., 0755, 01777). Must be a value between 0000 and 01777. If not specified, defaults to 0777. This might be in conflict with other options that affect the file mode, like fsGroup. If fsGroup is specified, the fsGroup permissions will override the mode specified here. This field has no effect on Windows. This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "sizeLimit": ({
+                    let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>();
+                    schema_obj.ensure_object().insert("description".into(), "sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir".into());
+                    schema_obj
+                }),
+            },
+        })
+    }
+}
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for EmptyDirVolumeSource {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.EmptyDirVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "medium".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("medium represents what type of storage medium should back this directory. The default is \"\" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::String))),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "mode".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("mode specifies the permission bits for the emptyDir directory, in numeric notation (e.g., 0755, 01777). Must be a value between 0000 and 01777. If not specified, defaults to 0777. This might be in conflict with other options that affect the file mode, like fsGroup. If fsGroup is specified, the fsGroup permissions will override the mode specified here. This field has no effect on Windows. This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "sizeLimit".into(),
+                        {
+                            let mut schema_obj = __gen.subschema_for::<crate::apimachinery::pkg::api::resource::Quantity>().into_object();
+                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir".into()),
+                                ..Default::default()
+                            }));
+                            crate::schemars08::schema::Schema::Object(schema_obj)
+                        },
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

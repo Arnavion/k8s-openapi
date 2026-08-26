@@ -42,7 +42,6 @@ async fn watch_pods() {
     assert_eq!(apiserver_pod_status.phase, Some("Running".to_string()));
 }
 
-#[cfg(k8s_watch_send_initial_events)]
 #[tokio::test]
 async fn watch_pods_without_initial_events() {
     use k8s_openapi::api::core::v1 as api;

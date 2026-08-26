@@ -1,0 +1,214 @@
+// Generated from definition io.k8s.api.core.v1.DownwardAPIVolumeSource
+
+/// DownwardAPIVolumeSource represents a volume containing downward API info. Downward API volumes support ownership management and SELinux relabeling.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct DownwardAPIVolumeSource {
+    /// Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+    pub default_mode: Option<i32>,
+
+    /// defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+    pub default_user: Option<i64>,
+
+    /// Items is a list of downward API volume file
+    pub items: Option<std::vec::Vec<crate::api::core::v1::DownwardAPIVolumeFile>>,
+}
+
+impl crate::DeepMerge for DownwardAPIVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        crate::DeepMerge::merge_from(&mut self.default_mode, other.default_mode);
+        crate::DeepMerge::merge_from(&mut self.default_user, other.default_user);
+        crate::merge_strategies::list::atomic(&mut self.items, other.items);
+    }
+}
+
+impl<'de> crate::serde::Deserialize<'de> for DownwardAPIVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_default_mode,
+            Key_default_user,
+            Key_items,
+            Other,
+        }
+
+        impl<'de> crate::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl crate::serde::de::Visitor<'_> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                        f.write_str("field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: crate::serde::de::Error {
+                        Ok(match v {
+                            "defaultMode" => Field::Key_default_mode,
+                            "defaultUser" => Field::Key_default_user,
+                            "items" => Field::Key_items,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> crate::serde::de::Visitor<'de> for Visitor {
+            type Value = DownwardAPIVolumeSource;
+
+            fn expecting(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                f.write_str("DownwardAPIVolumeSource")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: crate::serde::de::MapAccess<'de> {
+                let mut value_default_mode: Option<i32> = None;
+                let mut value_default_user: Option<i64> = None;
+                let mut value_items: Option<std::vec::Vec<crate::api::core::v1::DownwardAPIVolumeFile>> = None;
+
+                while let Some(key) = crate::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_default_mode => value_default_mode = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_default_user => value_default_user = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_items => value_items = crate::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: crate::serde::de::IgnoredAny = crate::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(DownwardAPIVolumeSource {
+                    default_mode: value_default_mode,
+                    default_user: value_default_user,
+                    items: value_items,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "DownwardAPIVolumeSource",
+            &[
+                "defaultMode",
+                "defaultUser",
+                "items",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl crate::serde::Serialize for DownwardAPIVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: crate::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "DownwardAPIVolumeSource",
+            self.default_mode.as_ref().map_or(0, |_| 1) +
+            self.default_user.as_ref().map_or(0, |_| 1) +
+            self.items.as_ref().map_or(0, |_| 1),
+        )?;
+        if let Some(value) = &self.default_mode {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
+        }
+        if let Some(value) = &self.default_user {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultUser", value)?;
+        }
+        if let Some(value) = &self.items {
+            crate::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+        }
+        crate::serde::ser::SerializeStruct::end(state)
+    }
+}
+
+#[cfg(feature = "schemars")]
+impl crate::schemars::JsonSchema for DownwardAPIVolumeSource {
+    fn schema_name() -> std::borrow::Cow<'static, str> {
+        "io.k8s.api.core.v1.DownwardAPIVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars::SchemaGenerator) -> crate::schemars::Schema {
+        crate::schemars::json_schema!({
+            "description": "DownwardAPIVolumeSource represents a volume containing downward API info. Downward API volumes support ownership management and SELinux relabeling.",
+            "type": "object",
+            "properties": {
+                "defaultMode": {
+                    "description": "Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
+                    "type": "integer",
+                    "format": "int32",
+                },
+                "defaultUser": {
+                    "description": "defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+                    "type": "integer",
+                    "format": "int64",
+                },
+                "items": {
+                    "description": "Items is a list of downward API volume file",
+                    "type": "array",
+                    "items": (__gen.subschema_for::<crate::api::core::v1::DownwardAPIVolumeFile>()),
+                },
+            },
+        })
+    }
+}
+
+#[cfg(feature = "schemars08")]
+impl crate::schemars08::JsonSchema for DownwardAPIVolumeSource {
+    fn schema_name() -> std::string::String {
+        "io.k8s.api.core.v1.DownwardAPIVolumeSource".into()
+    }
+
+    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
+        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                description: Some("DownwardAPIVolumeSource represents a volume containing downward API info. Downward API volumes support ownership management and SELinux relabeling.".into()),
+                ..Default::default()
+            })),
+            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
+            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
+                properties: [
+                    (
+                        "defaultMode".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Integer))),
+                            format: Some("int32".into()),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "defaultUser".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Integer))),
+                            format: Some("int64".into()),
+                            ..Default::default()
+                        }),
+                    ),
+                    (
+                        "items".into(),
+                        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
+                            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
+                                description: Some("Items is a list of downward API volume file".into()),
+                                ..Default::default()
+                            })),
+                            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Array))),
+                            array: Some(std::boxed::Box::new(crate::schemars08::schema::ArrayValidation {
+                                items: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(__gen.subschema_for::<crate::api::core::v1::DownwardAPIVolumeFile>()))),
+                                ..Default::default()
+                            })),
+                            ..Default::default()
+                        }),
+                    ),
+                ].into(),
+                ..Default::default()
+            })),
+            ..Default::default()
+        })
+    }
+}

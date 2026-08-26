@@ -22,8 +22,8 @@ schemars08 = { package = "schemars", version = "0.8", default-features = false, 
 ] }
 
 [features]
-test_v1_32 = ["k8s-openapi/v1_32"]
 test_v1_33 = ["k8s-openapi/v1_33"]
 test_v1_34 = ["k8s-openapi/v1_34"]
 test_v1_35 = ["k8s-openapi/v1_35"]
 test_v1_36 = ["k8s-openapi/v1_36"]
+test_v1_37 = ["k8s-openapi/v1_37"]
