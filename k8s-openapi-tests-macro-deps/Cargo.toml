@@ -3,7 +3,7 @@ name = "k8s-openapi-tests-macro-deps"
 version = "0.1.0"
 license = "Apache-2.0"
 authors = ["Arnav Singh <me@arnavion.dev>"]
-edition = "2021"
+edition = "2024"
 publish = false
 include = [
     "build.rs",
@@ -24,3 +24,6 @@ test_v1_34 = ["k8s-openapi/v1_34"]
 test_v1_35 = ["k8s-openapi/v1_35"]
 test_v1_36 = ["k8s-openapi/v1_36"]
 test_v1_37 = ["k8s-openapi/v1_37"]
+
+[lints]
+workspace = true

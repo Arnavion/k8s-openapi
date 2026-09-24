@@ -14,6 +14,7 @@ fn main() {
         }
         v1
     };
+    #[allow(clippy::cast_possible_truncation)]
     let expected_k8s_openapi_version = 0x00_01_00_00_u32 | ((enabled_version as u32) << 8);
 
     let actual_k8s_openapi_version: u32 =
@@ -27,8 +28,8 @@ fn main() {
 
     assert_eq!(actual_k8s_openapi_version, expected_k8s_openapi_version);
 
-    println!(r#"cargo::rustc-check-cfg=cfg(k8s_apps_spec_required)"#);
+    println!("cargo::rustc-check-cfg=cfg(k8s_apps_spec_required)");
     if actual_k8s_openapi_version >= 0x00_01_25_00 {
-        println!(r#"cargo::rustc-cfg=k8s_apps_spec_required"#);
+        println!("cargo::rustc-cfg=k8s_apps_spec_required");
     }
 }

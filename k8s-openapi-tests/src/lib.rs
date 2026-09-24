@@ -1,15 +1,6 @@
 #![cfg(test)]
 
 #![deny(rust_2018_idioms, warnings)]
-#![deny(clippy::all, clippy::pedantic)]
-#![allow(
-    clippy::default_trait_access,
-    clippy::large_enum_variant,
-    clippy::let_and_return,
-    clippy::let_unit_value,
-    clippy::too_many_lines,
-    clippy::type_complexity,
-)]
 
 use std::{future::Future, pin::Pin, task::{Context, Poll}};
 
@@ -55,8 +46,7 @@ impl Client {
             std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR")))
             .join("test-replays")
             .join(replays_directory);
-        let () =
-            std::fs::create_dir_all(&replays_directory)
+        std::fs::create_dir_all(&replays_directory)
             .map_err(|err| format!("couldn't create test-replays directory {}: {err}", replays_directory.display()))
             .unwrap();
 
@@ -92,8 +82,7 @@ impl Client {
                         base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
                         .expect("couldn't parse CA certificate data"),
                 };
-                let ca_cert = reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate");
-                ca_cert
+                reqwest::Certificate::from_pem(&ca_cert_pem).expect("couldn't create CA certificate")
             };
 
             let server: http::Uri = server.parse().expect("couldn't parse server URL");
@@ -125,8 +114,7 @@ impl Client {
                         .expect("couldn't parse client key data"),
                 }
 
-                let tls_identity = reqwest::Identity::from_pem(&pem).expect("couldn't construct client identity");
-                tls_identity
+                reqwest::Identity::from_pem(&pem).expect("couldn't construct client identity")
             };
 
             let inner =

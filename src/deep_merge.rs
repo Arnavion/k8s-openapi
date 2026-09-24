@@ -74,19 +74,20 @@ impl DeepMerge for jiff::Timestamp { default_overwriting_impl! {} }
 
 impl DeepMerge for serde_json::Value {
     fn merge_from(&mut self, other: Self) {
-        if let serde_json::Value::Object(this) = self {
-            if let serde_json::Value::Object(other) = other {
-                for (k, v) in other {
-                    if v.is_null() {
-                        this.remove(&k);
-                    }
-                    else {
-                        this.entry(k).or_insert(serde_json::Value::Null).merge_from(v);
-                    }
+        if
+            let serde_json::Value::Object(this) = self &&
+            let serde_json::Value::Object(other) = other
+        {
+            for (k, v) in other {
+                if v.is_null() {
+                    this.remove(&k);
                 }
-
-                return;
+                else {
+                    this.entry(k).or_insert(serde_json::Value::Null).merge_from(v);
+                }
             }
+
+            return;
         }
 
         *self = other;

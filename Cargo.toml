@@ -6,7 +6,7 @@ authors = ["Arnav Singh <me@arnavion.dev>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Bindings for the Kubernetes client API"
 documentation = "https://arnavion.github.io/k8s-openapi/v0.28.x/k8s_openapi/"
-edition = "2021"
+edition = "2024"
 keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi"
@@ -61,6 +61,9 @@ schemars = ["dep:schemars"]
 # docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
 features = ["latest"]
 
+[lints]
+workspace = true
+
 [workspace]
 members = [
     "k8s-openapi-codegen",
@@ -69,3 +72,14 @@ members = [
     "k8s-openapi-tests",
     "k8s-openapi-tests-macro-deps",
 ]
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+default_trait_access = "allow"
+large_enum_variant = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+too_many_lines = "allow"
+type_complexity = "allow"

@@ -20,21 +20,17 @@
 // Ref: https://github.com/kubernetes/kubernetes/issues/74819
 pub(crate) fn appsv1_statefulsetspec_volume_claim_templates_merge_strategy(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
     let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.apps.v1.StatefulSetSpec".to_owned());
-    if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-        if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-            if let Some((property_schema, _required)) = properties.get_mut("volumeClaimTemplates") {
-                if let crate::swagger20::MergeType::List { strategy, keys, .. } =
-                    &mut property_schema.merge_type
-                    {
-                        if *strategy == crate::swagger20::KubernetesListType::Atomic && keys.is_empty()
-                        {
-                            *strategy = crate::swagger20::KubernetesListType::Map;
-                            *keys = vec!["metadata.name".to_string()];
-                            return Ok(());
-                        }
-                    }
-            }
-        }
+    if
+        let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+        let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+        let Some((property_schema, _required)) = properties.get_mut("volumeClaimTemplates") &&
+        let crate::swagger20::MergeType::List { strategy, keys, .. } = &mut property_schema.merge_type &&
+        *strategy == crate::swagger20::KubernetesListType::Atomic &&
+        keys.is_empty()
+    {
+        *strategy = crate::swagger20::KubernetesListType::Map;
+        *keys = vec!["metadata.name".to_string()];
+        return Ok(());
     }
 
     Err("never applied apps.k8s.io/v1.StatefulSetSpec volumeClaimTemplates list merge override".into())
@@ -48,33 +44,34 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
     let mut found = false;
 
     for operation in &mut spec.operations {
-        if let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version {
-            if kubernetes_group_kind_version.group.is_empty() && kubernetes_group_kind_version.version == "v1" {
-                let kind = &mut kubernetes_group_kind_version.kind;
-                if &*kind == "NodeProxyOptions" {
-                    *kind = "Node".to_string();
-                    found = true;
-                }
-                else if &*kind == "PodAttachOptions" {
-                    *kind = "Pod".to_string();
-                    found = true;
-                }
-                else if &*kind == "PodExecOptions" {
-                    *kind = "Pod".to_string();
-                    found = true;
-                }
-                else if &*kind == "PodPortForwardOptions" {
-                    *kind = "Pod".to_string();
-                    found = true;
-                }
-                else if &*kind == "PodProxyOptions" {
-                    *kind = "Pod".to_string();
-                    found = true;
-                }
-                else if &*kind == "ServiceProxyOptions" {
-                    *kind = "Service".to_string();
-                    found = true;
-                }
+        if
+            let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version &&
+            kubernetes_group_kind_version.group.is_empty() && kubernetes_group_kind_version.version == "v1"
+        {
+            let kind = &mut kubernetes_group_kind_version.kind;
+            if &*kind == "NodeProxyOptions" {
+                *kind = "Node".to_string();
+                found = true;
+            }
+            else if &*kind == "PodAttachOptions" {
+                *kind = "Pod".to_string();
+                found = true;
+            }
+            else if &*kind == "PodExecOptions" {
+                *kind = "Pod".to_string();
+                found = true;
+            }
+            else if &*kind == "PodPortForwardOptions" {
+                *kind = "Pod".to_string();
+                found = true;
+            }
+            else if &*kind == "PodProxyOptions" {
+                *kind = "Pod".to_string();
+                found = true;
+            }
+            else if &*kind == "ServiceProxyOptions" {
+                *kind = "Service".to_string();
+                found = true;
             }
         }
     }
@@ -94,15 +91,14 @@ pub(crate) mod optional_properties {
     // `Event::eventTime`
     pub(crate) fn eventsv1_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.events.v1.Event".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("eventTime") {
-                    if property.1 {
-                        property.1 = false;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("eventTime") &&
+            property.1
+        {
+            property.1 = false;
+            return Ok(());
         }
 
         Err("never applied events.k8s.io/v1.Event optional properties override".into())
@@ -113,15 +109,14 @@ pub(crate) mod optional_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/131354
     pub(crate) fn networkingv1_networkpolicyspec(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.networking.v1.NetworkPolicySpec".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("podSelector") {
-                    if property.1 {
-                        property.1 = false;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("podSelector") &&
+            property.1
+        {
+            property.1 = false;
+            return Ok(());
         }
 
         Err("never applied networking.k8s.io/v1.NetworkPolicySpec optional properties override".into())
@@ -137,15 +132,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn config_map_env_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapEnvSource".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied ConfigMapEnvSource required properties override".into())
@@ -156,15 +150,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn config_map_key_selector(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapKeySelector".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied ConfigMapKeySelector required properties override".into())
@@ -175,15 +168,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn config_map_projection(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapProjection".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied ConfigMapProjection required properties override".into())
@@ -194,15 +186,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn config_map_volume_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.ConfigMapVolumeSource".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied ConfigMapVolumeSource required properties override".into())
@@ -213,15 +204,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn local_object_reference(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.LocalObjectReference".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied LocalObjectReference required properties override".into())
@@ -232,15 +222,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn secret_env_source(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretEnvSource".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied SecretEnvSource required properties override".into())
@@ -251,15 +240,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn secret_key_selector(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretKeySelector".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied SecretKeySelector required properties override".into())
@@ -270,15 +258,14 @@ pub(crate) mod required_properties {
     // Ref: https://github.com/kubernetes/kubernetes/pull/124694
     pub(crate) fn secret_projection(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
         let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.core.v1.SecretProjection".to_owned());
-        if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-            if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-                if let Some(property) = properties.get_mut("name") {
-                    if !property.1 {
-                        property.1 = true;
-                        return Ok(());
-                    }
-                }
-            }
+        if
+            let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+            let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind &&
+            let Some(property) = properties.get_mut("name") &&
+            !property.1
+        {
+            property.1 = true;
+            return Ok(());
         }
 
         Err("never applied SecretProjection required properties override".into())

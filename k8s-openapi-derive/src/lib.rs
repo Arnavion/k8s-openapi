@@ -1,9 +1,5 @@
 #![recursion_limit = "1024"]
 #![warn(rust_2018_idioms)]
-#![deny(clippy::all, clippy::pedantic)]
-#![allow(
-    clippy::too_many_lines,
-)]
 
 //! This crate contains custom derives related to the [`k8s-openapi`](https://crates.io/crates/k8s-openapi) crate.
 

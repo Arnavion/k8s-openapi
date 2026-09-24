@@ -59,7 +59,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         v1
     };
 
-    println!("cargo::metadata=version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
+    #[allow(clippy::cast_possible_truncation)]
+    {
+        println!("cargo::metadata=version={}", 0x00_01_00_00_u32 | ((enabled_version as u32) << 8));
+    }
 
     {
         let mut enabled_version_possible_values = String::new();

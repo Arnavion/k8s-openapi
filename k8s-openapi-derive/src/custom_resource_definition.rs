@@ -2,7 +2,6 @@ use k8s_openapi_codegen_common::swagger20;
 
 use super::ResultExt;
 
-#[expect(clippy::struct_excessive_bools)] // clippy thinks bool fields in a struct means it's being used to implement a state machine
 pub(super) struct CustomResourceDefinition {
     ident: proc_macro2::Ident,
     vis: syn::Visibility,

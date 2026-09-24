@@ -1,10 +1,4 @@
 #![deny(rust_2018_idioms, warnings)]
-#![deny(clippy::all, clippy::pedantic)]
-#![allow(
-    clippy::default_trait_access,
-    clippy::let_unit_value,
-    clippy::too_many_lines,
-)]
 
 mod fixups;
 mod logger;
@@ -215,7 +209,7 @@ async fn run(
         }
     };
 
-    let () = tokio::task::spawn_blocking(move || -> Result<(), Error> {
+    tokio::task::spawn_blocking(move || -> Result<(), Error> {
         {
             let thread_local_logger = logger::make_local_logger(supported_version.name());
             logger::register_thread_local_logger(thread_local_logger);

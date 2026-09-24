@@ -1,13 +1,4 @@
 #![warn(rust_2018_idioms)]
-#![deny(clippy::all, clippy::pedantic)]
-#![allow(
-    clippy::default_trait_access,
-    clippy::missing_errors_doc,
-    clippy::missing_panics_doc,
-    clippy::must_use_candidate,
-    clippy::too_many_arguments,
-    clippy::too_many_lines,
-)]
 
 //! This crate contains common code for the [`k8s-openapi` code generator](https://github.com/Arnavion/k8s-openapi/tree/master/k8s-openapi-codegen)
 //! and the [`k8s-openapi-derive`](https://crates.io/crates/k8s-openapi-derive) custom derive crate.

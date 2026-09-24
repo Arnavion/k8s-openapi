@@ -1,20 +1,12 @@
 #![warn(rust_2018_idioms)]
-#![deny(clippy::all, clippy::pedantic)]
 #![allow(
-    clippy::default_trait_access,
-    clippy::derive_partial_eq_without_eq,
-    clippy::doc_lazy_continuation,
     clippy::doc_markdown,
+    clippy::doc_lazy_continuation,
     clippy::doc_overindented_list_items,
-    clippy::large_enum_variant,
     clippy::match_single_binding,
-    clippy::missing_errors_doc,
     clippy::module_name_repetitions,
-    clippy::must_use_candidate,
     clippy::similar_names,
     clippy::single_match_else,
-    clippy::too_many_lines,
-    clippy::type_complexity,
     rustdoc::bare_urls,
 )]
 
@@ -183,7 +175,7 @@
 //!        // The build script can now do arbitrary things with the information.
 //!        // For example, it could define custom cfgs:
 //!        if k8s_openapi_version >= 0x00_01_22_00 {
-//!            println!(r#"cargo::rustc-cfg=k8s_pod_spec_supports_hostname_override"#);
+//!            println!("cargo::rustc-cfg=k8s_pod_spec_supports_hostname_override");
 //!        }
 //!
 //!        // ... or emit new source code files under OUT_DIR, or anything else a build script can do.

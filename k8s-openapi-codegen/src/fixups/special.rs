@@ -10,14 +10,12 @@ pub(crate) mod json_ty {
         for namespace in ["v1beta1", "v1"] {
             let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrArray"));
 
-            if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-                if !matches!(
-                    definition.kind,
-                    crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Array)),
-                ) {
-                    definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Array));
-                    found = true;
-                }
+            if
+                let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+                !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Array)))
+            {
+                definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Array));
+                found = true;
             }
         }
 
@@ -35,14 +33,12 @@ pub(crate) mod json_ty {
         for namespace in ["v1beta1", "v1"] {
             let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrBool"));
 
-            if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-                if !matches!(
-                    definition.kind,
-                    crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Bool)),
-                ) {
-                    definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Bool));
-                    found = true;
-                }
+            if
+                let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+                !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::Bool)))
+            {
+                definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::Bool));
+                found = true;
             }
         }
 
@@ -60,14 +56,12 @@ pub(crate) mod json_ty {
         for namespace in ["v1beta1", "v1"] {
             let definition_path = crate::swagger20::DefinitionPath(format!("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.{namespace}.JSONSchemaPropsOrStringArray"));
 
-            if let Some(definition) = spec.definitions.get_mut(&definition_path) {
-                if !matches!(
-                    definition.kind,
-                    crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::StringArray)),
-                ) {
-                    definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::StringArray));
-                    found = true;
-                }
+            if
+                let Some(definition) = spec.definitions.get_mut(&definition_path) &&
+                !matches!(definition.kind, crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(_, crate::swagger20::JsonSchemaPropsOr::StringArray)))
+            {
+                definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JsonSchemaPropsOr(namespace, crate::swagger20::JsonSchemaPropsOr::StringArray));
+                found = true;
             }
         }
 
@@ -111,24 +105,24 @@ pub(crate) fn watch_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate
     use std::fmt::Write;
 
     let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned());
-    if let Some(mut definition) = spec.definitions.remove(&definition_path) {
-        if let crate::swagger20::SchemaKind::Properties(mut properties) = definition.kind {
-            let object_property_name = crate::swagger20::PropertyName("object".to_owned());
-            if let Some((object_property, true)) = properties.remove(&object_property_name) {
-                if let crate::swagger20::SchemaKind::Ref(raw_extension_ref_path) = object_property.kind {
-                    definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchEvent(raw_extension_ref_path));
-                    if let Some(type_description) = &mut definition.description {
-                        if let Some(property_description) = &object_property.description {
-                            writeln!(type_description)?;
-                            writeln!(type_description)?;
-                            writeln!(type_description, "{property_description}")?;
-                        }
-                    }
-                    spec.definitions.insert(definition_path, definition);
-                    return Ok(());
-                }
-            }
+    if
+        let Some(mut definition) = spec.definitions.remove(&definition_path) &&
+        let crate::swagger20::SchemaKind::Properties(mut properties) = definition.kind &&
+        let object_property_name = crate::swagger20::PropertyName("object".to_owned()) &&
+        let Some((object_property, true)) = properties.remove(&object_property_name) &&
+        let crate::swagger20::SchemaKind::Ref(raw_extension_ref_path) = object_property.kind
+    {
+        definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchEvent(raw_extension_ref_path));
+        if
+            let Some(type_description) = &mut definition.description &&
+            let Some(property_description) = &object_property.description
+        {
+            writeln!(type_description)?;
+            writeln!(type_description)?;
+            writeln!(type_description, "{property_description}")?;
         }
+        spec.definitions.insert(definition_path, definition);
+        return Ok(());
     }
 
     Err("never applied WatchEvent override".into())
@@ -274,12 +268,13 @@ pub(crate) fn list(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error
             if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
                 for (field_value_schema, _) in properties.values_mut() {
                     let field_value_schema_kind = &mut field_value_schema.kind;
-                    if let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = field_value_schema_kind {
-                        if path == &definition_path.0 {
-                            *field_value_schema_kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef {
-                                items: Box::new(crate::swagger20::SchemaKind::Ref(item_ref_path.clone())),
-                            });
-                        }
+                    if
+                        let crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath { path, .. }) = field_value_schema_kind &&
+                        path == &definition_path.0
+                    {
+                        *field_value_schema_kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListRef {
+                            items: Box::new(crate::swagger20::SchemaKind::Ref(item_ref_path.clone())),
+                        });
                     }
                 }
             }

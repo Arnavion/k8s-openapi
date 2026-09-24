@@ -359,10 +359,10 @@ async fn test() {
         let namespace = metadata.namespace.as_deref().expect("create FooBar response did not set metadata.namespace");
         crate::clientset::delete_namespaced::<FooBar>(namespace, name)
     };
-    let () = match client.get_single_value(request, response_body).await {
+    match client.get_single_value(request, response_body).await {
         (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
-    };
+    }
 
     let (request, response_body) = {
         let metadata = &fb2.metadata;
@@ -370,10 +370,10 @@ async fn test() {
         let namespace = metadata.namespace.as_deref().expect("create FooBar response did not set metadata.namespace");
         crate::clientset::delete_namespaced::<FooBar>(namespace, name)
     };
-    let () = match client.get_single_value(request, response_body).await {
+    match client.get_single_value(request, response_body).await {
         (crate::clientset::DeleteResponse::OkStatus(_) | crate::clientset::DeleteResponse::OkValue(_), _) => (),
         (other, status_code) => panic!("{other:?} {status_code}"),
-    };
+    }
 
 
     // Create invalid CR.

@@ -27,3 +27,6 @@ serde = { version = "1", optional = true, default-features = false, features = [
 [features]
 # Enable `serde::Deserialize` implementations on OpenAPI types.
 serde = ["dep:serde"]
+
+[lints]
+workspace = true

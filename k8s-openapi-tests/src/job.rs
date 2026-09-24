@@ -102,10 +102,11 @@ async fn create() {
                 .map(|owner_reference| owner_reference.uid.as_ref()) == Some(&*job_uid))
             .and_then(|job_pod| job_pod.status);
 
-        if let Some(job_pod_status) = job_pod_status {
-            if job_pod_status.phase == Some("Failed".to_string()) {
-                break job_pod_status;
-            }
+        if
+            let Some(job_pod_status) = job_pod_status &&
+            job_pod_status.phase == Some("Failed".to_string())
+        {
+            break job_pod_status;
         }
 
         tokio::time::sleep(std::time::Duration::from_secs(1)).await;
