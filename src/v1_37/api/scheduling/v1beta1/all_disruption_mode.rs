@@ -55,21 +55,3 @@ impl crate::schemars::JsonSchema for AllDisruptionMode {
         })
     }
 }
-
-#[cfg(feature = "schemars08")]
-impl crate::schemars08::JsonSchema for AllDisruptionMode {
-    fn schema_name() -> std::string::String {
-        "io.k8s.api.scheduling.v1beta1.AllDisruptionMode".into()
-    }
-
-    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
-        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
-                description: Some("AllDisruptionMode specifies that children can only be disrupted together.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
-            ..Default::default()
-        })
-    }
-}

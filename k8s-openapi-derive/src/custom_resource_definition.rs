@@ -12,7 +12,6 @@ pub(super) struct CustomResourceDefinition {
     version: String,
     plural: String,
     generate_schema: bool,
-    generate_schema08: bool,
     namespaced: bool,
     has_subresources: Option<String>,
     impl_deep_merge: bool,
@@ -27,7 +26,6 @@ impl super::CustomDerive for CustomResourceDefinition {
         let mut version = None;
         let mut plural = None;
         let mut generate_schema = false;
-        let mut generate_schema08 = false;
         let mut namespaced = false;
         let mut has_subresources = None;
         let mut impl_deep_merge = false;
@@ -80,10 +78,6 @@ impl super::CustomDerive for CustomResourceDefinition {
                             generate_schema = true;
                             continue;
                         }
-                        else if path.is_ident("generate_schema08") {
-                            generate_schema08 = true;
-                            continue;
-                        }
                         else if path.is_ident("namespaced") {
                             namespaced = true;
                             continue;
@@ -129,7 +123,6 @@ impl super::CustomDerive for CustomResourceDefinition {
             version,
             plural,
             generate_schema,
-            generate_schema08,
             namespaced,
             has_subresources,
             impl_deep_merge,
@@ -137,7 +130,7 @@ impl super::CustomDerive for CustomResourceDefinition {
     }
 
     fn emit(self) -> Result<proc_macro2::TokenStream, syn::Error> {
-        let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, generate_schema, generate_schema08, namespaced, has_subresources, impl_deep_merge } = self;
+        let CustomResourceDefinition { ident: cr_spec_name, vis, tokens, group, version, plural, generate_schema, namespaced, has_subresources, impl_deep_merge } = self;
 
         let vis: std::borrow::Cow<'_, str> = match vis {
             syn::Visibility::Inherited => "".into(),
@@ -367,7 +360,6 @@ impl super::CustomDerive for CustomResourceDefinition {
                 &MapNamespace,
                 &vis,
                 if generate_schema { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },
-                if generate_schema08 { k8s_openapi_codegen_common::GenerateSchema::Yes { feature: None } } else { k8s_openapi_codegen_common::GenerateSchema::No },
                 &mut run_state,
             )
             .map_err(|err| format!("#[derive(CustomResourceDefinition)] failed: {err}"))

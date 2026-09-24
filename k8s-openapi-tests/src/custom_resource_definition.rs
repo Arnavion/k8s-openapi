@@ -21,19 +21,18 @@ async fn test() {
     #[derive(
         Clone, Debug, PartialEq,
         k8s_openapi_derive::CustomResourceDefinition,
-        schemars08::JsonSchema,
+        schemars::JsonSchema,
         serde::Deserialize, serde::Serialize,
     )]
     #[custom_resource_definition(
         group = "k8s-openapi-tests-custom-resource-definition.com",
         version = "v1",
         plural = "foobars",
-        generate_schema08,
+        generate_schema,
         namespaced,
         has_subresources = "v1",
         impl_deep_merge,
     )]
-    #[schemars(crate = "schemars08")]
     struct FooBarSpec {
         prop1: String,
         prop2: Vec<bool>,
@@ -486,18 +485,17 @@ fn dont_require_deep_merge_when_not_requested() {
     #[derive(
         Clone, Debug, PartialEq,
         k8s_openapi_derive::CustomResourceDefinition,
-        schemars08::JsonSchema,
+        schemars::JsonSchema,
         serde::Deserialize, serde::Serialize,
     )]
     #[custom_resource_definition(
         group = "k8s-openapi-tests-custom-resource-definition.com",
         version = "v1",
         plural = "foobars",
-        generate_schema08,
+        generate_schema,
         namespaced,
         has_subresources = "v1",
     )]
-    #[schemars(crate = "schemars08")]
     struct FooBarSpec {
         prop1: String,
         prop2: Vec<bool>,

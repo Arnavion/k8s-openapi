@@ -112,37 +112,3 @@ impl crate::schemars::JsonSchema for EvictionTarget {
         })
     }
 }
-
-#[cfg(feature = "schemars08")]
-impl crate::schemars08::JsonSchema for EvictionTarget {
-    fn schema_name() -> std::string::String {
-        "io.k8s.api.lifecycle.v1alpha1.EvictionTarget".into()
-    }
-
-    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
-        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
-                description: Some("EvictionTarget contains a reference to an object that should be evicted.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
-            object: Some(std::boxed::Box::new(crate::schemars08::schema::ObjectValidation {
-                properties: [
-                    (
-                        "pod".into(),
-                        {
-                            let mut schema_obj = __gen.subschema_for::<crate::api::lifecycle::v1alpha1::EvictionPodReference>().into_object();
-                            schema_obj.metadata = Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
-                                description: Some("pod references a pod that is subject to eviction/termination. Pods that are part of a PodGroup (.spec.schedulingGroup is set) are not supported.".into()),
-                                ..Default::default()
-                            }));
-                            crate::schemars08::schema::Schema::Object(schema_obj)
-                        },
-                    ),
-                ].into(),
-                ..Default::default()
-            })),
-            ..Default::default()
-        })
-    }
-}

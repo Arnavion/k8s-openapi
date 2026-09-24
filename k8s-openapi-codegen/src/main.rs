@@ -265,7 +265,6 @@ async fn run(
                 &MapNamespace,
                 "pub ",
                 k8s_openapi_codegen_common::GenerateSchema::Yes { feature: Some("schemars") },
-                k8s_openapi_codegen_common::GenerateSchema::Yes { feature: Some("schemars08") },
                 run_state,
             )?;
 

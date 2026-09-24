@@ -55,21 +55,3 @@ impl crate::schemars::JsonSchema for WorkloadPodGroupSingleDisruptionMode {
         })
     }
 }
-
-#[cfg(feature = "schemars08")]
-impl crate::schemars08::JsonSchema for WorkloadPodGroupSingleDisruptionMode {
-    fn schema_name() -> std::string::String {
-        "io.k8s.api.scheduling.v1alpha3.WorkloadPodGroupSingleDisruptionMode".into()
-    }
-
-    fn json_schema(__gen: &mut crate::schemars08::gen::SchemaGenerator) -> crate::schemars08::schema::Schema {
-        crate::schemars08::schema::Schema::Object(crate::schemars08::schema::SchemaObject {
-            metadata: Some(std::boxed::Box::new(crate::schemars08::schema::Metadata {
-                description: Some("WorkloadPodGroupSingleDisruptionMode indicates that individual pods can be disrupted independently.".into()),
-                ..Default::default()
-            })),
-            instance_type: Some(crate::schemars08::schema::SingleOrVec::Single(std::boxed::Box::new(crate::schemars08::schema::InstanceType::Object))),
-            ..Default::default()
-        })
-    }
-}
