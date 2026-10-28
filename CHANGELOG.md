@@ -1,3 +1,33 @@
+# v0.29.0 (2026-10-27)
+
+## k8s-openapi
+
+- BREAKING CHANGE: Added support for Kubernetes 1.37 under the `v1_37` feature.
+
+- BREAKING CHANGE: Dropped support for Kubernetes 1.32.
+
+- BREAKING CHANGE: schemars v0.8 support has been removed again.
+
+- Some, but not all, resource types have non-`Option`al `spec` fields in v1.37, due to a Kubernetes upstream change. It is likely that eventually all `spec` fields will become non-optional, but currently upstream has only made partial progress towards this. k8s-openapi normally backports such fixes to old versions, but given the partial nature of upstream's change and uncertainty of its scope, this has not been backported as of now.
+
+Corresponding Kubernetes API server versions:
+
+- v1.33.13
+- v1.34.13
+- v1.35.10
+- v1.36.6
+- v1.37.2
+
+## k8s-openapi-codegen-common
+
+- FEATURE: schemars v0.8 support has been removed again.
+
+## k8s-openapi-derive
+
+- FEATURE: schemars v0.8 support has been removed again.
+
+---
+
 # v0.28.0 (2026-06-14)
 
 ## k8s-openapi
