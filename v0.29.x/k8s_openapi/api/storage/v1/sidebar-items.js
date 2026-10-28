@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["CSIDriver","CSIDriverSpec","CSINode","CSINodeDriver","CSINodeSpec","CSINodeStatus","CSIStorageCapacity","StorageClass","StorageHealth","StorageHealthCondition","TokenRequest","VolumeAttachment","VolumeAttachmentSource","VolumeAttachmentSpec","VolumeAttachmentStatus","VolumeAttributesClass","VolumeError","VolumeNodeResources"]};

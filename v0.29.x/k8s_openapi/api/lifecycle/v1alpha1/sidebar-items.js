@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Eviction","EvictionPodReference","EvictionRequest","EvictionRequestPodReference","EvictionRequestSpec","EvictionRequestStatus","EvictionRequestTarget","EvictionSpec","EvictionStatus","EvictionTarget","Requester","ResponderStatus","TargetResponder"]};

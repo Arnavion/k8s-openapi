@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["ApplyConfiguration","JSONPatch","MatchCondition","MatchResources","MutatingAdmissionPolicy","MutatingAdmissionPolicyBinding","MutatingAdmissionPolicyBindingSpec","MutatingAdmissionPolicySpec","Mutation","NamedRuleWithOperations","ParamKind","ParamRef","Variable"]};
