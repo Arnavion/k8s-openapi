@@ -27,7 +27,7 @@ fn daemon_set() {
             .template
             .spec.expect("couldn't get PodTemplateSpec")
             .containers;
-        assert!(containers.is_empty());
+        assert_eq!(containers, []);
     }
 }
 
