@@ -11,7 +11,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok())
             .chain(
                 std::env::var("K8S_OPENAPI_ENABLED_VERSION").ok()
-                .and_then(|value| value.strip_prefix("1.").and_then(|value| value.parse::<usize>().ok())))
+                .and_then(|value| match value.as_str() {
+                    "earliest" => Some(MIN),
+                    "latest" => Some(MAX),
+                    _ => value.strip_prefix("1.")?.parse::<usize>().ok(),
+                }))
             .collect::<std::collections::BTreeSet<_>>()
             .into_iter();
         let v1 = enabled_versions.next().expect("\n\
@@ -27,7 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             In case your library crate does not directly depend on k8s-openapi, add a dev-dependency on k8s-openapi and enable the corresponding feature in it.\n\
             \n\
             Alternatively, when running commands that do not build dev dependencies such as `cargo check` and `cargo doc`, you can set the `K8S_OPENAPI_ENABLED_VERSION` \
-            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`.\n\
+            environment variable to a version such as `1.50` or to `earliest` or `latest`.\n\
             \n\
             Library crates *must not* enable any features in their direct dependency on k8s-openapi, only in their dev-dependency. \
             The choice of which Kubernetes version to support should be left to the final binary crate, so only binary crates should enable a specific feature. \
