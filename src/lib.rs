@@ -95,7 +95,7 @@
 //!    $ cargo check --features __check
 //!    ```
 //!
-//! 1. Define the `K8S_OPENAPI_ENABLED_VERSION` env var when running such commands:
+//! 1. Define the `K8S_OPENAPI_ENABLED_VERSION` env var when running such commands. The variable is only used when no version feature is enabled:
 //!
 //!    ```sh
 //!    $ K8S_OPENAPI_ENABLED_VERSION=1.50 cargo check

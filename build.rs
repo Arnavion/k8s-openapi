@@ -8,13 +8,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let enabled_version = {
         let mut enabled_versions =
-            (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok())
-            .chain(
-                std::env::var("K8S_OPENAPI_ENABLED_VERSION").ok()
-                .and_then(|value| value.strip_prefix("1.").and_then(|value| value.parse::<usize>().ok())))
-            .collect::<std::collections::BTreeSet<_>>()
-            .into_iter();
-        let v1 = enabled_versions.next().expect("\n\
+            (MIN..=MAX).filter(|v| std::env::var(format!("CARGO_FEATURE_V1_{v}")).is_ok());
+        let v1 = enabled_versions.next().or_else(|| {
+            let value = std::env::var("K8S_OPENAPI_ENABLED_VERSION").ok()?;
+            value.strip_prefix("1.")?.parse::<usize>().ok()
+        }).expect("\n\
             None of the v1_* features are enabled on the k8s-openapi crate.\n\
             \n\
             The k8s-openapi crate requires a feature to be enabled to indicate which version of Kubernetes it should support.\n\
@@ -27,7 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             In case your library crate does not directly depend on k8s-openapi, add a dev-dependency on k8s-openapi and enable the corresponding feature in it.\n\
             \n\
             Alternatively, when running commands that do not build dev dependencies such as `cargo check` and `cargo doc`, you can set the `K8S_OPENAPI_ENABLED_VERSION` \
-            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`.\n\
+            environment variable, such as `K8S_OPENAPI_ENABLED_VERSION=1.50`. This variable is only used when no version feature is enabled.\n\
             \n\
             Library crates *must not* enable any features in their direct dependency on k8s-openapi, only in their dev-dependency. \
             The choice of which Kubernetes version to support should be left to the final binary crate, so only binary crates should enable a specific feature. \
@@ -47,8 +45,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 Both v1_{v1} and v1_{v2} features are enabled on the k8s-openapi crate. These feature indicates which version of Kubernetes the k8s-openapi crate should support. \
                 Only one feature can be enabled at the same time.\n\
                 \n\
-                If you have enabled both of these features yourself, either via the k8s-openapi dependency in your Cargo.toml or via setting \
-                the `K8S_OPENAPI_ENABLED_VERSION` env var, please remove one of them. If you are writing a library crate, do not enable any features at all. \
+                If you have enabled both of these features yourself, please remove one of them. If you are writing a library crate, do not enable any features at all. \
                 Library crates *must not* enable any features on the k8s-openapi crate.\n\
                 \n\
                 If you have not enabled one or both of these features yourself, then one of the library crates in your dependency graph *has*. \
