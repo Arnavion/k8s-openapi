@@ -14,8 +14,8 @@ pub(crate) fn generate(
         Some(part) => format!("<'de, {part}>").into(),
         None => "<'de>".into(),
     };
-    let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
+    let type_generics_type = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_where = generics.where_part.map_or_default(|part| format!(" where {part}"));
 
     let (visitor_field, visitor_create_field) =
         if type_generics_type.is_empty() {

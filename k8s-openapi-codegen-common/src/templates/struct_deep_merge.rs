@@ -7,8 +7,8 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
     let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-    let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
+    let type_generics_type = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_where = generics.where_part.map_or_default(|part| format!(" where {part}"));
 
     let mut merge_body = String::new();
     for super::Property { field_name, merge_type, .. } in fields {

@@ -10,9 +10,9 @@ pub(crate) fn generate(
 
     let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-    let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
+    let type_generics_impl = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_type = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_where = generics.where_part.map_or_default(|part| format!(" where {part}"));
 
     let mut fields_string = String::new();
     let mut required_fields_num = 0_usize;

@@ -11,9 +11,9 @@ pub(crate) fn generate(
 ) -> Result<(), crate::Error> {
     let local = crate::map_namespace_local_to_string(map_namespace)?;
 
-    let type_generics_impl = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_type = generics.type_part.map(|part| format!("<{part}>")).unwrap_or_default();
-    let type_generics_where = generics.where_part.map(|part| format!(" where {part}")).unwrap_or_default();
+    let type_generics_impl = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_type = generics.type_part.map_or_default(|part| format!("<{part}>"));
+    let type_generics_where = generics.where_part.map_or_default(|part| format!(" where {part}"));
 
     let cfg = schemars_feature.map_or_else(String::new, |schemars_feature| format!("#[cfg(feature = {schemars_feature:?})]\n"));
     let mut schema = String::new();
