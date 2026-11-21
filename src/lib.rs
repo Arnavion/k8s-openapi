@@ -101,6 +101,9 @@
 //!    $ K8S_OPENAPI_ENABLED_VERSION=1.50 cargo check
 //!    ```
 //!
+//!    The variable also accepts `earliest` and `latest`, which select the same Kubernetes versions as the corresponding Cargo features.
+//!    If you set the variable and enable a version feature, both must select the same version.
+//!
 //!
 //! # Conditional compilation
 //!
