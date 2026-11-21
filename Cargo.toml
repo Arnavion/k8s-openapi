@@ -31,7 +31,7 @@ links = "k8s-openapi-0.29.0"
 base64 = { version = "0.22", default-features = false, features = [
     "alloc", # for base64::Engine::decode and base64::Engine::encode
 ] }
-jiff = { version = "0.2", default-features = false, features = [
+jiff = { version = "1", default-features = false, features = [
     "alloc", # for jiff::fmt::strtime::format
     "serde", # for jiff::Timestamp: serde::Deserialize
 ] }
