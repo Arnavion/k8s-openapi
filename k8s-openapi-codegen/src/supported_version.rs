@@ -40,9 +40,9 @@ impl SupportedVersion {
         match self {
             SupportedVersion::V1_33 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.33.13/api/openapi-spec/swagger.json",
             SupportedVersion::V1_34 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.13/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_35 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.10/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_36 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.36.6/api/openapi-spec/swagger.json",
-            SupportedVersion::V1_37 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.37.2/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_35 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.11/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_36 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.36.7/api/openapi-spec/swagger.json",
+            SupportedVersion::V1_37 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.37.3/api/openapi-spec/swagger.json",
         }
     }
 
